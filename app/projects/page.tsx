@@ -1,0 +1,154 @@
+'use client';
+
+import Header from '@/components/header';
+import Footer from '@/components/footer';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Github, ExternalLink } from 'lucide-react';
+
+const projects = [
+  {
+    title: 'Smart Home IoT Hub',
+    description: 'A comprehensive IoT platform for managing smart home devices with real-time monitoring and automation.',
+    technologies: ['Node.js', 'React', 'MQTT', 'PostgreSQL'],
+    status: 'Completed',
+    link: '#',
+    category: 'IoT',
+  },
+  {
+    title: 'AI-Powered Chatbot System',
+    description: 'Advanced conversational AI system for enterprise customer support with natural language processing.',
+    technologies: ['Python', 'TensorFlow', 'FastAPI', 'React'],
+    status: 'In Development',
+    link: '#',
+    category: 'AI/ML',
+  },
+  {
+    title: 'Industrial Sensor Dashboard',
+    description: 'Real-time visualization dashboard for industrial IoT sensors with predictive analytics.',
+    technologies: ['Next.js', 'TypeScript', 'WebSocket', 'InfluxDB'],
+    status: 'Completed',
+    link: '#',
+    category: 'IoT',
+  },
+  {
+    title: 'Mobile Weather Station',
+    description: 'Mobile application for collecting and analyzing weather data from distributed sensors.',
+    technologies: ['React Native', 'Firebase', 'Arduino', 'Node.js'],
+    status: 'Completed',
+    link: '#',
+    category: 'Mobile',
+  },
+  {
+    title: 'Web Analytics Platform',
+    description: 'Full-stack analytics platform for tracking user behavior and generating actionable insights.',
+    technologies: ['Next.js', 'D3.js', 'Python', 'PostgreSQL'],
+    status: 'In Development',
+    link: '#',
+    category: 'Web',
+  },
+  {
+    title: 'Drone Management System',
+    description: 'Enterprise solution for managing and monitoring autonomous drone fleets.',
+    technologies: ['React', 'Node.js', 'Docker', 'Redis'],
+    status: 'Completed',
+    link: '#',
+    category: 'IoT',
+  },
+];
+
+export default function ProjectsPage() {
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <Header />
+      
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="relative overflow-hidden border-b border-border/40 py-20">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-secondary/10 to-accent/10" />
+          <div className="container relative mx-auto px-4">
+            <div className="max-w-2xl">
+              <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
+                Our <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">Projects</span>
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Explore the innovative solutions we've built for IoT, web, mobile, and AI technologies. Each project showcases our expertise in cutting-edge development.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Grid */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            {/* Filter Tags */}
+            <div className="mb-12 flex flex-wrap gap-2">
+              <Badge variant="default" className="bg-accent/20 text-accent hover:bg-accent/30">
+                All Projects
+              </Badge>
+              <Badge variant="outline">IoT</Badge>
+              <Badge variant="outline">Web</Badge>
+              <Badge variant="outline">Mobile</Badge>
+              <Badge variant="outline">AI/ML</Badge>
+            </div>
+
+            {/* Projects Grid */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {projects.map((project, index) => (
+                <Card 
+                  key={index}
+                  className="border-border/40 bg-card/50 backdrop-blur transition-all hover:border-accent/50 hover:shadow-lg hover:shadow-accent/10"
+                >
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <CardTitle className="text-xl">{project.title}</CardTitle>
+                        <Badge className="mt-2 bg-primary/20 text-primary hover:bg-primary/30">
+                          {project.category}
+                        </Badge>
+                      </div>
+                      <Badge 
+                        variant="outline"
+                        className={project.status === 'Completed' ? 'border-accent/50 text-accent' : 'border-secondary/50 text-secondary'}
+                      >
+                        {project.status}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <CardDescription className="text-base">
+                      {project.description}
+                    </CardDescription>
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map((tech, i) => (
+                        <Badge key={i} variant="secondary" className="bg-muted/50">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="flex gap-2 pt-4">
+                      <Button variant="outline" size="sm" className="flex-1">
+                        <Github className="mr-2 h-4 w-4" />
+                        Code
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        className="flex-1 bg-accent hover:bg-accent/90"
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        View
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+}
