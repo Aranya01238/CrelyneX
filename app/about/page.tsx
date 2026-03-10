@@ -72,19 +72,19 @@ export default function AboutPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative overflow-hidden border-b border-border/40 py-20">
+        <section className="relative overflow-hidden border-b border-border/40 py-16 sm:py-20">
           <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-primary/10 to-secondary/10" />
           <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
           <div className="container relative mx-auto px-4">
             <div className="grid items-center gap-10 md:grid-cols-2">
               <div className="max-w-2xl">
-                <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
+                <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
                   About{" "}
                   <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
                     CrelyneX
                   </span>
                 </h1>
-                <p className="text-lg text-muted-foreground">
+                <p className="text-base text-muted-foreground sm:text-lg">
                   CrelyneX is a community-driven platform dedicated to
                   innovation in IoT, web development, and advanced technologies.
                 </p>
@@ -105,9 +105,9 @@ export default function AboutPage() {
         </section>
 
         {/* Our Story Section */}
-        <section className="border-b border-border/40 py-20">
+        <section className="border-b border-border/40 py-16 sm:py-20">
           <div className="container mx-auto px-4">
-            <div className="grid gap-12 md:grid-cols-2 md:gap-8">
+            <div className="grid gap-10 md:grid-cols-2 md:gap-8">
               <div>
                 <h2 className="text-3xl font-bold">Our Story</h2>
                 <div className="mt-6 space-y-4 text-muted-foreground">
@@ -131,7 +131,7 @@ export default function AboutPage() {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center justify-center">
+              <div className="hidden items-center justify-center md:flex">
                 <div className="relative h-64 w-64 rounded-lg bg-gradient-to-br from-accent via-primary to-secondary opacity-30 blur-3xl" />
               </div>
             </div>
@@ -139,7 +139,7 @@ export default function AboutPage() {
         </section>
 
         {/* Our Values Section */}
-        <section className="border-b border-border/40 py-20">
+        <section className="border-b border-border/40 py-16 sm:py-20">
           <div className="container mx-auto px-4">
             <h2 className="mb-12 text-3xl font-bold">Our Values</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -165,26 +165,26 @@ export default function AboutPage() {
         </section>
 
         {/* Statistics Section */}
-        <section className="border-b border-border/40 py-20">
+        <section className="border-b border-border/40 py-16 sm:py-20">
           <div className="container mx-auto px-4">
-            <div className="grid gap-8 md:grid-cols-4">
-              <div className="rounded-lg border border-border/40 bg-card/50 p-8 backdrop-blur text-center">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-8">
+              <div className="rounded-lg border border-border/40 bg-card/50 p-6 text-center backdrop-blur sm:p-8">
                 <div className="text-4xl font-bold text-accent">1000+</div>
                 <div className="mt-2 text-muted-foreground">
                   Community Members
                 </div>
               </div>
-              <div className="rounded-lg border border-border/40 bg-card/50 p-8 backdrop-blur text-center">
+              <div className="rounded-lg border border-border/40 bg-card/50 p-6 text-center backdrop-blur sm:p-8">
                 <div className="text-4xl font-bold text-secondary">50+</div>
                 <div className="mt-2 text-muted-foreground">
                   Projects Completed
                 </div>
               </div>
-              <div className="rounded-lg border border-border/40 bg-card/50 p-8 backdrop-blur text-center">
+              <div className="rounded-lg border border-border/40 bg-card/50 p-6 text-center backdrop-blur sm:p-8">
                 <div className="text-4xl font-bold text-primary">30+</div>
                 <div className="mt-2 text-muted-foreground">Events Hosted</div>
               </div>
-              <div className="rounded-lg border border-border/40 bg-card/50 p-8 backdrop-blur text-center">
+              <div className="rounded-lg border border-border/40 bg-card/50 p-6 text-center backdrop-blur sm:p-8">
                 <div className="text-4xl font-bold text-accent">5000+</div>
                 <div className="mt-2 text-muted-foreground">
                   Students Trained
@@ -195,7 +195,7 @@ export default function AboutPage() {
         </section>
 
         {/* Team Section */}
-        <section className="py-20">
+        <section className="py-16 sm:py-20">
           <div className="container mx-auto px-4">
             <h2 className="mb-12 text-3xl font-bold">Our Team</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">

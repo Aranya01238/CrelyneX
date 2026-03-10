@@ -73,19 +73,19 @@ export default function ContactPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative overflow-hidden border-b border-border/40 py-20">
+        <section className="relative overflow-hidden border-b border-border/40 py-16 sm:py-20">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10" />
           <div className="absolute right-8 top-6 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
           <div className="container relative mx-auto px-4">
             <div className="grid items-center gap-10 md:grid-cols-2">
               <div className="max-w-2xl">
-                <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
+                <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
                   Get in{" "}
                   <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
                     Touch
                   </span>
                 </h1>
-                <p className="text-lg text-muted-foreground">
+                <p className="text-base text-muted-foreground sm:text-lg">
                   Have a question or want to collaborate? We'd love to hear from
                   you. Reach out to us through any of these channels.
                 </p>
@@ -106,7 +106,7 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Methods Grid */}
-        <section className="border-b border-border/40 py-20">
+        <section className="border-b border-border/40 py-16 sm:py-20">
           <div className="container mx-auto px-4">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {contactMethods.map((method, index) => {
@@ -132,7 +132,7 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Form Section */}
-        <section className="py-20">
+        <section className="py-16 sm:py-20">
           <div className="container mx-auto max-w-2xl px-4">
             <Card className="border-border/40 bg-card/50 backdrop-blur">
               <CardHeader>
@@ -227,7 +227,7 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                   >
                     <Button
-                      className="mt-4 bg-secondary hover:bg-secondary/90 font-semibold"
+                      className="mt-4 w-full bg-secondary font-semibold hover:bg-secondary/90 sm:w-auto"
                       size="lg"
                     >
                       Join WhatsApp Community

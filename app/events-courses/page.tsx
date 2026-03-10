@@ -17,8 +17,6 @@ import {
   Clock,
   ArrowRight,
   CheckCircle2,
-  Orbit,
-  Cuboid,
   Workflow,
   Target,
 } from "lucide-react";
@@ -70,33 +68,6 @@ const courses = [
   },
 ];
 
-const threeDTracks = [
-  {
-    title: "Three.js Fundamentals Lab",
-    summary:
-      "Build animated 3D scenes with cameras, lighting, and responsive controls.",
-    stack: "Three.js + WebGL",
-    mode: "Live Workshop",
-    level: "Beginner Friendly",
-  },
-  {
-    title: "Interactive Product Visuals",
-    summary:
-      "Design product cards with depth, hover parallax, and mobile-optimized motion.",
-    stack: "React + Motion",
-    mode: "Hands-on Sprint",
-    level: "Intermediate",
-  },
-  {
-    title: "3D Portfolio Experience",
-    summary:
-      "Create a responsive portfolio page with layered scenes and cinematic transitions.",
-    stack: "Next.js + Three.js",
-    mode: "Mentored Build",
-    level: "Intermediate+",
-  },
-];
-
 const questFlow = [
   {
     quest: "Quest 01",
@@ -131,19 +102,19 @@ export default function EventsCoursesPage() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative overflow-hidden border-b border-border/40 py-20">
+        <section className="relative overflow-hidden border-b border-border/40 py-16 sm:py-20">
           <div className="absolute inset-0 bg-gradient-to-r from-secondary/10 via-accent/10 to-primary/10" />
           <div className="absolute left-8 top-8 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" />
           <div className="container relative mx-auto px-4">
             <div className="grid items-center gap-10 md:grid-cols-2">
               <div className="max-w-3xl">
-                <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
+                <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
                   Events &{" "}
                   <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
                     Courses
                   </span>
                 </h1>
-                <p className="text-lg text-muted-foreground">
+                <p className="text-base text-muted-foreground sm:text-lg">
                   Join our community for exclusive events, workshops, and
                   comprehensive courses. Upskill and network with tech
                   enthusiasts.
@@ -164,102 +135,8 @@ export default function EventsCoursesPage() {
           </div>
         </section>
 
-        {/* 3D Design Section */}
-        <section className="relative overflow-hidden border-b border-border/40 py-20">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,oklch(0.62_0.22_185_/_0.12),transparent_40%),radial-gradient(circle_at_80%_80%,oklch(0.55_0.25_310_/_0.12),transparent_42%)]" />
-          <div className="container relative mx-auto px-4">
-            <div className="grid items-center gap-10 lg:grid-cols-2">
-              <div>
-                <Badge className="mb-4 bg-accent/20 text-accent hover:bg-accent/30">
-                  New 3D Tracks
-                </Badge>
-                <h2 className="text-3xl font-bold md:text-4xl">
-                  Responsive{" "}
-                  <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
-                    3D Design
-                  </span>{" "}
-                  Labs
-                </h2>
-                <p className="mt-4 text-muted-foreground">
-                  Explore Three.js-inspired experiences, immersive UI motion,
-                  and production-ready 3D layouts that adapt smoothly from
-                  mobile to desktop.
-                </p>
-              </div>
-
-              <div className="relative mx-auto h-72 w-full max-w-md [perspective:1200px]">
-                <div className="absolute inset-6 rounded-2xl border border-accent/30 bg-accent/10 [transform:rotateX(60deg)_rotateZ(-30deg)]" />
-                <div className="absolute inset-10 rounded-2xl border border-secondary/40 bg-secondary/10 [transform:rotateX(60deg)_rotateZ(-30deg)_translate3d(0,-20px,50px)]" />
-                <div className="absolute inset-0 rounded-2xl border border-border/60 bg-card/70 p-6 shadow-2xl backdrop-blur [transform:translate3d(0,0,90px)]">
-                  <div className="mb-5 flex items-center justify-between">
-                    <span className="text-sm font-semibold">
-                      3D Scene Preview
-                    </span>
-                    <Orbit className="h-5 w-5 text-accent" />
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="rounded-lg border border-border/60 bg-background/60 p-3">
-                      <div className="text-xs text-muted-foreground">Depth</div>
-                      <div className="mt-1 font-semibold">Layered</div>
-                    </div>
-                    <div className="rounded-lg border border-border/60 bg-background/60 p-3">
-                      <div className="text-xs text-muted-foreground">
-                        Motion
-                      </div>
-                      <div className="mt-1 font-semibold">Smooth</div>
-                    </div>
-                    <div className="rounded-lg border border-border/60 bg-background/60 p-3">
-                      <div className="text-xs text-muted-foreground">
-                        Mobile
-                      </div>
-                      <div className="mt-1 font-semibold">Adaptive</div>
-                    </div>
-                    <div className="rounded-lg border border-border/60 bg-background/60 p-3">
-                      <div className="text-xs text-muted-foreground">
-                        Engine
-                      </div>
-                      <div className="mt-1 font-semibold">Three.js</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-12 grid gap-4 md:grid-cols-3">
-              {threeDTracks.map((track) => (
-                <Card
-                  key={track.title}
-                  className="border-border/60 bg-card/60 backdrop-blur transition-transform hover:-translate-y-1"
-                >
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-lg">
-                      <Cuboid className="h-5 w-5 text-accent" />
-                      {track.title}
-                    </CardTitle>
-                    <CardDescription>{track.summary}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-2 text-sm">
-                    <div className="flex items-center justify-between rounded-md bg-background/60 p-2">
-                      <span className="text-muted-foreground">Stack</span>
-                      <span className="font-medium">{track.stack}</span>
-                    </div>
-                    <div className="flex items-center justify-between rounded-md bg-background/60 p-2">
-                      <span className="text-muted-foreground">Mode</span>
-                      <span className="font-medium">{track.mode}</span>
-                    </div>
-                    <div className="flex items-center justify-between rounded-md bg-background/60 p-2">
-                      <span className="text-muted-foreground">Level</span>
-                      <span className="font-medium">{track.level}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Upcoming Events Section */}
-        <section className="border-b border-border/40 py-20">
+        <section className="border-b border-border/40 py-16 sm:py-20">
           <div className="container mx-auto px-4">
             <div className="mb-12">
               <h2 className="text-3xl font-bold">Featured Event</h2>
@@ -275,7 +152,7 @@ export default function EventsCoursesPage() {
                   className="border-secondary/40 bg-gradient-to-br from-card to-card/50 backdrop-blur transition-all hover:border-secondary/70 hover:shadow-2xl hover:shadow-secondary/20"
                 >
                   <CardHeader>
-                    <div className="flex items-start justify-between gap-4">
+                    <div className="flex flex-col items-start gap-4 sm:flex-row sm:justify-between">
                       <div className="flex-1">
                         <CardTitle className="text-2xl">
                           {event.title}
@@ -284,7 +161,7 @@ export default function EventsCoursesPage() {
                           {event.category}
                         </Badge>
                       </div>
-                      <div className="text-right">
+                      <div className="text-left sm:text-right">
                         <div className="text-3xl font-bold text-accent">
                           {event.price}
                         </div>
@@ -348,7 +225,7 @@ export default function EventsCoursesPage() {
         </section>
 
         {/* Courses Section */}
-        <section className="py-20">
+        <section className="py-16 sm:py-20">
           <div className="container mx-auto px-4">
             <div className="mb-12">
               <h2 className="text-3xl font-bold">Featured Course</h2>
@@ -376,7 +253,7 @@ export default function EventsCoursesPage() {
                   <Badge className="bg-secondary/20 text-secondary hover:bg-secondary/30 mb-4">
                     {courses[0].level}
                   </Badge>
-                  <h3 className="text-3xl font-bold mb-4">
+                  <h3 className="mb-4 text-2xl font-bold sm:text-3xl">
                     {courses[0].title}
                   </h3>
                   <p className="text-lg text-muted-foreground mb-6">
@@ -385,14 +262,14 @@ export default function EventsCoursesPage() {
                 </div>
 
                 {/* Key Info */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-lg bg-card/50 border border-border/40">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <div className="rounded-lg border border-border/40 bg-card/50 p-4">
                     <div className="text-sm text-muted-foreground mb-1">
                       Duration
                     </div>
                     <div className="font-semibold">{courses[0].duration}</div>
                   </div>
-                  <div className="p-4 rounded-lg bg-card/50 border border-border/40">
+                  <div className="rounded-lg border border-border/40 bg-card/50 p-4">
                     <div className="text-sm text-muted-foreground mb-1">
                       Price
                     </div>
@@ -400,7 +277,7 @@ export default function EventsCoursesPage() {
                       {courses[0].price}
                     </div>
                   </div>
-                  <div className="p-4 rounded-lg bg-card/50 border border-border/40 col-span-2">
+                  <div className="rounded-lg border border-border/40 bg-card/50 p-4 sm:col-span-2">
                     <div className="text-sm text-muted-foreground mb-2">
                       Time
                     </div>
@@ -483,7 +360,7 @@ export default function EventsCoursesPage() {
         </section>
 
         {/* Quest Workflow */}
-        <section className="border-t border-border/40 py-20">
+        <section className="border-t border-border/40 py-16 sm:py-20">
           <div className="container mx-auto px-4">
             <div className="mb-10 max-w-2xl">
               <Badge className="mb-4 bg-secondary/20 text-secondary hover:bg-secondary/30">
