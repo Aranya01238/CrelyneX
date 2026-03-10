@@ -1,80 +1,106 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Mail, MessageSquare, MapPin, Phone } from 'lucide-react';
+import { useState } from "react";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Mail, MessageSquare, MapPin, Phone } from "lucide-react";
 
 const contactMethods = [
   {
     icon: Mail,
-    title: 'Email',
-    value: 'hello@crelynex.com',
-    description: 'Send us an email',
+    title: "Email",
+    value: "hello@crelynex.com",
+    description: "Send us an email",
   },
   {
     icon: MessageSquare,
-    title: 'WhatsApp',
-    value: 'WhatsApp Community',
-    description: 'Join our WhatsApp group',
+    title: "WhatsApp",
+    value: "WhatsApp Community",
+    description: "Join our WhatsApp group",
   },
   {
     icon: MapPin,
-    title: 'Location',
-    value: 'India',
-    description: 'Community based across India',
+    title: "Location",
+    value: "India",
+    description: "Community based across India",
   },
   {
     icon: Phone,
-    title: 'Phone',
-    value: '+91 9876543210',
-    description: 'Call us during business hours',
+    title: "Phone",
+    value: "+91 9876543210",
+    description: "Call us during business hours",
   },
 ];
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission here
-    console.log('Form submitted:', formData);
+    console.log("Form submitted:", formData);
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 3000);
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setFormData({ name: "", email: "", subject: "", message: "" });
   };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      
+
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative overflow-hidden border-b border-border/40 py-20">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10" />
+          <div className="absolute right-8 top-6 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
           <div className="container relative mx-auto px-4">
-            <div className="max-w-2xl">
-              <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
-                Get in <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">Touch</span>
-              </h1>
-              <p className="text-lg text-muted-foreground">
-                Have a question or want to collaborate? We'd love to hear from you. Reach out to us through any of these channels.
-              </p>
+            <div className="grid items-center gap-10 md:grid-cols-2">
+              <div className="max-w-2xl">
+                <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
+                  Get in{" "}
+                  <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
+                    Touch
+                  </span>
+                </h1>
+                <p className="text-lg text-muted-foreground">
+                  Have a question or want to collaborate? We'd love to hear from
+                  you. Reach out to us through any of these channels.
+                </p>
+              </div>
+              <div className="relative mx-auto hidden h-52 w-full max-w-sm md:block [perspective:1200px]">
+                <div className="absolute inset-8 rounded-2xl border border-primary/40 bg-primary/10 [transform:rotateX(60deg)_rotateZ(-30deg)]" />
+                <div className="absolute inset-0 rounded-2xl border border-border/70 bg-card/70 p-5 shadow-xl backdrop-blur [transform:translate3d(0,0,80px)]">
+                  <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                    Contact Deck
+                  </div>
+                  <div className="mt-2 text-xl font-semibold">
+                    Email, WhatsApp, Support
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -86,7 +112,7 @@ export default function ContactPage() {
               {contactMethods.map((method, index) => {
                 const Icon = method.icon;
                 return (
-                  <Card 
+                  <Card
                     key={index}
                     className="border-border/40 bg-card/50 backdrop-blur"
                   >
@@ -111,14 +137,17 @@ export default function ContactPage() {
             <Card className="border-border/40 bg-card/50 backdrop-blur">
               <CardHeader>
                 <CardTitle className="text-2xl">Send us a Message</CardTitle>
-                <CardDescription>Fill out the form below and we'll get back to you as soon as possible.</CardDescription>
+                <CardDescription>
+                  Fill out the form below and we'll get back to you as soon as
+                  possible.
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Full Name</label>
-                      <Input 
+                      <Input
                         name="name"
                         placeholder="Your name"
                         value={formData.name}
@@ -129,7 +158,7 @@ export default function ContactPage() {
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Email</label>
-                      <Input 
+                      <Input
                         name="email"
                         type="email"
                         placeholder="your@email.com"
@@ -143,7 +172,7 @@ export default function ContactPage() {
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Subject</label>
-                    <Input 
+                    <Input
                       name="subject"
                       placeholder="What is this about?"
                       value={formData.subject}
@@ -155,7 +184,7 @@ export default function ContactPage() {
 
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Message</label>
-                    <Textarea 
+                    <Textarea
                       name="message"
                       placeholder="Tell us more about your inquiry..."
                       rows={6}
@@ -166,7 +195,7 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <Button 
+                  <Button
                     type="submit"
                     className="w-full bg-accent hover:bg-accent/90 font-semibold"
                     size="lg"
@@ -189,14 +218,15 @@ export default function ContactPage() {
                 <div className="text-center">
                   <h3 className="text-lg font-semibold">Quick Response?</h3>
                   <p className="mt-2 text-muted-foreground">
-                    Join our WhatsApp community for instant communication and updates
+                    Join our WhatsApp community for instant communication and
+                    updates
                   </p>
-                  <a 
-                    href="https://chat.whatsapp.com/KVzZksJWnJT0aJvm1fzK7W" 
-                    target="_blank" 
+                  <a
+                    href="https://chat.whatsapp.com/KVzZksJWnJT0aJvm1fzK7W"
+                    target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Button 
+                    <Button
                       className="mt-4 bg-secondary hover:bg-secondary/90 font-semibold"
                       size="lg"
                     >
