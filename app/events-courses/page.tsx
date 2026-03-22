@@ -20,6 +20,7 @@ import {
   Target,
 } from "lucide-react";
 import Image from "next/image";
+import { readEventsCoursesData } from "@/lib/events-courses";
 
 export const metadata: Metadata = {
   title: "Events & Courses | CrelyneX",
@@ -27,51 +28,7 @@ export const metadata: Metadata = {
     "Join CrelyneX events and practical courses to level up in machine learning, IoT, and modern development.",
 };
 
-const upcomingEvents = [
-  {
-    title: "Machine Learning Online Bootcamp",
-    date: "March 21 - April 5, 2026",
-    time: "8:00 PM - 9:00 PM IST",
-    attendees: 500,
-    location: "Online",
-    description:
-      "Intensive 4-day bootcamp in association with AI ZENERA. Master ML fundamentals, algorithms, Google Colab, and deep learning with live demos and giveaways.",
-    category: "Bootcamp",
-    price: "₹249",
-    registrationLink: "https://forms.gle/cjqqRug8VNBuenhH8",
-  },
-];
-
-const courses = [
-  {
-    title: "Machine Learning Online Bootcamp",
-    price: "₹249",
-    duration: "4 Days",
-    level: "Beginner to Intermediate",
-    students: 500,
-    description:
-      "Master Machine Learning fundamentals with AI ZENERA. Learn ML algorithms, Google Colab, and deep learning in this intensive bootcamp.",
-    modules: [
-      "How ML Works",
-      "Basic Terms & Conditions",
-      "Types of ML",
-      "Google Colab",
-      "Deep Learning",
-      "Optimization Techniques",
-      "Live Demos & Giveaway",
-    ],
-    featured: true,
-    dates: [
-      "March 21, 2026",
-      "March 28, 2026",
-      "April 4, 2026",
-      "April 5, 2026",
-    ],
-    time: "8:00 PM - 9:00 PM",
-    certificate: true,
-    registrationLink: "https://forms.gle/cjqqRug8VNBuenhH8",
-  },
-];
+export const dynamic = "force-dynamic";
 
 const questFlow = [
   {
@@ -100,7 +57,10 @@ const questFlow = [
   },
 ];
 
-export default function EventsCoursesPage() {
+export default async function EventsCoursesPage() {
+  const { events: upcomingEvents, courses } = await readEventsCoursesData();
+  const featuredCourse = courses[0];
+
   return (
     <div className="min-h-screen bg-transparent flex flex-col">
       <Header />
@@ -150,10 +110,18 @@ export default function EventsCoursesPage() {
               </p>
             </div>
 
-            <div className="max-w-2xl">
-              {upcomingEvents.map((event, index) => (
+            <div className="max-w-2xl space-y-5">
+              {upcomingEvents.length === 0 ? (
+                <Card className="border-border/40 bg-card/50">
+                  <CardContent className="pt-6 text-muted-foreground">
+                    No events are available right now.
+                  </CardContent>
+                </Card>
+              ) : null}
+
+              {upcomingEvents.map((event) => (
                 <Card
-                  key={index}
+                  key={event.id}
                   className="border-secondary/40 bg-linear-to-br from-card to-card/50 backdrop-blur transition-all hover:border-secondary/70 hover:shadow-2xl hover:shadow-secondary/20"
                 >
                   <CardHeader>
@@ -239,128 +207,143 @@ export default function EventsCoursesPage() {
               </p>
             </div>
 
-            <div className="grid gap-8 lg:grid-cols-2 items-center">
-              {/* Bootcamp Poster */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-linear-to-r from-secondary/20 to-accent/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                <Image
-                  src="/ml-bootcamp.png"
-                  alt="Machine Learning Online Bootcamp"
-                  width={500}
-                  height={700}
-                  className="relative w-full rounded-lg border border-border/40 shadow-2xl"
-                />
-              </div>
-
-              {/* Course Details */}
-              <div className="space-y-6">
-                <div>
-                  <Badge className="bg-secondary/20 text-secondary hover:bg-secondary/30 mb-4">
-                    {courses[0].level}
-                  </Badge>
-                  <h3 className="mb-4 text-2xl font-bold sm:text-3xl">
-                    {courses[0].title}
-                  </h3>
-                  <p className="text-lg text-muted-foreground mb-6">
-                    {courses[0].description}
-                  </p>
+            {featuredCourse ? (
+              <div className="grid gap-8 lg:grid-cols-2 items-center">
+                {/* Bootcamp Poster */}
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-linear-to-r from-secondary/20 to-accent/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <Image
+                    src="/ml-bootcamp.png"
+                    alt={featuredCourse.title}
+                    width={500}
+                    height={700}
+                    className="relative w-full rounded-lg border border-border/40 shadow-2xl"
+                  />
                 </div>
 
-                {/* Key Info */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <div className="rounded-lg border border-border/40 bg-card/50 p-4">
-                    <div className="text-sm text-muted-foreground mb-1">
-                      Duration
-                    </div>
-                    <div className="font-semibold">{courses[0].duration}</div>
+                {/* Course Details */}
+                <div className="space-y-6">
+                  <div>
+                    <Badge className="bg-secondary/20 text-secondary hover:bg-secondary/30 mb-4">
+                      {featuredCourse.level}
+                    </Badge>
+                    <h3 className="mb-4 text-2xl font-bold sm:text-3xl">
+                      {featuredCourse.title}
+                    </h3>
+                    <p className="text-lg text-muted-foreground mb-6">
+                      {featuredCourse.description}
+                    </p>
                   </div>
-                  <div className="rounded-lg border border-border/40 bg-card/50 p-4">
-                    <div className="text-sm text-muted-foreground mb-1">
-                      Price
-                    </div>
-                    <div className="text-2xl font-bold text-accent">
-                      {courses[0].price}
-                    </div>
-                  </div>
-                  <div className="rounded-lg border border-border/40 bg-card/50 p-4 sm:col-span-2">
-                    <div className="text-sm text-muted-foreground mb-2">
-                      Time
-                    </div>
-                    <div className="font-semibold">{courses[0].time} IST</div>
-                  </div>
-                </div>
 
-                {/* Dates */}
-                <div className="space-y-2">
-                  <h4 className="font-semibold flex items-center gap-2">
-                    <Calendar className="h-5 w-5 text-accent" />
-                    Available Dates
-                  </h4>
+                  {/* Key Info */}
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="rounded-lg border border-border/40 bg-card/50 p-4">
+                      <div className="text-sm text-muted-foreground mb-1">
+                        Duration
+                      </div>
+                      <div className="font-semibold">
+                        {featuredCourse.duration}
+                      </div>
+                    </div>
+                    <div className="rounded-lg border border-border/40 bg-card/50 p-4">
+                      <div className="text-sm text-muted-foreground mb-1">
+                        Price
+                      </div>
+                      <div className="text-2xl font-bold text-accent">
+                        {featuredCourse.price}
+                      </div>
+                    </div>
+                    <div className="rounded-lg border border-border/40 bg-card/50 p-4 sm:col-span-2">
+                      <div className="text-sm text-muted-foreground mb-2">
+                        Time
+                      </div>
+                      <div className="font-semibold">
+                        {featuredCourse.time} IST
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Dates */}
                   <div className="space-y-2">
-                    {courses[0].dates.map((date, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-3 p-2 rounded-lg bg-card/30 border border-border/20"
-                      >
-                        <CheckCircle2 className="h-4 w-4 text-accent" />
-                        <span className="text-sm">{date}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Learning Modules */}
-                <div className="space-y-3">
-                  <h4 className="font-semibold">What You'll Learn:</h4>
-                  <div className="grid gap-2">
-                    {courses[0].modules.map((module, i) => (
-                      <div key={i} className="flex items-center gap-2 text-sm">
-                        <div className="h-2 w-2 rounded-full bg-accent" />
-                        {module}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Features */}
-                {courses[0].certificate && (
-                  <div className="p-4 rounded-lg bg-accent/10 border border-accent/30">
-                    <div className="flex items-center gap-2 text-accent font-semibold">
-                      <CheckCircle2 className="h-5 w-5" />
-                      E-Certificate Included
+                    <h4 className="font-semibold flex items-center gap-2">
+                      <Calendar className="h-5 w-5 text-accent" />
+                      Available Dates
+                    </h4>
+                    <div className="space-y-2">
+                      {featuredCourse.dates.map((date, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center gap-3 p-2 rounded-lg bg-card/30 border border-border/20"
+                        >
+                          <CheckCircle2 className="h-4 w-4 text-accent" />
+                          <span className="text-sm">{date}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                )}
 
-                {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <a
-                    href={courses[0].registrationLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1"
-                  >
-                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base py-6">
-                      Register Now
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </a>
-                  <a
-                    href="https://chat.whatsapp.com/KVzZksJWnJT0aJvm1fzK7W"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1"
-                  >
-                    <Button
-                      variant="outline"
-                      className="w-full border-secondary/50 text-secondary hover:bg-secondary/10 font-bold text-base py-6"
+                  {/* Learning Modules */}
+                  <div className="space-y-3">
+                    <h4 className="font-semibold">What You'll Learn:</h4>
+                    <div className="grid gap-2">
+                      {featuredCourse.modules.map((module, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center gap-2 text-sm"
+                        >
+                          <div className="h-2 w-2 rounded-full bg-accent" />
+                          {module}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Features */}
+                  {featuredCourse.certificate && (
+                    <div className="p-4 rounded-lg bg-accent/10 border border-accent/30">
+                      <div className="flex items-center gap-2 text-accent font-semibold">
+                        <CheckCircle2 className="h-5 w-5" />
+                        E-Certificate Included
+                      </div>
+                    </div>
+                  )}
+
+                  {/* CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a
+                      href={featuredCourse.registrationLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1"
                     >
-                      Ask on WhatsApp
-                    </Button>
-                  </a>
+                      <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-bold text-base py-6">
+                        Register Now
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </Button>
+                    </a>
+                    <a
+                      href="https://chat.whatsapp.com/KVzZksJWnJT0aJvm1fzK7W"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1"
+                    >
+                      <Button
+                        variant="outline"
+                        className="w-full border-secondary/50 text-secondary hover:bg-secondary/10 font-bold text-base py-6"
+                      >
+                        Ask on WhatsApp
+                      </Button>
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <Card className="border-border/40 bg-card/50">
+                <CardContent className="pt-6 text-muted-foreground">
+                  No courses are available right now.
+                </CardContent>
+              </Card>
+            )}
           </div>
         </section>
 

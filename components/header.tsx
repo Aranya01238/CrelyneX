@@ -157,6 +157,15 @@ export default function Header() {
 
         {/* Desktop CTA Buttons */}
         <div className="relative z-10 hidden shrink-0 items-center gap-4 md:flex">
+          <Link href="/login">
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-10 rounded-full border-red-500/20 bg-black/40 px-5 text-xs font-bold uppercase tracking-widest text-zinc-300 backdrop-blur-md transition-all hover:border-red-500/50 hover:bg-red-500/10 hover:text-white hover:shadow-[0_0_20px_rgba(220,38,38,0.2)]"
+            >
+              Login
+            </Button>
+          </Link>
           <a
             href="https://chat.whatsapp.com/KVzZksJWnJT0aJvm1fzK7W"
             target="_blank"
@@ -223,7 +232,15 @@ export default function Header() {
                 </Link>
               );
             })}
-            <div className="mt-2 grid grid-cols-2 gap-3">
+            <div className="mt-2 grid grid-cols-3 gap-3">
+              <Link href="/login" onClick={() => setIsOpen(false)}>
+                <Button
+                  variant="outline"
+                  className="w-full rounded-xl border-red-500/20 bg-black/40 text-xs font-bold uppercase tracking-widest text-zinc-300 hover:border-red-500/50 hover:bg-red-500/10"
+                >
+                  Login
+                </Button>
+              </Link>
               <a
                 href="https://chat.whatsapp.com/KVzZksJWnJT0aJvm1fzK7W"
                 target="_blank"

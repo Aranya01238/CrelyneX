@@ -1,0 +1,46 @@
+{
+  "events": [
+    {
+      "id": "ml-bootcamp-event-2026",
+      "title": "Machine Learning Online Bootcamp",
+      "date": "March 21 - April 5, 2026",
+      "time": "8:00 PM - 9:00 PM IST",
+      "attendees": 500,
+      "location": "Online",
+      "description": "Intensive 4-day bootcamp in association with AI ZENERA. Master ML fundamentals, algorithms, Google Colab, and deep learning with live demos and giveaways.",
+      "category": "Bootcamp",
+      "price": "₹249",
+      "registrationLink": "https://forms.gle/cjqqRug8VNBuenhH8"
+    }
+  ],
+  "courses": [
+    {
+      "id": "ml-bootcamp-course-2026",
+      "title": "Machine Learning Online Bootcamp",
+      "price": "₹249",
+      "duration": "4 Days",
+      "level": "Beginner to Intermediate",
+      "students": 500,
+      "description": "Master Machine Learning fundamentals with AI ZENERA. Learn ML algorithms, Google Colab, and deep learning in this intensive bootcamp.",
+      "modules": [
+        "How ML Works",
+        "Basic Terms & Conditions",
+        "Types of ML",
+        "Google Colab",
+        "Deep Learning",
+        "Optimization Techniques",
+        "Live Demos & Giveaway"
+      ],
+      "featured": true,
+      "dates": [
+        "March 21, 2026",
+        "March 28, 2026",
+        "April 4, 2026",
+        "April 5, 2026"
+      ],
+      "time": "8:00 PM - 9:00 PM",
+      "certificate": true,
+      "registrationLink": "https://forms.gle/cjqqRug8VNBuenhH8"
+    }
+  ]
+}

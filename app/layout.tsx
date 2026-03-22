@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import GlobalInteractiveBackground from "@/components/global-interactive-background";
+import SiteOpenTracker from "@/components/site-open-tracker";
 import "./globals.css";
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -25,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-sans antialiased">
+        <SiteOpenTracker />
         <GlobalInteractiveBackground>
           {children}
           <Analytics />
