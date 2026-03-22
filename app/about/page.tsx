@@ -2,6 +2,7 @@
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -14,28 +15,58 @@ import { Users, Target, Lightbulb, Zap } from "lucide-react";
 
 const team = [
   {
-    name: "Founder & Lead",
-    role: "Vision & Direction",
-    bio: "Passionate about IoT and innovation",
+    name: "Aranya Rath",
+    role: "Founder",
+    bio: "Leading CrelyneX vision, strategy, and innovation initiatives.",
     icon: "👨‍💼",
   },
   {
-    name: "Technical Lead",
-    role: "Development & Architecture",
-    bio: "Expert in full-stack development",
-    icon: "👨‍💻",
+    name: "Swarnabha Ray",
+    role: "Co-Founder",
+    bio: "Driving product direction and community growth at CrelyneX.",
+    icon: "👨‍💼",
   },
   {
-    name: "Community Manager",
-    role: "Engagement & Growth",
-    bio: "Building the CrelyneX community",
+    name: "Sahitya Pan",
+    role: "Co-Founder",
+    bio: "Building operations and partnerships for long-term impact.",
     icon: "👩‍💼",
   },
   {
-    name: "Course Instructor",
-    role: "Education & Training",
-    bio: "Educating the next generation",
-    icon: "👨‍🏫",
+    name: "Amullyajit Nandi",
+    role: "Core Team - Manager",
+    bio: "Managing execution, coordination, and team workflows.",
+    icon: "🧭",
+  },
+  {
+    name: "Pushan Seth",
+    role: "Core Team - Technical Lead",
+    bio: "Leading technical planning and implementation quality.",
+    icon: "👨‍💻",
+  },
+  {
+    name: "Arunabha Dey",
+    role: "Core Team - Technical Lead",
+    bio: "Supporting architecture decisions and engineering delivery.",
+    icon: "👨‍💻",
+  },
+  {
+    name: "Priyanshu Mitra",
+    role: "Core Team - Graphics Lead",
+    bio: "Crafting visual identity and design assets for CrelyneX.",
+    icon: "🎨",
+  },
+  {
+    name: "Snehasis Das",
+    role: "Core Team - Social Media Lead",
+    bio: "Handling brand communication and external collaborations.",
+    icon: "📣",
+  },
+  {
+    name: "Debjit Paul",
+    role: "Core Team - Partnerships Lead",
+    bio: "Managing social channels and partnership initiatives.",
+    icon: "🤝",
   },
 ];
 
@@ -67,37 +98,51 @@ const values = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-transparent flex flex-col">
+    <div className="min-h-screen bg-[#050505] flex flex-col relative text-zinc-200">
+      {/* Global Background Grid & Glows */}
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(to_right,#dc262608_1px,transparent_1px),linear-gradient(to_bottom,#dc262608_1px,transparent_1px)] bg-[size:32px_32px]" />
+      <div className="pointer-events-none fixed top-0 right-0 h-[500px] w-[500px] rounded-full bg-red-900/10 blur-[120px]" />
+      <div className="pointer-events-none fixed bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-red-950/10 blur-[120px]" />
+
       <Header />
 
-      <main className="flex-1">
+      <main className="flex-1 relative z-10">
         {/* Hero Section */}
-        <section className="relative overflow-hidden border-b border-border/40 py-16 sm:py-20">
-          <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-primary/10 to-secondary/10" />
-          <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
-          <div className="container relative mx-auto px-4">
-            <div className="grid items-center gap-10 md:grid-cols-2">
-              <div className="max-w-2xl">
-                <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+        <section className="relative overflow-hidden border-b border-white/5 py-16 sm:py-24">
+          <div className="container relative mx-auto px-4 sm:px-6">
+            <div className="grid items-center gap-12 md:grid-cols-2">
+              <div className="max-w-2xl space-y-6">
+                <div className="inline-flex items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-red-400">
+                  <span className="h-1.5 w-1.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(220,38,38,1)]" />
+                  Our Mission
+                </div>
+                <h1 className="text-4xl font-black tracking-tight sm:text-5xl md:text-6xl">
                   About{" "}
-                  <span className="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-red-400 via-red-600 to-red-800 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(220,38,38,0.4)]">
                     CrelyneX
                   </span>
                 </h1>
-                <p className="text-base text-muted-foreground sm:text-lg">
+                <p className="text-lg text-zinc-400 leading-relaxed max-w-lg font-light">
                   CrelyneX is a community-driven platform dedicated to
                   innovation in IoT, web development, and advanced technologies.
+                  We turn ideas into reality.
                 </p>
               </div>
-              <div className="relative mx-auto hidden h-52 w-full max-w-sm md:block [perspective:1200px]">
-                <div className="absolute inset-8 rounded-2xl border border-accent/40 bg-accent/10 [transform:rotateX(62deg)_rotateZ(-32deg)]" />
-                <div className="absolute inset-0 rounded-2xl border border-border/70 bg-card/70 p-5 shadow-xl backdrop-blur [transform:translate3d(0,0,70px)]">
-                  <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    About Layer
+
+              {/* Upgraded CSS 3D Glass Panel */}
+              <div className="relative mx-auto hidden h-64 w-full max-w-sm md:block [perspective:1200px]">
+                {/* Glowing red under-layer */}
+                <div className="absolute inset-8 rounded-2xl border border-red-500/40 bg-red-500/10 shadow-[0_0_30px_rgba(220,38,38,0.3)] [transform:rotateX(62deg)_rotateZ(-32deg)] transition-transform duration-700 hover:[transform:rotateX(55deg)_rotateZ(-25deg)]" />
+                {/* Smoked glass top layer */}
+                <div className="absolute inset-0 rounded-2xl border border-white/10 bg-black/60 p-6 shadow-2xl backdrop-blur-xl [transform:translate3d(0,0,70px)] flex flex-col justify-end">
+                  <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-500 mb-2">
+                    // Architecture Layer
                   </div>
-                  <div className="mt-2 text-xl font-semibold">
-                    People + Purpose + Product
+                  <div className="text-2xl font-black text-white">
+                    People <span className="text-red-600">+</span> Purpose{" "}
+                    <span className="text-red-600">+</span> Product
                   </div>
+                  <div className="mt-4 h-1 w-12 bg-red-600 rounded-full shadow-[0_0_10px_rgba(220,38,38,0.8)]" />
                 </div>
               </div>
             </div>
@@ -105,12 +150,14 @@ export default function AboutPage() {
         </section>
 
         {/* Our Story Section */}
-        <section className="border-b border-border/40 py-16 sm:py-20">
-          <div className="container mx-auto px-4">
-            <div className="grid gap-10 md:grid-cols-2 md:gap-8">
-              <div>
-                <h2 className="text-3xl font-bold">Our Story</h2>
-                <div className="mt-6 space-y-4 text-muted-foreground">
+        <section className="relative border-b border-white/5 py-20">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="grid gap-12 md:grid-cols-2 items-center">
+              <div className="space-y-6">
+                <h2 className="text-3xl font-bold text-white tracking-tight sm:text-4xl">
+                  The Genesis
+                </h2>
+                <div className="space-y-4 text-zinc-400 leading-relaxed font-light">
                   <p>
                     CrelyneX was founded with a mission to bridge the gap
                     between education and industry. We recognized a need for a
@@ -124,38 +171,90 @@ export default function AboutPage() {
                     impacted thousands of lives through our education
                     initiatives.
                   </p>
-                  <p>
+                  <p className="border-l-2 border-red-600 pl-4 text-zinc-300 font-medium">
                     Today, CrelyneX stands as a beacon for tech innovation,
                     offering world-class training, consulting services, and a
                     platform for turning ideas into reality.
                   </p>
                 </div>
               </div>
-              <div className="hidden items-center justify-center md:flex">
-                <div className="relative h-64 w-64 rounded-lg bg-gradient-to-br from-accent via-primary to-secondary opacity-30 blur-3xl" />
+
+              {/* Abstract Story Visual */}
+              <div className="hidden md:flex relative justify-center items-center">
+                <div className="absolute h-64 w-64 rounded-full border border-red-500/20 bg-red-900/10 blur-xl animate-pulse" />
+                <div className="relative h-48 w-48 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl shadow-[0_0_40px_rgba(220,38,38,0.15)] flex items-center justify-center rotate-3 hover:rotate-0 transition-all duration-500">
+                  <Image
+                    src="/logo.png"
+                    alt="CrelyneX Icon"
+                    width={80}
+                    height={80}
+                    className="opacity-80 drop-shadow-[0_0_15px_rgba(220,38,38,0.5)]"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </section>
 
+        {/* Statistics Section - High Impact Numbers */}
+        <section className="border-b border-white/5 py-16 bg-black/40">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-6">
+              {[
+                { value: "1000+", label: "Community Members" },
+                { value: "50+", label: "Projects Completed" },
+                { value: "30+", label: "Events Hosted" },
+                { value: "5000+", label: "Students Trained" },
+              ].map((stat, i) => (
+                <div
+                  key={i}
+                  className="group rounded-2xl border border-white/5 bg-white/[0.01] p-8 text-center backdrop-blur-sm transition-all hover:bg-white/[0.03] hover:border-red-500/30"
+                >
+                  <div className="text-4xl font-black bg-gradient-to-br from-white to-zinc-500 bg-clip-text text-transparent group-hover:from-red-400 group-hover:to-red-700 transition-all duration-500 drop-shadow-sm">
+                    {stat.value}
+                  </div>
+                  <div className="mt-3 text-xs font-bold uppercase tracking-widest text-zinc-500 group-hover:text-zinc-300">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Our Values Section */}
-        <section className="border-b border-border/40 py-16 sm:py-20">
-          <div className="container mx-auto px-4">
-            <h2 className="mb-12 text-3xl font-bold">Our Values</h2>
+        <section className="border-b border-white/5 py-20">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                Core Directives
+              </h2>
+              <p className="mt-4 text-zinc-400">
+                The foundational protocols that drive our community and our
+                products.
+              </p>
+            </div>
+
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {values.map((value, index) => {
                 const Icon = value.icon;
                 return (
                   <Card
                     key={index}
-                    className="border-border/40 bg-card/50 backdrop-blur"
+                    className="group border-white/5 bg-white/[0.02] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-red-500/30 hover:bg-black/60 hover:shadow-[0_10px_30px_-10px_rgba(220,38,38,0.3)]"
                   >
                     <CardHeader>
-                      <Icon className="mb-4 h-8 w-8 text-accent" />
-                      <CardTitle>{value.title}</CardTitle>
+                      <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-black/50 transition-colors group-hover:border-red-500/50 group-hover:bg-red-500/10">
+                        <Icon className="h-6 w-6 text-zinc-400 group-hover:text-red-500 group-hover:drop-shadow-[0_0_10px_rgba(220,38,38,0.8)] transition-all" />
+                      </div>
+                      <CardTitle className="text-xl text-white tracking-wide">
+                        {value.title}
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <CardDescription>{value.description}</CardDescription>
+                      <CardDescription className="text-zinc-400 font-light leading-relaxed">
+                        {value.description}
+                      </CardDescription>
                     </CardContent>
                   </Card>
                 );
@@ -164,55 +263,48 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Statistics Section */}
-        <section className="border-b border-border/40 py-16 sm:py-20">
-          <div className="container mx-auto px-4">
-            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 md:gap-8">
-              <div className="rounded-lg border border-border/40 bg-card/50 p-6 text-center backdrop-blur sm:p-8">
-                <div className="text-4xl font-bold text-accent">1000+</div>
-                <div className="mt-2 text-muted-foreground">
-                  Community Members
-                </div>
-              </div>
-              <div className="rounded-lg border border-border/40 bg-card/50 p-6 text-center backdrop-blur sm:p-8">
-                <div className="text-4xl font-bold text-secondary">50+</div>
-                <div className="mt-2 text-muted-foreground">
-                  Projects Completed
-                </div>
-              </div>
-              <div className="rounded-lg border border-border/40 bg-card/50 p-6 text-center backdrop-blur sm:p-8">
-                <div className="text-4xl font-bold text-primary">30+</div>
-                <div className="mt-2 text-muted-foreground">Events Hosted</div>
-              </div>
-              <div className="rounded-lg border border-border/40 bg-card/50 p-6 text-center backdrop-blur sm:p-8">
-                <div className="text-4xl font-bold text-accent">5000+</div>
-                <div className="mt-2 text-muted-foreground">
-                  Students Trained
-                </div>
+        {/* Team Section */}
+        <section className="py-20">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+              <div>
+                <h2 className="text-3xl font-bold text-white sm:text-4xl">
+                  The Architects
+                </h2>
+                <p className="mt-4 text-zinc-400 max-w-xl">
+                  Meet the engineers, designers, and visionaries building the
+                  future of CrelyneX.
+                </p>
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Team Section */}
-        <section className="py-16 sm:py-20">
-          <div className="container mx-auto px-4">
-            <h2 className="mb-12 text-3xl font-bold">Our Team</h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {team.map((member, index) => (
                 <Card
                   key={index}
-                  className="border-border/40 bg-card/50 backdrop-blur text-center"
+                  className="group relative overflow-hidden border-white/5 bg-white/[0.02] backdrop-blur text-center transition-all duration-300 hover:border-red-500/30 hover:bg-black/40 hover:shadow-[0_0_40px_-15px_rgba(220,38,38,0.4)]"
                 >
-                  <CardHeader>
-                    <div className="mb-4 text-4xl">{member.icon}</div>
-                    <CardTitle>{member.name}</CardTitle>
-                    <Badge className="mt-2 mx-auto w-fit bg-accent/20 text-accent hover:bg-accent/30">
+                  {/* Subtle top red highlight on hover */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                  <CardHeader className="pt-8">
+                    {/* Glassy Avatar Ring */}
+                    <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full border border-white/10 bg-black/50 text-3xl shadow-inner transition-all duration-300 group-hover:border-red-500/40 group-hover:shadow-[0_0_20px_rgba(220,38,38,0.2)]">
+                      <span className="group-hover:scale-110 transition-transform">
+                        {member.icon}
+                      </span>
+                    </div>
+                    <CardTitle className="text-lg text-white">
+                      {member.name}
+                    </CardTitle>
+                    <Badge className="mt-3 mx-auto w-fit bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 px-3 py-0.5 rounded-full text-[10px] uppercase tracking-widest font-bold">
                       {member.role}
                     </Badge>
                   </CardHeader>
                   <CardContent>
-                    <CardDescription>{member.bio}</CardDescription>
+                    <CardDescription className="text-zinc-400 text-sm leading-relaxed">
+                      {member.bio}
+                    </CardDescription>
                   </CardContent>
                 </Card>
               ))}
