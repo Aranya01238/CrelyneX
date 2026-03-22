@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="bg-card border-t border-border/40 relative overflow-hidden"
+      className="bg-transparent border-t border-border/40 relative overflow-hidden"
     >
       {/* Decorative background */}
       <div className="absolute inset-0 -z-10">
@@ -18,12 +18,12 @@ export default function Footer() {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-secondary">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-accent to-secondary">
                 <span className="text-sm font-bold text-accent-foreground">
                   𝞓
                 </span>
               </div>
-              <span className="font-bold text-lg bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
+              <span className="font-bold text-lg bg-linear-to-r from-accent to-secondary bg-clip-text text-transparent">
                 CrelyneX
               </span>
             </div>

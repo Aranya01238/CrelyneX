@@ -52,7 +52,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative bg-background px-4 py-16 sm:py-20"
+      className="relative bg-transparent px-4 py-16 sm:py-20"
     >
       {/* Decorative elements */}
       <div className="absolute inset-0 -z-10">
@@ -64,7 +64,7 @@ export default function Services() {
         {/* Section header */}
         <div className="mb-12 space-y-4 text-center sm:mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold">
-            <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-accent to-secondary bg-clip-text text-transparent">
               Our Services
             </span>
           </h2>
@@ -82,7 +82,7 @@ export default function Services() {
                 hoveredId === service.id
                   ? "shadow-2xl md:scale-[1.02]"
                   : "hover:shadow-lg"
-              } bg-gradient-to-br ${service.gradient} border ${service.borderColor}`}
+              } bg-linear-to-br ${service.gradient} border ${service.borderColor}`}
               onMouseEnter={() => setHoveredId(service.id)}
               onMouseLeave={() => setHoveredId(null)}
             >
@@ -90,7 +90,7 @@ export default function Services() {
               <div
                 className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 ${
                   hoveredId === service.id
-                    ? `bg-gradient-to-br ${service.gradient}`
+                    ? `bg-linear-to-br ${service.gradient}`
                     : ""
                 }`}
               />
@@ -111,7 +111,7 @@ export default function Services() {
 
                 {/* Animated border accent */}
                 <div
-                  className={`h-1 w-0 bg-gradient-to-r ${service.accentColor === "text-accent" ? "from-accent to-secondary" : "from-primary to-accent"} group-hover:w-16 transition-all duration-300 mt-4`}
+                  className={`h-1 w-0 bg-linear-to-r ${service.accentColor === "text-accent" ? "from-accent to-secondary" : "from-primary to-accent"} group-hover:w-16 transition-all duration-300 mt-4`}
                 />
 
                 <button

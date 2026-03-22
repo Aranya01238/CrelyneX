@@ -7,7 +7,7 @@ export default function CTA() {
   return (
     <section
       id="community"
-      className="relative overflow-hidden bg-background px-4 py-16 sm:py-20"
+      className="relative overflow-hidden bg-transparent px-4 py-16 sm:py-20"
     >
       {/* Animated background */}
       <div className="absolute inset-0 -z-10">
