@@ -21,11 +21,11 @@ export default function Hero() {
       className="group relative overflow-hidden bg-[#020202] pt-20 pb-10 sm:pt-24 sm:pb-14 min-h-screen flex items-center"
     >
       {/* Base Static Crimson Net Background */}
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#dc26260a_1px,transparent_1px),linear-gradient(to_bottom,#dc26260a_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#dc26260a_1px,transparent_1px),linear-gradient(to_bottom,#dc26260a_1px,transparent_1px)] bg-size-[32px_32px] mask-[radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
       {/* Interactive Hover Crimson Net */}
       <div
-        className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#dc2626_1px,transparent_1px),linear-gradient(to_bottom,#dc2626_1px,transparent_1px)] bg-[size:32px_32px] opacity-0 transition-opacity duration-500 group-hover:opacity-60"
+        className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#dc2626_1px,transparent_1px),linear-gradient(to_bottom,#dc2626_1px,transparent_1px)] bg-size-[32px_32px] opacity-0 transition-opacity duration-500 group-hover:opacity-60"
         style={{
           WebkitMaskImage: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, black, transparent)`,
           maskImage: `radial-gradient(400px circle at ${mousePosition.x}px ${mousePosition.y}px, black, transparent)`,
@@ -41,7 +41,7 @@ export default function Hero() {
           {/* Left Column: Content */}
           <div className="order-1 w-full space-y-8 text-left lg:order-1 pointer-events-none">
             {/* Minimalist Pill Badge */}
-            <div className="inline-flex items-center gap-2.5 rounded-full border border-red-500/20 bg-red-500/[0.03] px-4 py-1.5 text-xs font-medium tracking-wide text-gray-300 backdrop-blur-md pointer-events-auto shadow-[0_0_15px_rgba(220,38,38,0.1)]">
+            <div className="inline-flex items-center gap-2.5 rounded-full border border-red-500/20 bg-red-500/3 px-4 py-1.5 text-xs font-medium tracking-wide text-gray-300 backdrop-blur-md pointer-events-auto shadow-[0_0_15px_rgba(220,38,38,0.1)]">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
@@ -57,11 +57,11 @@ export default function Hero() {
                 </span>
                 <br />
                 {/* Fixed gradient and shadow to be sharp and premium */}
-                <span className="bg-gradient-to-r from-red-400 via-red-600 to-red-800 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(220,38,38,0.4)]">
+                <span className="bg-linear-to-r from-red-400 via-red-600 to-red-800 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(220,38,38,0.4)]">
                   World With CrelyneX
                 </span>
               </h1>
-              <p className="max-w-[21rem] text-base leading-relaxed text-gray-400 sm:max-w-xl sm:text-lg font-light">
+              <p className="max-w-84 text-base leading-relaxed text-gray-400 sm:max-w-xl sm:text-lg font-light">
                 Learn by building real IoT, web, and 3D-first products. Join
                 live cohorts, ship practical projects, and grow with a community
                 that actually creates.
@@ -87,7 +87,7 @@ export default function Hero() {
               ].map((stat, i) => (
                 <div
                   key={i}
-                  className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur-md transition-colors hover:bg-white/[0.04]"
+                  className="rounded-2xl border border-white/10 bg-white/2 p-4 backdrop-blur-md transition-colors hover:bg-white/4"
                 >
                   <div className="text-2xl font-bold text-red-500">
                     {stat.value}
@@ -102,8 +102,8 @@ export default function Hero() {
 
           {/* Right Column: 3D Canvas Box */}
           <div className="order-2 w-full flex justify-center lg:justify-end">
-            <div className="relative w-full overflow-hidden rounded-[2rem] border border-white/10 bg-black/40 backdrop-blur-2xl shadow-[0_0_50px_-12px_rgba(220,38,38,0.15)] transition-all duration-500 hover:border-red-500/30 sm:max-w-xl aspect-square lg:h-[500px]">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-900/[0.1] via-transparent to-black pointer-events-none z-0" />
+            <div className="relative w-full overflow-hidden rounded-4xl border border-white/10 bg-black/40 backdrop-blur-2xl shadow-[0_0_50px_-12px_rgba(220,38,38,0.15)] transition-all duration-500 hover:border-red-500/30 sm:max-w-xl aspect-square lg:h-125">
+              <div className="absolute inset-0 bg-linear-to-br from-red-900/10 via-transparent to-black pointer-events-none z-0" />
 
               {/* 3D Scene */}
               <div className="absolute inset-0 z-10">
@@ -119,7 +119,7 @@ export default function Hero() {
               </div>
 
               {/* Bottom Footer Bar */}
-              <div className="absolute inset-x-4 bottom-4 z-20 rounded-2xl border border-white/10 bg-black/60 p-4 backdrop-blur-xl supports-[backdrop-filter]:bg-black/40">
+              <div className="absolute inset-x-4 bottom-4 z-20 rounded-2xl border border-white/10 bg-black/60 p-4 backdrop-blur-xl supports-backdrop-filter:bg-black/40">
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">

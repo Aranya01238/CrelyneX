@@ -21,7 +21,7 @@ export default function CTA() {
           <div className="space-y-6">
             <div className="space-y-4">
               <h2 className="text-3xl font-bold sm:text-4xl lg:text-5xl">
-                <span className="bg-gradient-to-r from-accent via-primary to-secondary bg-clip-text text-transparent">
+                <span className="bg-linear-to-r from-accent via-primary to-secondary bg-clip-text text-transparent">
                   Join CrelyneX Community
                 </span>
               </h2>
@@ -42,7 +42,7 @@ export default function CTA() {
                 "Early access to courses and events",
               ].map((feature, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <div className="mt-1 h-5 w-5 rounded-full bg-accent/20 flex items-center justify-center flex-shrink-0">
+                  <div className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/20">
                     <div className="h-2 w-2 rounded-full bg-accent" />
                   </div>
                   <span className="text-foreground font-medium">{feature}</span>
@@ -60,7 +60,7 @@ export default function CTA() {
               >
                 <Button
                   size="lg"
-                  className="w-full bg-gradient-to-r from-accent to-secondary hover:from-accent/90 hover:to-secondary/90 text-accent-foreground font-bold px-8"
+                  className="w-full bg-linear-to-r from-accent to-secondary hover:from-accent/90 hover:to-secondary/90 text-accent-foreground font-bold px-8"
                 >
                   Join Community
                 </Button>
@@ -105,10 +105,10 @@ export default function CTA() {
           </div>
 
           {/* Right side - Card showcase */}
-          <div className="relative flex min-h-[22rem] items-center justify-center sm:min-h-96">
+          <div className="relative flex min-h-88 items-center justify-center sm:min-h-96">
             <Card className="relative w-full max-w-sm overflow-hidden border-border/40 bg-card p-6 shadow-2xl sm:p-8">
               {/* Accent gradient background */}
-              <div className="absolute inset-0 -z-10 bg-gradient-to-br from-accent/10 to-secondary/10" />
+              <div className="absolute inset-0 -z-10 bg-linear-to-br from-accent/10 to-secondary/10" />
 
               {/* Content */}
               <div className="relative z-10 space-y-6">
@@ -190,7 +190,7 @@ export default function CTA() {
               </div>
 
               {/* Corner accent */}
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-accent/20 to-secondary/20 rounded-bl-full -z-10" />
+              <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-accent/20 to-secondary/20 rounded-bl-full -z-10" />
             </Card>
           </div>
         </div>

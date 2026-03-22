@@ -1,6 +1,26 @@
 "use client";
 
+import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
+
+const serviceLinks = [
+  { label: "IoT Consulting", href: "/projects" },
+  { label: "Web Development", href: "/projects" },
+  { label: "App Development", href: "/projects" },
+  { label: "Event Updates", href: "/events-courses" },
+  { label: "Online Courses", href: "/events-courses" },
+];
+
+const communityLinks = [
+  {
+    label: "Join Us",
+    href: "https://chat.whatsapp.com/KVzZksJWnJT0aJvm1fzK7W",
+  },
+  { label: "Events", href: "/events-courses" },
+  { label: "Resources", href: "/about" },
+  { label: "Members", href: "/about" },
+  { label: "Partnerships", href: "/contact" },
+];
 
 export default function Footer() {
   return (
@@ -33,19 +53,23 @@ export default function Footer() {
             </p>
             <div className="flex gap-4 pt-4">
               <a
-                href="#"
+                href="https://github.com/Aranya01238/CrelyneX"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="h-10 w-10 rounded-lg bg-primary/20 hover:bg-primary/40 flex items-center justify-center text-primary transition-colors"
               >
                 <span className="text-lg">f</span>
               </a>
               <a
-                href="#"
+                href="https://chat.whatsapp.com/KVzZksJWnJT0aJvm1fzK7W"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="h-10 w-10 rounded-lg bg-accent/20 hover:bg-accent/40 flex items-center justify-center text-accent transition-colors"
               >
                 <span className="text-lg">𝕏</span>
               </a>
               <a
-                href="#"
+                href="mailto:crelynex@gmail.com"
                 className="h-10 w-10 rounded-lg bg-secondary/20 hover:bg-secondary/40 flex items-center justify-center text-secondary transition-colors"
               >
                 <span className="text-lg">in</span>
@@ -57,20 +81,14 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Services</h3>
             <ul className="space-y-2">
-              {[
-                "IoT Consulting",
-                "Web Development",
-                "App Development",
-                "Event Updates",
-                "Online Courses",
-              ].map((item) => (
-                <li key={item}>
-                  <a
-                    href="#"
+              {serviceLinks.map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
                     className="text-sm text-muted-foreground hover:text-accent transition-colors"
                   >
-                    {item}
-                  </a>
+                    {item.label}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -80,20 +98,25 @@ export default function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Community</h3>
             <ul className="space-y-2">
-              {[
-                "Join Us",
-                "Events",
-                "Resources",
-                "Members",
-                "Partnerships",
-              ].map((item) => (
-                <li key={item}>
-                  <a
-                    href="#"
-                    className="text-sm text-muted-foreground hover:text-accent transition-colors"
-                  >
-                    {item}
-                  </a>
+              {communityLinks.map((item) => (
+                <li key={item.label}>
+                  {item.href.startsWith("http") ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-muted-foreground hover:text-accent transition-colors"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="text-sm text-muted-foreground hover:text-accent transition-colors"
+                    >
+                      {item.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -115,7 +138,9 @@ export default function Footer() {
               <li>
                 <p className="text-muted-foreground">WhatsApp</p>
                 <a
-                  href="#"
+                  href="https://chat.whatsapp.com/KVzZksJWnJT0aJvm1fzK7W"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-accent hover:text-accent/80 transition-colors"
                 >
                   Join Community
@@ -137,24 +162,24 @@ export default function Footer() {
             © 2024 CrelyneX. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-4 text-sm md:gap-6">
-            <a
-              href="#"
+            <Link
+              href="/privacy-policy"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               Privacy Policy
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/terms-of-service"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               Terms of Service
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              href="/cookie-policy"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               Cookie Policy
-            </a>
+            </Link>
           </div>
           <div className="space-y-1 text-center text-xs text-muted-foreground md:text-right">
             <p>In Association with</p>

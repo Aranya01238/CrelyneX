@@ -1,5 +1,4 @@
-"use client";
-
+import type { Metadata } from "next";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import {
@@ -21,6 +20,12 @@ import {
   Target,
 } from "lucide-react";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Events & Courses | CrelyneX",
+  description:
+    "Join CrelyneX events and practical courses to level up in machine learning, IoT, and modern development.",
+};
 
 const upcomingEvents = [
   {
@@ -103,14 +108,14 @@ export default function EventsCoursesPage() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative overflow-hidden border-b border-border/40 py-16 sm:py-20">
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary/10 via-accent/10 to-primary/10" />
+          <div className="absolute inset-0 bg-linear-to-r from-secondary/10 via-accent/10 to-primary/10" />
           <div className="absolute left-8 top-8 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" />
           <div className="container relative mx-auto px-4">
             <div className="grid items-center gap-10 md:grid-cols-2">
               <div className="max-w-3xl">
                 <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
                   Events &{" "}
-                  <span className="bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">
+                  <span className="bg-linear-to-r from-secondary to-accent bg-clip-text text-transparent">
                     Courses
                   </span>
                 </h1>
@@ -120,9 +125,9 @@ export default function EventsCoursesPage() {
                   enthusiasts.
                 </p>
               </div>
-              <div className="relative mx-auto hidden h-52 w-full max-w-sm md:block [perspective:1200px]">
-                <div className="absolute inset-8 rounded-2xl border border-secondary/40 bg-secondary/10 [transform:rotateX(58deg)_rotateZ(-28deg)]" />
-                <div className="absolute inset-0 rounded-2xl border border-border/70 bg-card/70 p-5 shadow-xl backdrop-blur [transform:translate3d(0,0,80px)]">
+              <div className="relative mx-auto hidden h-52 w-full max-w-sm perspective-distant md:block">
+                <div className="absolute inset-8 rounded-2xl border border-secondary/40 bg-secondary/10 transform-[rotateX(58deg)_rotateZ(-28deg)]" />
+                <div className="absolute inset-0 rounded-2xl border border-border/70 bg-card/70 p-5 shadow-xl backdrop-blur transform-[translate3d(0,0,80px)]">
                   <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
                     Learning Grid
                   </div>
@@ -149,7 +154,7 @@ export default function EventsCoursesPage() {
               {upcomingEvents.map((event, index) => (
                 <Card
                   key={index}
-                  className="border-secondary/40 bg-gradient-to-br from-card to-card/50 backdrop-blur transition-all hover:border-secondary/70 hover:shadow-2xl hover:shadow-secondary/20"
+                  className="border-secondary/40 bg-linear-to-br from-card to-card/50 backdrop-blur transition-all hover:border-secondary/70 hover:shadow-2xl hover:shadow-secondary/20"
                 >
                   <CardHeader>
                     <div className="flex flex-col items-start gap-4 sm:flex-row sm:justify-between">
@@ -177,15 +182,15 @@ export default function EventsCoursesPage() {
                     </CardDescription>
                     <div className="space-y-3">
                       <div className="flex items-center gap-3 rounded-lg bg-card/50 p-3">
-                        <Calendar className="h-5 w-5 text-accent flex-shrink-0" />
+                        <Calendar className="h-5 w-5 text-accent shrink-0" />
                         <span className="font-medium">{event.date}</span>
                       </div>
                       <div className="flex items-center gap-3 rounded-lg bg-card/50 p-3">
-                        <Clock className="h-5 w-5 text-accent flex-shrink-0" />
+                        <Clock className="h-5 w-5 text-accent shrink-0" />
                         <span className="font-medium">{event.time}</span>
                       </div>
                       <div className="flex items-center gap-3 rounded-lg bg-card/50 p-3">
-                        <Users className="h-5 w-5 text-accent flex-shrink-0" />
+                        <Users className="h-5 w-5 text-accent shrink-0" />
                         <span className="font-medium">
                           {event.attendees}+ participants
                         </span>
@@ -237,7 +242,7 @@ export default function EventsCoursesPage() {
             <div className="grid gap-8 lg:grid-cols-2 items-center">
               {/* Bootcamp Poster */}
               <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-secondary/20 to-accent/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-linear-to-r from-secondary/20 to-accent/20 rounded-lg blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 <Image
                   src="/ml-bootcamp.png"
                   alt="Machine Learning Online Bootcamp"
@@ -379,7 +384,7 @@ export default function EventsCoursesPage() {
               {questFlow.map((item) => (
                 <Card
                   key={item.quest}
-                  className="border-border/60 bg-gradient-to-b from-card to-card/70"
+                  className="border-border/60 bg-linear-to-b from-card to-card/70"
                 >
                   <CardHeader>
                     <div className="mb-2 inline-flex w-fit items-center gap-2 rounded-full border border-border/60 px-3 py-1 text-xs text-muted-foreground">

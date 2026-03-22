@@ -1,5 +1,4 @@
-"use client";
-
+import type { Metadata } from "next";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Image from "next/image";
@@ -12,6 +11,12 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, Target, Lightbulb, Zap } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "About | CrelyneX",
+  description:
+    "Meet the CrelyneX team and discover our mission, values, and innovation journey.",
+};
 
 const team = [
   {
@@ -100,9 +105,9 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#050505] flex flex-col relative text-zinc-200">
       {/* Global Background Grid & Glows */}
-      <div className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(to_right,#dc262608_1px,transparent_1px),linear-gradient(to_bottom,#dc262608_1px,transparent_1px)] bg-[size:32px_32px]" />
-      <div className="pointer-events-none fixed top-0 right-0 h-[500px] w-[500px] rounded-full bg-red-900/10 blur-[120px]" />
-      <div className="pointer-events-none fixed bottom-0 left-0 h-[500px] w-[500px] rounded-full bg-red-950/10 blur-[120px]" />
+      <div className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(to_right,#dc262608_1px,transparent_1px),linear-gradient(to_bottom,#dc262608_1px,transparent_1px)] bg-size-[32px_32px]" />
+      <div className="pointer-events-none fixed top-0 right-0 h-125 w-125 rounded-full bg-red-900/10 blur-[120px]" />
+      <div className="pointer-events-none fixed bottom-0 left-0 h-125 w-125 rounded-full bg-red-950/10 blur-[120px]" />
 
       <Header />
 
@@ -118,7 +123,7 @@ export default function AboutPage() {
                 </div>
                 <h1 className="text-4xl font-black tracking-tight sm:text-5xl md:text-6xl">
                   About{" "}
-                  <span className="bg-gradient-to-r from-red-400 via-red-600 to-red-800 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(220,38,38,0.4)]">
+                  <span className="bg-linear-to-r from-red-400 via-red-600 to-red-800 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(220,38,38,0.4)]">
                     CrelyneX
                   </span>
                 </h1>
@@ -130,11 +135,11 @@ export default function AboutPage() {
               </div>
 
               {/* Upgraded CSS 3D Glass Panel */}
-              <div className="relative mx-auto hidden h-64 w-full max-w-sm md:block [perspective:1200px]">
+              <div className="relative mx-auto hidden h-64 w-full max-w-sm perspective-distant md:block">
                 {/* Glowing red under-layer */}
-                <div className="absolute inset-8 rounded-2xl border border-red-500/40 bg-red-500/10 shadow-[0_0_30px_rgba(220,38,38,0.3)] [transform:rotateX(62deg)_rotateZ(-32deg)] transition-transform duration-700 hover:[transform:rotateX(55deg)_rotateZ(-25deg)]" />
+                <div className="absolute inset-8 rounded-2xl border border-red-500/40 bg-red-500/10 shadow-[0_0_30px_rgba(220,38,38,0.3)] transform-[rotateX(62deg)_rotateZ(-32deg)] transition-transform duration-700 hover:transform-[rotateX(55deg)_rotateZ(-25deg)]" />
                 {/* Smoked glass top layer */}
-                <div className="absolute inset-0 rounded-2xl border border-white/10 bg-black/60 p-6 shadow-2xl backdrop-blur-xl [transform:translate3d(0,0,70px)] flex flex-col justify-end">
+                <div className="absolute inset-0 flex flex-col justify-end rounded-2xl border border-white/10 bg-black/60 p-6 shadow-2xl backdrop-blur-xl transform-[translate3d(0,0,70px)]">
                   <div className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-500 mb-2">
                     // Architecture Layer
                   </div>
@@ -208,9 +213,9 @@ export default function AboutPage() {
               ].map((stat, i) => (
                 <div
                   key={i}
-                  className="group rounded-2xl border border-white/5 bg-white/[0.01] p-8 text-center backdrop-blur-sm transition-all hover:bg-white/[0.03] hover:border-red-500/30"
+                  className="group rounded-2xl border border-white/5 bg-white/1 p-8 text-center backdrop-blur-sm transition-all hover:bg-white/3 hover:border-red-500/30"
                 >
-                  <div className="text-4xl font-black bg-gradient-to-br from-white to-zinc-500 bg-clip-text text-transparent group-hover:from-red-400 group-hover:to-red-700 transition-all duration-500 drop-shadow-sm">
+                  <div className="text-4xl font-black bg-linear-to-br from-white to-zinc-500 bg-clip-text text-transparent group-hover:from-red-400 group-hover:to-red-700 transition-all duration-500 drop-shadow-sm">
                     {stat.value}
                   </div>
                   <div className="mt-3 text-xs font-bold uppercase tracking-widest text-zinc-500 group-hover:text-zinc-300">
@@ -241,7 +246,7 @@ export default function AboutPage() {
                 return (
                   <Card
                     key={index}
-                    className="group border-white/5 bg-white/[0.02] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-red-500/30 hover:bg-black/60 hover:shadow-[0_10px_30px_-10px_rgba(220,38,38,0.3)]"
+                    className="group border-white/5 bg-white/2 backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-red-500/30 hover:bg-black/60 hover:shadow-[0_10px_30px_-10px_rgba(220,38,38,0.3)]"
                   >
                     <CardHeader>
                       <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-black/50 transition-colors group-hover:border-red-500/50 group-hover:bg-red-500/10">
@@ -282,10 +287,10 @@ export default function AboutPage() {
               {team.map((member, index) => (
                 <Card
                   key={index}
-                  className="group relative overflow-hidden border-white/5 bg-white/[0.02] backdrop-blur text-center transition-all duration-300 hover:border-red-500/30 hover:bg-black/40 hover:shadow-[0_0_40px_-15px_rgba(220,38,38,0.4)]"
+                  className="group relative overflow-hidden border-white/5 bg-white/2 backdrop-blur text-center transition-all duration-300 hover:border-red-500/30 hover:bg-black/40 hover:shadow-[0_0_40px_-15px_rgba(220,38,38,0.4)]"
                 >
                   {/* Subtle top red highlight on hover */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-linear-to-r from-transparent via-red-600 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                   <CardHeader className="pt-8">
                     {/* Glassy Avatar Ring */}
