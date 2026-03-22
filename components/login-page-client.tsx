@@ -31,10 +31,25 @@ export default function LoginPageClient() {
         body: JSON.stringify({ id: userId, password }),
       });
 
-      const data = (await response.json()) as { error?: string };
+      let errorMessage = "Login failed.";
+      const contentType = response.headers.get("content-type") || "";
+
+      if (contentType.includes("application/json")) {
+        const data = (await response.json()) as { error?: string };
+        errorMessage = data.error || errorMessage;
+      } else {
+        const text = await response.text();
+
+        if (response.status === 404) {
+          errorMessage =
+            "Login API not found (404). Restart dev server or redeploy latest code.";
+        } else if (text.trim()) {
+          errorMessage = "Unexpected server response. Please try again.";
+        }
+      }
 
       if (!response.ok) {
-        throw new Error(data.error || "Login failed.");
+        throw new Error(errorMessage);
       }
 
       router.push("/admin");

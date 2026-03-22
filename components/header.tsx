@@ -18,6 +18,7 @@ const navLinks = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const currentPath: string = pathname ?? "";
   const navContainerRef = useRef<HTMLDivElement>(null);
   const navLinkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const [activeIndicator, setActiveIndicator] = useState({
@@ -27,8 +28,8 @@ export default function Header() {
   });
 
   const isActiveLink = (href: string) => {
-    if (href === "/") return pathname === "/";
-    return pathname.startsWith(href);
+    if (href === "/") return currentPath === "/";
+    return currentPath.startsWith(href);
   };
 
   useEffect(() => {
@@ -66,7 +67,7 @@ export default function Header() {
       clearTimeout(timeoutId);
       window.removeEventListener("resize", updateIndicator);
     };
-  }, [pathname]);
+  }, [currentPath]);
 
   return (
     <header className="sticky top-0 z-50 w-full overflow-x-hidden overflow-y-visible border-b border-red-500/10 bg-[#050505]/70 backdrop-blur-2xl supports-backdrop-filter:bg-[#050505]/50">
