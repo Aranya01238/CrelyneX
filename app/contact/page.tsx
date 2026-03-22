@@ -19,7 +19,7 @@ const contactMethods = [
   {
     icon: Mail,
     title: "Email",
-    value: "hello@crelynex.com",
+    value: "crelynex@gmail.com",
     description: "Send us an email",
   },
   {

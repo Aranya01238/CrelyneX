@@ -106,10 +106,10 @@ export default function Footer() {
               <li>
                 <p className="text-muted-foreground">Email</p>
                 <a
-                  href="mailto:hello@crelynex.com"
+                  href="mailto:crelynex@gmail.com"
                   className="text-accent hover:text-accent/80 transition-colors"
                 >
-                  hello@crelynex.com
+                  crelynex@gmail.com
                 </a>
               </li>
               <li>
