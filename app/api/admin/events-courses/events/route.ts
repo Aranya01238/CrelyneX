@@ -46,8 +46,14 @@ export async function POST(request: Request) {
     await writeEventsCoursesData(data);
 
     return NextResponse.json({ ok: true, event: nextEvent });
-  } catch {
-    return NextResponse.json({ error: "Failed to add event." }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error ? error.message : "Failed to add event.",
+      },
+      { status: 500 },
+    );
   }
 }
 
@@ -69,7 +75,13 @@ export async function DELETE(request: Request) {
     await writeEventsCoursesData(data);
 
     return NextResponse.json({ ok: true });
-  } catch {
-    return NextResponse.json({ error: "Failed to remove event." }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error ? error.message : "Failed to remove event.",
+      },
+      { status: 500 },
+    );
   }
 }

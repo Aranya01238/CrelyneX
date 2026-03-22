@@ -83,11 +83,23 @@ export default function AdminEventsCoursesManager() {
       const response = await fetch("/api/events-courses", {
         cache: "no-store",
       });
-      const data = (await response.json()) as EventsCoursesResponse;
+
+      const data = (await response.json()) as
+        | EventsCoursesResponse
+        | { error?: string };
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to load events and courses.");
+      }
+
       setEvents(data.events || []);
       setCourses(data.courses || []);
-    } catch {
-      setMessage("Failed to load events and courses.");
+    } catch (error) {
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Failed to load events and courses.",
+      );
     } finally {
       setIsLoading(false);
     }
