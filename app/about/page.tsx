@@ -32,7 +32,7 @@ const team = [
     icon: "👨‍💼",
   },
   {
-    name: "Sahitya Pan",
+    name: "Snehasis Das",
     role: "Co-Founder",
     bio: "Building operations and partnerships for long-term impact.",
     icon: "👩‍💼",
@@ -62,8 +62,8 @@ const team = [
     icon: "🎨",
   },
   {
-    name: "Snehasis Das",
-    role: "Core Team - Partnerships & Social Media Lead",
+    name: "Sahitya Pan",
+    role: "Core Team - Partnerships Lead",
     bio: "Handling brand communication and external collaborations.",
     icon: "📣",
   },
