@@ -302,7 +302,7 @@ export default function AboutPage() {
                     <CardTitle className="text-lg text-white">
                       {member.name}
                     </CardTitle>
-                    <Badge className="mt-3 mx-auto w-fit bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 px-3 py-0.5 rounded-full text-[10px] uppercase tracking-widest font-bold">
+                    <Badge className="mt-3 mx-auto max-w-[180px] bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 px-3 py-1 rounded-full text-[9px] uppercase tracking-widest font-bold whitespace-normal text-center">
                       {member.role}
                     </Badge>
                   </CardHeader>
