@@ -63,13 +63,13 @@ const team = [
   },
   {
     name: "Sahitya Pan",
-    role: "Core Team - Partnerships Lead",
+    role: "Core Team - Social Media & Partnerships Lead",
     bio: "Handling brand communication and external collaborations.",
     icon: "📣",
   },
   {
     name: "Debjit Paul",
-    role: "Core Team - Social Media Co-Lead",
+    role: "Core Team - Social Media  & Partnership Co-Lead",
     bio: "Managing social channels and partnership initiatives.",
     icon: "🤝",
   },
