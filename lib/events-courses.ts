@@ -58,50 +58,20 @@ const hasAppsScriptConfig = true;
 const DEFAULT_DATA: EventsCoursesData = {
   events: [
     {
-      id: "ml-bootcamp-event-2026",
-      title: "Machine Learning Online Bootcamp",
-      date: "March 21 - April 5, 2026",
-      time: "8:00 PM - 9:00 PM IST",
-      attendees: 500,
-      location: "Online",
+      id: "iot-workshop-master-classes-2026",
+      title: "IoT Workshop - Master Classes 2026",
+      date: "May 16-17, 2026",
+      time: "3:00 PM - 6:00 PM",
+      attendees: 200,
+      location: "Offline",
       description:
-        "Intensive 4-day bootcamp in association with AI ZENERA. Master ML fundamentals, algorithms, Google Colab, and deep learning with live demos and giveaways.",
-      category: "Bootcamp",
-      price: "₹249",
-      registrationLink: "https://forms.gle/cjqqRug8VNBuenhH8",
+        "Learn the basics and advanced concepts of IoT, discover real-world applications, and join an engaging interactive session.",
+      category: "Workshop",
+      price: "₹99",
+      registrationLink: "https://forms.gle/VEBroAEH3stdeuMv7",
     },
   ],
-  courses: [
-    {
-      id: "ml-bootcamp-course-2026",
-      title: "Machine Learning Online Bootcamp",
-      price: "₹249",
-      duration: "4 Days",
-      level: "Beginner to Intermediate",
-      students: 500,
-      description:
-        "Master Machine Learning fundamentals with AI ZENERA. Learn ML algorithms, Google Colab, and deep learning in this intensive bootcamp.",
-      modules: [
-        "How ML Works",
-        "Basic Terms & Conditions",
-        "Types of ML",
-        "Google Colab",
-        "Deep Learning",
-        "Optimization Techniques",
-        "Live Demos & Giveaway",
-      ],
-      featured: true,
-      dates: [
-        "March 21, 2026",
-        "March 28, 2026",
-        "April 4, 2026",
-        "April 5, 2026",
-      ],
-      time: "8:00 PM - 9:00 PM",
-      certificate: true,
-      registrationLink: "https://forms.gle/cjqqRug8VNBuenhH8",
-    },
-  ],
+  courses: [],
 };
 
 async function ensureDataFile() {
@@ -116,9 +86,16 @@ async function ensureDataFile() {
 }
 
 function normalizeData(data: Partial<EventsCoursesData> | null | undefined): EventsCoursesData {
+  const events = Array.isArray(data?.events)
+    ? data.events.filter((item) => item.id !== "ml-bootcamp-event-2026")
+    : [];
+  const courses = Array.isArray(data?.courses)
+    ? data.courses.filter((item) => item.id !== "ml-bootcamp-course-2026")
+    : [];
+
   return {
-    events: Array.isArray(data?.events) ? data.events : [],
-    courses: Array.isArray(data?.courses) ? data.courses : [],
+    events: events.length > 0 ? events : DEFAULT_DATA.events,
+    courses,
   };
 }
 

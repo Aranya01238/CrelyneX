@@ -1,33 +1,17 @@
 {
-  "events": [],
-  "courses": [
+  "events": [
     {
-      "id": "ml-bootcamp-course-2026",
-      "title": "Machine Learning Online Bootcamp",
-      "price": "₹249",
-      "duration": "4 Days",
-      "level": "Beginner to Intermediate",
-      "students": 500,
-      "description": "Master Machine Learning fundamentals with AI ZENERA. Learn ML algorithms, Google Colab, and deep learning in this intensive bootcamp.",
-      "modules": [
-        "How ML Works",
-        "Basic Terms & Conditions",
-        "Types of ML",
-        "Google Colab",
-        "Deep Learning",
-        "Optimization Techniques",
-        "Live Demos & Giveaway"
-      ],
-      "featured": true,
-      "dates": [
-        "March 21, 2026",
-        "March 28, 2026",
-        "April 4, 2026",
-        "April 5, 2026"
-      ],
-      "time": "8:00 PM - 9:00 PM",
-      "certificate": true,
-      "registrationLink": "https://forms.gle/cjqqRug8VNBuenhH8"
+      "id": "iot-workshop-master-classes-2026",
+      "title": "IoT Workshop - Master Classes 2026",
+      "date": "May 16-17, 2026",
+      "time": "3:00 PM - 6:00 PM",
+      "attendees": 200,
+      "location": "Offline",
+      "description": "Learn the basics and advanced concepts of IoT, discover real-world applications, and join an engaging interactive session.",
+      "category": "Workshop",
+      "price": "₹99",
+      "registrationLink": "https://forms.gle/VEBroAEH3stdeuMv7"
     }
-  ]
+  ],
+  "courses": []
 }

@@ -57,6 +57,17 @@ const questFlow = [
   },
 ];
 
+const completedCourseArchive = {
+  title: "Machine Learning Online Bootcamp",
+  status: "Completed",
+  dateRange: "March 21 - April 5, 2026",
+  highlights: [
+    "4 live sessions completed",
+    "500+ learners attended",
+    "E-certificates issued to participants",
+  ],
+};
+
 export default async function EventsCoursesPage() {
   const { events: upcomingEvents, courses } = await readEventsCoursesData();
   const featuredCourse = courses[0];
@@ -106,7 +117,7 @@ export default async function EventsCoursesPage() {
             <div className="mb-12">
               <h2 className="text-3xl font-bold">Featured Event</h2>
               <p className="mt-2 text-muted-foreground">
-                Join the latest bootcamp organized by CrelyneX with AI ZENERA
+                Join our latest hands-on workshop and community sessions
               </p>
             </div>
 
@@ -201,9 +212,10 @@ export default async function EventsCoursesPage() {
         <section className="py-16 sm:py-20">
           <div className="container mx-auto px-4">
             <div className="mb-12">
-              <h2 className="text-3xl font-bold">Featured Course</h2>
+              <h2 className="text-3xl font-bold">Courses</h2>
               <p className="mt-2 text-muted-foreground">
-                Dive into machine learning with industry experts
+                The previous Machine Learning Bootcamp is completed. New cohorts
+                will be announced soon.
               </p>
             </div>
 
@@ -338,9 +350,50 @@ export default async function EventsCoursesPage() {
                 </div>
               </div>
             ) : (
-              <Card className="border-border/40 bg-card/50">
-                <CardContent className="pt-6 text-muted-foreground">
-                  No courses are available right now.
+              <Card className="border-secondary/30 bg-linear-to-br from-card to-card/60 backdrop-blur">
+                <CardHeader>
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <CardTitle className="text-2xl">
+                        {completedCourseArchive.title}
+                      </CardTitle>
+                      <CardDescription className="mt-2 text-base">
+                        This cohort has successfully concluded.
+                      </CardDescription>
+                    </div>
+                    <Badge className="w-fit bg-secondary/20 text-secondary hover:bg-secondary/30">
+                      {completedCourseArchive.status}
+                    </Badge>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center gap-2 rounded-lg border border-border/40 bg-card/40 p-3 text-sm text-muted-foreground">
+                    <Calendar className="h-4 w-4 text-accent" />
+                    {completedCourseArchive.dateRange}
+                  </div>
+                  <div className="space-y-2">
+                    {completedCourseArchive.highlights.map((item) => (
+                      <div
+                        key={item}
+                        className="flex items-center gap-2 text-sm"
+                      >
+                        <CheckCircle2 className="h-4 w-4 text-accent" />
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="pt-2">
+                    <a
+                      href="https://forms.gle/VEBroAEH3stdeuMv7"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
+                        Join Upcoming Workshops
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </a>
+                  </div>
                 </CardContent>
               </Card>
             )}
@@ -398,7 +451,7 @@ export default async function EventsCoursesPage() {
                   </p>
                 </div>
                 <a
-                  href="https://forms.gle/cjqqRug8VNBuenhH8"
+                  href="https://forms.gle/VEBroAEH3stdeuMv7"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
