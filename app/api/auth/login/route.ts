@@ -5,7 +5,13 @@ import {
   ADMIN_PASSWORD,
   ADMIN_SESSION_COOKIE,
   ADMIN_SESSION_VALUE,
+  MEMBER_SESSION_COOKIE,
+  MEMBER_SESSION_VALUE,
+  MEMBER_ID_COOKIE,
+  MEMBER_NAME_COOKIE,
+  MEMBER_PORTALS_COOKIE,
 } from "@/lib/auth";
+import { getMembers } from "@/lib/members";
 
 const loginSchema = z.object({
   id: z.string().min(1),
@@ -23,26 +29,51 @@ export async function POST(request: Request) {
 
     const { id, password } = parsed.data;
 
-    if (id !== ADMIN_ID || password !== ADMIN_PASSWORD) {
-      return NextResponse.json(
-        { error: "Invalid ID or password." },
-        { status: 401 },
-      );
+    // Check admin credentials first
+    if (id === ADMIN_ID && password === ADMIN_PASSWORD) {
+      const response = NextResponse.json({ ok: true, role: "admin", redirect: "/admin" });
+      response.cookies.set({
+        name: ADMIN_SESSION_COOKIE,
+        value: ADMIN_SESSION_VALUE,
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: 60 * 60 * 8,
+      });
+      return response;
     }
 
-    const response = NextResponse.json({ ok: true });
+    // Check member credentials
+    const members = await getMembers();
+    const member = members.find((m) => m.id === id && m.password === password);
 
-    response.cookies.set({
-      name: ADMIN_SESSION_COOKIE,
-      value: ADMIN_SESSION_VALUE,
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: 60 * 60 * 8,
-    });
+    if (member) {
+      const response = NextResponse.json({
+        ok: true,
+        role: "member",
+        redirect: "/member",
+        portals: member.portals,
+      });
+      const cookieOpts = {
+        httpOnly: true,
+        sameSite: "lax" as const,
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: 60 * 60 * 8,
+      };
+      response.cookies.set({ name: MEMBER_SESSION_COOKIE, value: MEMBER_SESSION_VALUE, ...cookieOpts });
+      response.cookies.set({ name: MEMBER_ID_COOKIE, value: member.id, ...cookieOpts });
+      // Name and portals are not httpOnly so client can read them
+      response.cookies.set({ name: MEMBER_NAME_COOKIE, value: member.name, httpOnly: false, sameSite: "lax", secure: process.env.NODE_ENV === "production", path: "/", maxAge: 60 * 60 * 8 });
+      response.cookies.set({ name: MEMBER_PORTALS_COOKIE, value: member.portals.join(","), httpOnly: false, sameSite: "lax", secure: process.env.NODE_ENV === "production", path: "/", maxAge: 60 * 60 * 8 });
+      return response;
+    }
 
-    return response;
+    return NextResponse.json(
+      { error: "Invalid ID or password." },
+      { status: 401 }
+    );
   } catch {
     return NextResponse.json({ error: "Login failed." }, { status: 500 });
   }

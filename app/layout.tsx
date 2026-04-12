@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import GlobalInteractiveBackground from "@/components/global-interactive-background";
 import SiteOpenTracker from "@/components/site-open-tracker";
+import PageLoader from "@/components/page-loader";
+import ScrollReveal from "@/components/scroll-reveal";
 import "./globals.css";
-
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CrelyneX",
@@ -25,8 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased">
+      <body className="antialiased">
+        <PageLoader />
         <SiteOpenTracker />
+        <ScrollReveal />
         <GlobalInteractiveBackground>
           {children}
           <Analytics />

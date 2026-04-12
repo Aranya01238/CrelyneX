@@ -1,12 +1,27 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { ADMIN_SESSION_COOKIE, ADMIN_SESSION_VALUE } from "@/lib/auth";
+import {
+  ADMIN_SESSION_COOKIE,
+  ADMIN_SESSION_VALUE,
+  MEMBER_SESSION_COOKIE,
+  MEMBER_SESSION_VALUE,
+} from "@/lib/auth";
 
 export function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith("/admin")) {
-    const session = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
+  const path = request.nextUrl.pathname;
 
+  // Protect Admin Routes
+  if (path.startsWith("/admin")) {
+    const session = request.cookies.get(ADMIN_SESSION_COOKIE)?.value;
     if (session !== ADMIN_SESSION_VALUE) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+  }
+
+  // Protect Member Routes
+  if (path.startsWith("/member")) {
+    const session = request.cookies.get(MEMBER_SESSION_COOKIE)?.value;
+    if (session !== MEMBER_SESSION_VALUE) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
@@ -15,5 +30,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin", "/admin/:path*", "/member", "/member/:path*"],
 };

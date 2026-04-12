@@ -89,11 +89,12 @@ export default function AdminEventsCoursesManager() {
         | { error?: string };
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to load events and courses.");
+        throw new Error((data as any).error || "Failed to load events and courses.");
       }
 
-      setEvents(data.events || []);
-      setCourses(data.courses || []);
+      const vData = data as EventsCoursesResponse;
+      setEvents(vData.events || []);
+      setCourses(vData.courses || []);
     } catch (error) {
       setMessage(
         error instanceof Error
