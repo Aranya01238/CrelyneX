@@ -13,7 +13,8 @@ import {
   ShieldCheck,
   CheckCircle2,
   Clock,
-  Loader2
+  Loader2,
+  Activity
 } from "lucide-react";
 import type { Task } from "@/lib/members";
 
@@ -63,10 +64,18 @@ export default function MemberPage() {
     {
       id: "social",
       title: "Social Portal",
-      desc: "Manage social media credentials and growth logs.",
+      desc: "Manage social media credentials and follower logs.",
       icon: <Share2 className="w-8 h-8 text-emerald-500" />,
       href: "/member/social",
       color: "from-emerald-600/10 to-transparent"
+    },
+    {
+      id: "updates",
+      title: "Updates Feed",
+      desc: "File your daily performance numbers and event impact.",
+      icon: <Activity className="w-8 h-8 text-amber-500" />,
+      href: "/member/updates",
+      color: "from-amber-600/10 to-transparent"
     }
   ];
 

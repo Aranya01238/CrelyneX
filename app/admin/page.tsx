@@ -8,9 +8,10 @@ import AdminEventsCoursesManager from "@/components/admin-events-courses-manager
 import AdminMembersManager from "@/components/admin-members-manager";
 import AdminTasksManager from "@/components/admin-tasks-manager";
 import AdminSocialCredentialsManager from "@/components/admin-social-credentials-manager";
+import AdminUpdatesManager from "@/components/admin-updates-manager";
 import AdminLogoutButton from "@/components/admin-logout-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ShieldCheck, Calendar, Users, Briefcase, Key } from "lucide-react";
+import { ShieldCheck, Calendar, Users, Briefcase, Key, Activity } from "lucide-react";
 
 export default function AdminPage() {
   const [mounted, setMounted] = useState(false);
@@ -59,6 +60,9 @@ export default function AdminPage() {
                 <TabsTrigger value="social" className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
                   <Key className="w-3.5 h-3.5" /> Social Creds
                 </TabsTrigger>
+                <TabsTrigger value="updates" className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
+                  <Activity className="w-3.5 h-3.5" /> Updates Feed
+                </TabsTrigger>
               </TabsList>
             </div>
 
@@ -74,6 +78,9 @@ export default function AdminPage() {
               </TabsContent>
               <TabsContent value="social" className="mt-0 focus-visible:outline-none">
                 <AdminSocialCredentialsManager />
+              </TabsContent>
+              <TabsContent value="updates" className="mt-0 focus-visible:outline-none">
+                <AdminUpdatesManager />
               </TabsContent>
             </div>
           </Tabs>
