@@ -40,14 +40,15 @@ const FOLLOWERS_FILE = path.join(
 const REDIS_CREDS_KEY = "crelynex:social_creds";
 const REDIS_FOLLOWERS_KEY = "crelynex:social_followers";
 
-const hasRedisConfig = Boolean(
-  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN,
-);
+const redisUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const redisToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+
+const hasRedisConfig = Boolean(redisUrl && redisToken);
 
 const redis = hasRedisConfig
   ? new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL!,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+      url: redisUrl!,
+      token: redisToken!,
     })
   : null;
 

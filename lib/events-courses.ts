@@ -42,14 +42,15 @@ const APPS_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbzvEb82D_IEmRKf7INY_w7h-LouAcmmQrZGob__zFMeJjaRRvUe_5pgPbzSan5sukQsWw/exec";
 const APPS_SCRIPT_SECRET = "";
 
-const hasRedisConfig = Boolean(
-  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN,
-);
+const redisUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+const redisToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+
+const hasRedisConfig = Boolean(redisUrl && redisToken);
 
 const redis = hasRedisConfig
   ? new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL!,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+      url: redisUrl!,
+      token: redisToken!,
     })
   : null;
 
