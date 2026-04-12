@@ -10,6 +10,7 @@ export type Member = {
   password: string; // plain text for now, same pattern as admin
   portals: MemberPortal[];
   createdAt: string;
+  lastLoginAt?: string;
 };
 
 export type Task = {

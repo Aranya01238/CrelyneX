@@ -11,7 +11,7 @@ import {
   MEMBER_NAME_COOKIE,
   MEMBER_PORTALS_COOKIE,
 } from "@/lib/auth";
-import { getMembers } from "@/lib/members";
+import { getMembers, updateMember } from "@/lib/members";
 
 const loginSchema = z.object({
   id: z.string().min(1),
@@ -49,6 +49,8 @@ export async function POST(request: Request) {
     const member = members.find((m) => m.id === id && m.password === password);
 
     if (member) {
+      await updateMember(member.id, { lastLoginAt: new Date().toISOString() });
+      
       const response = NextResponse.json({
         ok: true,
         role: "member",

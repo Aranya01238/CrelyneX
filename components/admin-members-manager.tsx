@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Loader2, UserPlus, Trash2, Shield, Settings } from "lucide-react";
+import { Loader2, UserPlus, Trash2, Shield, Settings, Clock } from "lucide-react";
 import type { Member, MemberPortal } from "@/lib/members";
 
 const initialMemberForm = {
@@ -179,6 +179,23 @@ export default function AdminMembersManager() {
                       {member.portals.map(p => (
                         <span key={p} className="text-[8px] font-black uppercase tracking-widest text-red-500 bg-red-500/10 px-2 py-0.5 rounded-full">{p}</span>
                       ))}
+                      
+                      {member.lastLoginAt ? (
+                        <>
+                          <div className="h-4 w-px bg-white/10" />
+                          <div className="flex items-center gap-1 text-[9px] font-bold tracking-widest text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+                            <Clock className="w-2.5 h-2.5" />
+                            {new Date(member.lastLoginAt).toLocaleString()}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="h-4 w-px bg-white/10" />
+                          <div className="flex items-center gap-1 text-[9px] font-bold tracking-widest text-zinc-500 bg-zinc-500/10 px-2 py-0.5 rounded-full">
+                            Never Logged In
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
