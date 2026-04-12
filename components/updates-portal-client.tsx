@@ -126,7 +126,7 @@ export default function UpdatesPortalClient() {
       <div className="max-w-6xl mx-auto space-y-8">
         
         {/* Header */}
-        <div className="flex items-center gap-4 reveal">
+        <div className="flex items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <Link href="/member">
             <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white rounded-full">
               <ArrowLeft className="w-5 h-5" />
@@ -140,7 +140,7 @@ export default function UpdatesPortalClient() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 reveal delay-100">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100 fill-mode-both">
           
           {/* Form */}
           <Card className="lg:col-span-5 border-white/5 bg-background shadow-2xl rounded-[32px] overflow-hidden">
