@@ -135,10 +135,13 @@ export default function AdminMembersManager() {
                 <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Portal Clearances</label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {["graphics", "social", "updates"].map(portal => (
-                    <div key={portal} className="flex items-center gap-3 p-4 rounded-2xl glass border-white/5 cursor-pointer" onClick={() => togglePortal(portal as MemberPortal)}>
-                      <Checkbox checked={form.portals.includes(portal as MemberPortal)} />
+                    <label key={portal} className="flex items-center gap-3 p-4 rounded-2xl glass border-white/5 cursor-pointer">
+                      <Checkbox 
+                        checked={(form.portals || []).includes(portal as MemberPortal)} 
+                        onCheckedChange={() => togglePortal(portal as MemberPortal)}
+                      />
                       <span className="text-xs font-bold uppercase tracking-widest text-zinc-300">{portal}</span>
-                    </div>
+                    </label>
                   ))}
                 </div>
               </div>
