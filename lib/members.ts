@@ -1,5 +1,6 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { Redis } from "@upstash/redis";
 
 export type MemberPortal = "graphics" | "social" | "updates";
 
@@ -23,17 +24,45 @@ export type Task = {
 
 const MEMBERS_FILE = path.join(process.cwd(), "data", "members.json");
 const TASKS_FILE = path.join(process.cwd(), "data", "tasks.json");
+const REDIS_MEMBERS_KEY = "crelynex:members";
+const REDIS_TASKS_KEY = "crelynex:tasks";
+
+const hasRedisConfig = Boolean(
+  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN,
+);
+
+const redis = hasRedisConfig
+  ? new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL!,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    })
+  : null;
 
 async function ensureFile(filePath: string, defaultValue: unknown) {
-  await fs.mkdir(path.dirname(filePath), { recursive: true });
   try {
+    await fs.mkdir(path.dirname(filePath), { recursive: true });
     await fs.access(filePath);
   } catch {
-    await fs.writeFile(filePath, JSON.stringify(defaultValue, null, 2), "utf8");
+    try {
+      await fs.writeFile(filePath, JSON.stringify(defaultValue, null, 2), "utf8");
+    } catch {
+      // Ignore write errors in read-only environments (e.g. Vercel)
+    }
   }
 }
 
+// ---- Members ---- //
+
 export async function getMembers(): Promise<Member[]> {
+  if (redis) {
+    try {
+      const data = await redis.get<Member[]>(REDIS_MEMBERS_KEY);
+      if (data) return data;
+    } catch {
+      // Fallback
+    }
+  }
+
   await ensureFile(MEMBERS_FILE, []);
   try {
     const raw = await fs.readFile(MEMBERS_FILE, "utf8");
@@ -49,8 +78,21 @@ export async function getMember(id: string): Promise<Member | null> {
 }
 
 export async function saveMembers(members: Member[]) {
+  if (redis) {
+    try {
+      await redis.set(REDIS_MEMBERS_KEY, members);
+      return;
+    } catch {
+      // Fallback
+    }
+  }
+
   await ensureFile(MEMBERS_FILE, []);
-  await fs.writeFile(MEMBERS_FILE, JSON.stringify(members, null, 2), "utf8");
+  try {
+    await fs.writeFile(MEMBERS_FILE, JSON.stringify(members, null, 2), "utf8");
+  } catch {
+    // Vercel read-only FS fallback handled by Redis ideally
+  }
 }
 
 export async function createMember(
@@ -86,14 +128,42 @@ export async function deleteMember(id: string): Promise<boolean> {
   return true;
 }
 
-// Tasks
+// ---- Tasks ---- //
+
 export async function getTasks(): Promise<Task[]> {
+  if (redis) {
+    try {
+      const data = await redis.get<Task[]>(REDIS_TASKS_KEY);
+      if (data) return data;
+    } catch {
+      // Fallback
+    }
+  }
+
   await ensureFile(TASKS_FILE, []);
   try {
     const raw = await fs.readFile(TASKS_FILE, "utf8");
     return JSON.parse(raw) as Task[];
   } catch {
     return [];
+  }
+}
+
+export async function saveTasks(tasks: Task[]) {
+  if (redis) {
+    try {
+      await redis.set(REDIS_TASKS_KEY, tasks);
+      return;
+    } catch {
+      // Fallback
+    }
+  }
+
+  await ensureFile(TASKS_FILE, []);
+  try {
+    await fs.writeFile(TASKS_FILE, JSON.stringify(tasks, null, 2), "utf8");
+  } catch {
+    // Vercel read-only FS fallback
   }
 }
 
@@ -113,7 +183,7 @@ export async function createTask(
     status: "pending",
   };
   tasks.push(newTask);
-  await fs.writeFile(TASKS_FILE, JSON.stringify(tasks, null, 2), "utf8");
+  await saveTasks(tasks);
   return newTask;
 }
 
@@ -125,7 +195,7 @@ export async function updateTaskStatus(
   const idx = tasks.findIndex((t) => t.id === id);
   if (idx === -1) return false;
   tasks[idx].status = status;
-  await fs.writeFile(TASKS_FILE, JSON.stringify(tasks, null, 2), "utf8");
+  await saveTasks(tasks);
   return true;
 }
 
@@ -133,6 +203,6 @@ export async function deleteTask(id: string): Promise<boolean> {
   const tasks = await getTasks();
   const filtered = tasks.filter((t) => t.id !== id);
   if (filtered.length === tasks.length) return false;
-  await fs.writeFile(TASKS_FILE, JSON.stringify(filtered, null, 2), "utf8");
+  await saveTasks(filtered);
   return true;
 }

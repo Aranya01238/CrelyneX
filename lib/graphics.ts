@@ -1,5 +1,6 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { Redis } from "@upstash/redis";
 
 export type GraphicsUpload = {
   id: string;
@@ -14,23 +15,66 @@ export type GraphicsUpload = {
 };
 
 const GRAPHICS_FILE = path.join(process.cwd(), "data", "graphics.json");
+const REDIS_GRAPHICS_KEY = "crelynex:graphics";
+
+const hasRedisConfig = Boolean(
+  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN,
+);
+
+const redis = hasRedisConfig
+  ? new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL!,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    })
+  : null;
 
 async function ensureFile() {
-  await fs.mkdir(path.dirname(GRAPHICS_FILE), { recursive: true });
   try {
+    await fs.mkdir(path.dirname(GRAPHICS_FILE), { recursive: true });
     await fs.access(GRAPHICS_FILE);
   } catch {
-    await fs.writeFile(GRAPHICS_FILE, "[]", "utf8");
+    try {
+      await fs.writeFile(GRAPHICS_FILE, "[]", "utf8");
+    } catch {
+      // ignore
+    }
   }
 }
 
 export async function getUploads(): Promise<GraphicsUpload[]> {
+  if (redis) {
+    try {
+      const data = await redis.get<GraphicsUpload[]>(REDIS_GRAPHICS_KEY);
+      if (data) return data;
+    } catch {
+      // fallback
+    }
+  }
+
   await ensureFile();
   try {
     const raw = await fs.readFile(GRAPHICS_FILE, "utf8");
     return JSON.parse(raw) as GraphicsUpload[];
   } catch {
     return [];
+  }
+}
+
+async function saveUploads(uploads: GraphicsUpload[]) {
+  if (redis) {
+    try {
+      await redis.set(REDIS_GRAPHICS_KEY, uploads);
+      return;
+    } catch {
+      // fallback
+    }
+  }
+
+  await ensureFile();
+  try {
+    await fs.writeFile(GRAPHICS_FILE, JSON.stringify(uploads, null, 2), "utf8");
+  } catch {
+    // Vercel read-only FS fallback
   }
 }
 
@@ -44,7 +88,7 @@ export async function addUpload(
     uploadedAt: new Date().toISOString(),
   };
   uploads.unshift(newUpload); // newest first
-  await fs.writeFile(GRAPHICS_FILE, JSON.stringify(uploads, null, 2), "utf8");
+  await saveUploads(uploads);
   return newUpload;
 }
 
@@ -52,6 +96,6 @@ export async function deleteUpload(id: string): Promise<boolean> {
   const uploads = await getUploads();
   const filtered = uploads.filter((u) => u.id !== id);
   if (filtered.length === uploads.length) return false;
-  await fs.writeFile(GRAPHICS_FILE, JSON.stringify(filtered, null, 2), "utf8");
+  await saveUploads(filtered);
   return true;
 }
