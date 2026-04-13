@@ -21,6 +21,8 @@ import { cn } from "@/lib/utils";
 import type { Task } from "@/lib/members";
 
 export default function MemberPage() {
+  const [name, setName] = useState("");
+  const [portals, setPortals] = useState<string[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [creditPoints, setCreditPoints] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
