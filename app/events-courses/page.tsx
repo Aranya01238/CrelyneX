@@ -433,8 +433,6 @@ export default async function EventsCoursesPage() {
             )}
           </div>
         </section>
-          </div>
-        </section>
 
         {/* Quest Workflow */}
         <section className="border-t border-border/40 py-16 sm:py-20">
