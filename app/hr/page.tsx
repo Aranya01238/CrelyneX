@@ -20,6 +20,69 @@ import AdminMembersManager from "@/components/admin-members-manager";
 import AdminTasksManager from "@/components/admin-tasks-manager";
 import AdminUpdatesManager from "@/components/admin-updates-manager";
 
+function HRAuditLogs() {
+  const [logs, setLogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/admin/logs")
+      .then(res => res.json())
+      .then(data => {
+        setLogs(Array.isArray(data) ? data : []);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+         <h3 className="text-xl font-bold text-white flex items-center gap-3">
+           <Clock className="w-5 h-5 text-amber-500" /> Member Access Audit
+         </h3>
+         <div className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Restricted Management View</div>
+      </div>
+      
+      <div className="glass rounded-[32px] border-white/5 overflow-hidden">
+        {loading ? (
+          <div className="p-20 text-center italic text-zinc-500">Retrieving filtered logs...</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-white/5 border-b border-white/5">
+                  <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Member Entity</th>
+                  <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Protocol</th>
+                  <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {logs.map((log) => (
+                  <tr key={log.id} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="px-6 py-4">
+                       <div className="flex items-center gap-2">
+                         <div className="h-1.5 w-1.5 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.5)]" />
+                         <span className="text-sm font-bold text-zinc-300">{log.userId}</span>
+                       </div>
+                    </td>
+                    <td className="px-6 py-4 text-xs font-medium text-zinc-400">{log.action}</td>
+                    <td className="px-6 py-4 text-xs font-mono text-zinc-500">{new Date(log.timestamp).toLocaleString()}</td>
+                  </tr>
+                ))}
+                {logs.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="px-6 py-12 text-center text-zinc-600 italic">No member activity recorded in the filtered buffer.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function HRPage() {
   const [mounted, setMounted] = useState(false);
 
@@ -85,6 +148,9 @@ export default function HRPage() {
                 <TabsTrigger value="tasks" className="h-12 px-8 rounded-2xl flex-1 data-[state=active]:bg-amber-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
                   <Briefcase className="w-3.5 h-3.5" /> Missions & Tasks
                 </TabsTrigger>
+                <TabsTrigger value="logs" className="h-12 px-8 rounded-2xl flex-1 data-[state=active]:bg-amber-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
+                  <Clock className="w-3.5 h-3.5" /> Access Audit
+                </TabsTrigger>
               </TabsList>
             </div>
 
@@ -97,6 +163,9 @@ export default function HRPage() {
               </TabsContent>
               <TabsContent value="tasks" className="mt-0">
                 <AdminTasksManager theme="amber" />
+              </TabsContent>
+              <TabsContent value="logs" className="mt-0">
+                <HRAuditLogs />
               </TabsContent>
             </div>
           </Tabs>
