@@ -162,7 +162,13 @@ export default function AdminTasksManager() {
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Mission Parameters</label>
-                  <Textarea ... />
+                  <Textarea 
+                    value={form.description}
+                    onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
+                    placeholder="Detailed requirements and deliverables"
+                    className="min-h-[140px] bg-white/5 border-white/5 focus:border-purple-500 rounded-2xl resize-none"
+                    required
+                  />
                 </div>
               </div>
 
