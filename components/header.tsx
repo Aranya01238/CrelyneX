@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Bell } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -158,6 +158,17 @@ export default function Header() {
 
         {/* Desktop CTA Buttons */}
         <div className="relative z-10 hidden shrink-0 items-center gap-4 md:flex">
+          <div className="relative group cursor-pointer mr-2">
+            <div className="absolute -top-1 -right-1 h-3 w-3 bg-purple-500 rounded-full blur-[2px] animate-pulse" />
+            <div className="absolute -top-1 -right-1 h-3 w-3 bg-purple-500 rounded-full border-2 border-black" />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-10 w-10 rounded-xl border border-white/5 bg-white/5 text-zinc-400 group-hover:text-purple-400 group-hover:border-purple-500/30 transition-all"
+            >
+              <Bell className="w-5 h-5" />
+            </Button>
+          </div>
           <Link href="/login">
             <Button
               variant="outline"

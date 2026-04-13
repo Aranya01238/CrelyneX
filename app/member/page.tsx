@@ -18,6 +18,8 @@ import {
   ShieldAlert
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import DashboardCore3D from "@/components/dashboard-core-3d";
 import type { Task } from "@/lib/members";
 
 export default function MemberPage() {
@@ -70,8 +72,8 @@ export default function MemberPage() {
         body: JSON.stringify({ id }),
       });
       if (res.ok) {
-        // Optimistic update
         setTasks(prev => prev.map(t => t.id === id ? { ...t, memberMarkedDone: true } : t));
+        toast.success("Mission declaration transmitted to Command Console.");
       }
     } catch (err) {
       console.error("Update error");
@@ -112,32 +114,42 @@ export default function MemberPage() {
     <div className="container mx-auto max-w-7xl px-4 py-16 sm:py-24 space-y-16">
       
       {/* Welcome Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 reveal">
-        <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 glass-red rounded-full px-4 py-1.5 text-[10px] font-bold tracking-[0.3em] text-red-500 uppercase">
-            <LayoutDashboard className="w-3 h-3" /> Member Workspace
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center reveal">
+        <div className="lg:col-span-12 xl:col-span-8 flex flex-col md:flex-row md:items-center justify-between gap-8">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 glass-red rounded-full px-4 py-1.5 text-[10px] font-bold tracking-[0.3em] text-red-500 uppercase">
+              <LayoutDashboard className="w-3 h-3" /> Member Workspace
+            </div>
+            <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tighter">
+              Welcome, <span className="text-gradient-red">{name}</span>
+            </h1>
+            <p className="text-zinc-500 text-sm sm:text-base font-medium max-w-xl italic leading-relaxed">
+              Your centralized node for accessing CrelyneX resources, tracking mission objectives, and managing digital growth.
+            </p>
           </div>
-          <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tighter">
-            Welcome, <span className="text-gradient-red">{name}</span>
-          </h1>
-          <p className="text-zinc-500 text-sm sm:text-base font-medium max-w-xl italic leading-relaxed">
-            Your centralized node for accessing CrelyneX resources, tracking mission objectives, and managing digital growth.
-          </p>
+          <div className="flex items-center gap-6 glass p-4 rounded-[32px] border-white/5 h-fit">
+            <div className="text-right">
+              <div className="text-[10px] font-black text-purple-400 uppercase tracking-[0.3em] mb-1">Mission Credits</div>
+              <div className="text-3xl font-black text-white">{creditPoints}</div>
+            </div>
+            <div className="h-12 w-px bg-white/10" />
+            <div className="flex items-center gap-4">
+              <div className="h-12 w-12 rounded-2xl glass-purple flex items-center justify-center text-purple-400 font-black border border-purple-500/20">
+                {name.charAt(0)}
+              </div>
+              <div className="pr-4">
+                <div className="text-xs font-black text-white uppercase tracking-widest">{name}</div>
+                <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Authorized Member</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="hidden lg:flex items-center gap-6 glass p-4 rounded-[32px] border-white/5">
-          <div className="text-right">
-            <div className="text-[10px] font-black text-purple-400 uppercase tracking-[0.3em] mb-1">Mission Credits</div>
-            <div className="text-3xl font-black text-white">{creditPoints}</div>
-          </div>
-          <div className="h-12 w-px bg-white/10" />
-          <div className="flex items-center gap-4">
-            <div className="h-12 w-12 rounded-2xl glass-purple flex items-center justify-center text-purple-400 font-black border border-purple-500/20">
-              {name.charAt(0)}
-            </div>
-            <div className="pr-4">
-              <div className="text-xs font-black text-white uppercase tracking-widest">{name}</div>
-              <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Authorized Member</div>
-            </div>
+
+        {/* 3D Dashboard Core Integration */}
+        <div className="hidden xl:block xl:col-span-4 h-full relative group">
+          <div className="absolute inset-0 bg-purple-500/20 blur-[100px] rounded-full opacity-50 group-hover:opacity-100 transition-opacity duration-1000" />
+          <div className="h-[250px] w-full relative z-10">
+            <DashboardCore3D />
           </div>
         </div>
       </div>
