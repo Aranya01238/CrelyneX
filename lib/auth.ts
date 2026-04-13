@@ -5,7 +5,7 @@ export const ADMIN_SESSION_COOKIE = "crelynex-admin-session";
 export const ADMIN_SESSION_VALUE =
   process.env.ADMIN_SESSION_VALUE || "crelynex-admin-v1";
 
-export const HR_ID = process.env.HR_ID || "Amullyjit";
+export const HR_ID = process.env.HR_ID || "Amullyajit";
 export const HR_PASSWORD = process.env.HR_PASSWORD || "Manage@2026";
 export const HR_SESSION_COOKIE = "crelynex-hr-session";
 export const HR_SESSION_VALUE = "crelynex-hr-v1";
