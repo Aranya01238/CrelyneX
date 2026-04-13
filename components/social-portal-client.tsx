@@ -43,8 +43,8 @@ export default function SocialPortalClient() {
     setIsLoading(true);
     try {
       const [credsRes, followersRes] = await Promise.all([
-        fetch("/api/social/credentials"),
-        fetch("/api/social/followers")
+        fetch("/api/social/credentials", { cache: "no-store" }),
+        fetch("/api/social/followers", { cache: "no-store" })
       ]);
       if (credsRes.ok) setCreds(await credsRes.json());
       if (followersRes.ok) setFollowerData(await followersRes.json());

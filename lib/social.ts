@@ -2,6 +2,8 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 import { Redis } from "@upstash/redis";
 
+export const revalidate = 0;
+
 export type SocialPlatform = "instagram" | "facebook" | "linkedin";
 
 export type SocialCredentials = {
@@ -75,8 +77,8 @@ export async function getAllCredentials(): Promise<AllSocialCredentials> {
     try {
       const data = await redis.get<AllSocialCredentials>(REDIS_CREDS_KEY);
       if (data) return data;
-    } catch {
-      // fallback
+    } catch (err) {
+      console.error("Redis read error (Credentials):", err);
     }
   }
 
@@ -94,16 +96,18 @@ export async function saveCredentials(all: AllSocialCredentials) {
     try {
       await redis.set(REDIS_CREDS_KEY, all);
       return;
-    } catch {
-      // fallback
+    } catch (err) {
+      console.error("Redis save error (Credentials):", err);
+      // fallback to file
     }
   }
 
   await ensureFile(CREDENTIALS_FILE, {});
   try {
     await fs.writeFile(CREDENTIALS_FILE, JSON.stringify(all, null, 2), "utf8");
-  } catch {
-    // Vercel read-only FS fallback
+  } catch (err) {
+    console.error("File save error (Credentials):", err);
+    throw new Error("Persistent storage unavailable (Both Redis and File failed)");
   }
 }
 

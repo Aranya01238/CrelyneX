@@ -24,7 +24,7 @@ export default function AdminSocialCredentialsManager() {
   const loadData = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/admin/members");
+      const response = await fetch("/api/admin/members", { cache: "no-store" });
       if (!response.ok) throw new Error("Load error.");
       const mems = await response.json();
       // Only members with social portal access
@@ -42,7 +42,7 @@ export default function AdminSocialCredentialsManager() {
     if (!id) return;
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/social/credentials?memberId=${id}`);
+      const response = await fetch(`/api/social/credentials?memberId=${id}&t=${Date.now()}`, { cache: "no-store" });
       if (!response.ok) throw new Error("Load credentials failed.");
       const data = await response.json();
       setCreds({
@@ -69,6 +69,7 @@ export default function AdminSocialCredentialsManager() {
       });
       if (!response.ok) throw new Error("Save failed.");
       setMessage({ text: "Vault successfully synchronized.", type: "success" });
+      await loadMemberCreds(selectedId);
     } catch (err) {
       setMessage({ text: "Failed to save secret data.", type: "error" });
     } finally {
