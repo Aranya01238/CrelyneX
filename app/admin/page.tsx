@@ -8,7 +8,6 @@ import AdminMembersManager from "@/components/admin-members-manager";
 import AdminTasksManager from "@/components/admin-tasks-manager";
 import AdminSocialCredentialsManager from "@/components/admin-social-credentials-manager";
 import AdminUpdatesManager from "@/components/admin-updates-manager";
-import AdminUpdatesManager from "@/components/admin-updates-manager";
 import LogoutButton from "@/components/logout-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ShieldCheck, Calendar, Users, Briefcase, Key, Activity, Clock } from "lucide-react";

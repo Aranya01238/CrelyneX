@@ -246,7 +246,7 @@ export default async function EventsCoursesPage() {
               </p>
             </div>
 
-            {featuredCourse ? (
+            {featuredCourse && (
               <div className="grid gap-8 lg:grid-cols-2 items-center">
                 {/* Bootcamp Poster */}
                 <div className="relative group">
