@@ -25,8 +25,22 @@ async function getAuthContext() {
 // GET: Admin gets all, member gets their own
 export async function GET(request: Request) {
   const { isAdmin, memberSession, memberId } = await getAuthContext();
+  const headerList = await headers();
+  const referer = headerList.get("referer") || "";
 
-  // 1. If we have a member session, strictly filter to their own
+  // 1. If we are in the ADMIN CONSOLE (via Referer)
+  if (isAdmin && referer.includes("/admin")) {
+    const url = new URL(request.url);
+    const forMember = url.searchParams.get("memberId");
+    if (forMember) {
+      const creds = await getMemberCredentials(forMember);
+      return NextResponse.json(creds);
+    }
+    const all = await getAllCredentials();
+    return NextResponse.json(all);
+  }
+
+  // 2. If we have a MEMBER SESSION (Standard Dashboard or testing)
   if (memberSession && memberId) {
     const member = await getMember(memberId);
     if (!member?.portals.includes("social")) {
@@ -36,14 +50,8 @@ export async function GET(request: Request) {
     return NextResponse.json(creds);
   }
 
-  // 2. If we have an admin session
+  // 3. Fallback for Admin
   if (isAdmin) {
-    const url = new URL(request.url);
-    const forMember = url.searchParams.get("memberId");
-    if (forMember) {
-      const creds = await getMemberCredentials(forMember);
-      return NextResponse.json(creds);
-    }
     const all = await getAllCredentials();
     return NextResponse.json(all);
   }

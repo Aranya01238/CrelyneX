@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { z } from "zod";
 import { ADMIN_SESSION_COOKIE, ADMIN_SESSION_VALUE } from "@/lib/auth";
 import { getTasks, createTask, updateTask, deleteTask, getTasksForMember, updateMember, getMember } from "@/lib/members";
@@ -17,24 +17,32 @@ function getMemberId(cookieStore: Awaited<ReturnType<typeof cookies>>) {
 
 export async function GET(request: Request) {
   const cookieStore = await cookies();
+  const headerList = await headers();
+  const referer = headerList.get("referer") || "";
+  
   const memberId = getMemberId(cookieStore);
   const url = new URL(request.url);
   const forMember = url.searchParams.get("memberId");
+  const isAdminUser = isAdmin(cookieStore);
 
-  // 1. If we have a member session, only show their tasks
+  // 1. If we are in the ADMIN CONSOLE (via Referer)
+  if (isAdminUser && referer.includes("/admin")) {
+    if (forMember) {
+      const tasks = await getTasksForMember(forMember);
+      return NextResponse.json(tasks);
+    }
+    const tasks = await getTasks();
+    return NextResponse.json(tasks);
+  }
+
+  // 2. If we have a MEMBER SESSION (Standard Member Dashboard or testing)
   if (memberId) {
     const tasks = await getTasksForMember(memberId);
     return NextResponse.json(tasks);
   }
 
-  // 2. If we have an admin session
-  if (isAdmin(cookieStore)) {
-    // Check if they want specific member tasks
-    if (forMember) {
-      const tasks = await getTasksForMember(forMember);
-      return NextResponse.json(tasks);
-    }
-    // Otherwise return all
+  // 3. Fallback for Admin (e.g. direct API access or other tools)
+  if (isAdminUser) {
     const tasks = await getTasks();
     return NextResponse.json(tasks);
   }
