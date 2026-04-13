@@ -17,21 +17,25 @@ function getMemberId(cookieStore: Awaited<ReturnType<typeof cookies>>) {
 
 export async function GET(request: Request) {
   const cookieStore = await cookies();
+  const memberId = getMemberId(cookieStore);
   const url = new URL(request.url);
   const forMember = url.searchParams.get("memberId");
 
+  // 1. If we have a member session, only show their tasks
+  if (memberId) {
+    const tasks = await getTasksForMember(memberId);
+    return NextResponse.json(tasks);
+  }
+
+  // 2. If we have an admin session
   if (isAdmin(cookieStore)) {
+    // Check if they want specific member tasks
     if (forMember) {
       const tasks = await getTasksForMember(forMember);
       return NextResponse.json(tasks);
     }
+    // Otherwise return all
     const tasks = await getTasks();
-    return NextResponse.json(tasks);
-  }
-
-  const memberId = getMemberId(cookieStore);
-  if (memberId) {
-    const tasks = await getTasksForMember(memberId);
     return NextResponse.json(tasks);
   }
 

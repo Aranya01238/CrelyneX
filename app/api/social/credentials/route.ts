@@ -26,6 +26,17 @@ async function getAuthContext() {
 export async function GET(request: Request) {
   const { isAdmin, memberSession, memberId } = await getAuthContext();
 
+  // 1. If we have a member session, strictly filter to their own
+  if (memberSession && memberId) {
+    const member = await getMember(memberId);
+    if (!member?.portals.includes("social")) {
+      return NextResponse.json({ error: "No access to Social portal." }, { status: 403 });
+    }
+    const creds = await getMemberCredentials(memberId);
+    return NextResponse.json(creds);
+  }
+
+  // 2. If we have an admin session
   if (isAdmin) {
     const url = new URL(request.url);
     const forMember = url.searchParams.get("memberId");
@@ -35,15 +46,6 @@ export async function GET(request: Request) {
     }
     const all = await getAllCredentials();
     return NextResponse.json(all);
-  }
-
-  if (memberSession && memberId) {
-    const member = await getMember(memberId);
-    if (!member?.portals.includes("social")) {
-      return NextResponse.json({ error: "No access to Social portal." }, { status: 403 });
-    }
-    const creds = await getMemberCredentials(memberId);
-    return NextResponse.json(creds);
   }
 
   return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
