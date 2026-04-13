@@ -20,6 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import DashboardCore3D from "@/components/dashboard-core-3d";
+import LogoutButton from "@/components/logout-button";
 import type { Task } from "@/lib/members";
 
 export default function MemberPage() {
@@ -142,6 +143,9 @@ export default function MemberPage() {
                 <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Authorized Member</div>
               </div>
             </div>
+          </div>
+          <div className="flex md:flex-col justify-end">
+             <LogoutButton variant="ghost" className="text-zinc-600 hover:text-red-400 hover:bg-red-500/10" />
           </div>
         </div>
 

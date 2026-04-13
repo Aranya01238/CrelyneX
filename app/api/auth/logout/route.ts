@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { 
   ADMIN_SESSION_COOKIE, 
+  HR_SESSION_COOKIE,
   MEMBER_SESSION_COOKIE, 
   MEMBER_ID_COOKIE, 
   MEMBER_NAME_COOKIE, 
@@ -21,6 +22,8 @@ export async function POST() {
 
   // Clear Admin
   response.cookies.set({ name: ADMIN_SESSION_COOKIE, ...cookieOpts });
+  // Clear HR
+  response.cookies.set({ name: HR_SESSION_COOKIE, ...cookieOpts });
   // Clear Member Session
   response.cookies.set({ name: MEMBER_SESSION_COOKIE, ...cookieOpts });
   // Clear Member Id

@@ -8,9 +8,10 @@ import AdminMembersManager from "@/components/admin-members-manager";
 import AdminTasksManager from "@/components/admin-tasks-manager";
 import AdminSocialCredentialsManager from "@/components/admin-social-credentials-manager";
 import AdminUpdatesManager from "@/components/admin-updates-manager";
-import AdminLogoutButton from "@/components/admin-logout-button";
+import AdminUpdatesManager from "@/components/admin-updates-manager";
+import LogoutButton from "@/components/logout-button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ShieldCheck, Calendar, Users, Briefcase, Key, Activity } from "lucide-react";
+import { ShieldCheck, Calendar, Users, Briefcase, Key, Activity, Clock } from "lucide-react";
 
 export default function AdminPage() {
   const [mounted, setMounted] = useState(false);
@@ -39,7 +40,7 @@ export default function AdminPage() {
               Centralized management system for CrelyneX events, member permissions, work tasking, and sensitive social credentials.
             </p>
           </div>
-          <AdminLogoutButton />
+          <LogoutButton variant="outline" className="text-red-500 border-red-500/20 hover:bg-red-500/10" />
         </div>
 
         {/* Console / Tabs Section */}
@@ -62,6 +63,9 @@ export default function AdminPage() {
                 <TabsTrigger value="updates" className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
                   <Activity className="w-3.5 h-3.5" /> Updates Feed
                 </TabsTrigger>
+                <TabsTrigger value="audit" className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
+                  <Clock className="w-3.5 h-3.5" /> Systems Audit
+                </TabsTrigger>
               </TabsList>
             </div>
 
@@ -81,6 +85,9 @@ export default function AdminPage() {
               <TabsContent value="updates" className="mt-0 focus-visible:outline-none">
                 <AdminUpdatesManager />
               </TabsContent>
+              <TabsContent value="audit" className="mt-0 focus-visible:outline-none">
+                <AdminAuditLogs />
+              </TabsContent>
             </div>
           </Tabs>
         </section>
@@ -90,3 +97,64 @@ export default function AdminPage() {
     </div>
   );
 }
+
+function AdminAuditLogs() {
+  const [logs, setLogs] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/admin/logs")
+      .then(r => r.json())
+      .then(data => setLogs(Array.isArray(data) ? data : []))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+         <h3 className="text-xl font-bold text-white flex items-center gap-3">
+           <Clock className="w-5 h-5 text-red-500" /> Operational Audit Logs
+         </h3>
+         <div className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Real-time Logging Active</div>
+      </div>
+      
+      <div className="glass rounded-[32px] border-white/5 overflow-hidden">
+        {loading ? (
+          <div className="p-20 text-center italic text-zinc-500">Retrieving secure logs...</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-white/5 border-b border-white/5">
+                  <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Target</th>
+                  <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Access Protocol</th>
+                  <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5">
+                {logs.map((log) => (
+                  <tr key={log.id} className="hover:bg-white/[0.02] transition-colors">
+                    <td className="px-6 py-4">
+                       <div className="flex items-center gap-2">
+                         <div className={`h-1.5 w-1.5 rounded-full ${log.role === 'admin' ? 'bg-red-500' : 'bg-amber-500'}`} />
+                         <span className="text-sm font-bold text-white">{log.userId}</span>
+                       </div>
+                    </td>
+                    <td className="px-6 py-4 text-xs font-medium text-zinc-400">{log.action}</td>
+                    <td className="px-6 py-4 text-xs font-mono text-zinc-500">{new Date(log.timestamp).toLocaleString()}</td>
+                  </tr>
+                ))}
+                {logs.length === 0 && (
+                  <tr>
+                    <td colSpan={3} className="px-6 py-12 text-center text-zinc-600 italic">No access logs found in the core buffer.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+

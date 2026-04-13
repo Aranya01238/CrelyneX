@@ -94,9 +94,13 @@ export default function GlobalCommandMenu() {
 
             <Command.Group heading={<span className="px-3 py-2 text-[10px] font-black text-zinc-600 uppercase tracking-widest">System Protocols</span>}>
               <Command.Item 
-                onSelect={() => runCommand(() => {
+                onSelect={() => runCommand(async () => {
+                    await fetch("/api/auth/logout", { method: "POST" });
                     document.cookie = "crelynex-member-session=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+                    document.cookie = "crelynex-admin-session=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+                    document.cookie = "crelynex-hr-session=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
                     router.push("/login");
+                    router.refresh();
                 })}
                 className="flex items-center gap-4 px-4 py-3 rounded-2xl cursor-pointer hover:bg-red-500/10 transition-colors group"
               >

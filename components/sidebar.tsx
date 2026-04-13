@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import LogoutButton from "./logout-button";
 
 const navLinks = [
   { href: "/", label: "Home", icon: Home },
@@ -129,6 +130,20 @@ export default function Sidebar() {
         {isCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
         {!isCollapsed && <span>Collapse</span>}
       </button>
+
+      {/* Portal Logout - Only in Portal Context */}
+      {(pathname?.startsWith("/member") || pathname?.startsWith("/admin") || pathname?.startsWith("/hr")) && (
+        <div className="mt-4 pt-4 border-t border-purple-500/10">
+           <LogoutButton 
+             variant="ghost" 
+             showLabel={!isCollapsed} 
+             className={cn(
+               "w-full justify-start text-red-500 border-none hover:bg-red-500/10 hover:text-red-400",
+               isCollapsed && "justify-center p-2"
+             )} 
+           />
+        </div>
+      )}
     </div>
   );
 
