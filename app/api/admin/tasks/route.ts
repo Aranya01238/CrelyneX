@@ -25,26 +25,27 @@ export async function GET(request: Request) {
   const forMember = url.searchParams.get("memberId");
   const isAdminUser = isAdmin(cookieStore);
 
-  // 1. If we are in the ADMIN CONSOLE (via Referer)
-  if (isAdminUser && referer.includes("/admin")) {
-    if (forMember) {
-      const tasks = await getTasksForMember(forMember);
-      return NextResponse.json(tasks);
-    }
-    const tasks = await getTasks();
+  // 1. If Admin is requesting a SPECIFIC member's tasks (Safe, used in Admin Console)
+  if (isAdminUser && forMember) {
+    const tasks = await getTasksForMember(forMember);
     return NextResponse.json(tasks);
   }
 
-  // 2. If we have a MEMBER SESSION (Standard Member Dashboard or testing)
+  // 2. If we have an active MEMBER SESSION (Dashboard view)
   if (memberId) {
     const tasks = await getTasksForMember(memberId);
     return NextResponse.json(tasks);
   }
 
-  // 3. Fallback for Admin (e.g. direct API access or other tools)
-  if (isAdminUser) {
+  // 3. Admin Viewing ALL tasks (Only allowed if explicitly in Admin Console)
+  if (isAdminUser && referer.includes("/admin")) {
     const tasks = await getTasks();
     return NextResponse.json(tasks);
+  }
+
+  // 4. Final Fallback for Admin (e.g. direct API access)
+  if (isAdminUser) {
+    return NextResponse.json(await getTasks());
   }
 
   return NextResponse.json({ error: "Unauthorized." }, { status: 401 });

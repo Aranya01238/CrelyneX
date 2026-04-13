@@ -27,20 +27,16 @@ export async function GET(request: Request) {
   const { isAdmin, memberSession, memberId } = await getAuthContext();
   const headerList = await headers();
   const referer = headerList.get("referer") || "";
+  const url = new URL(request.url);
+  const forMember = url.searchParams.get("memberId");
 
-  // 1. If we are in the ADMIN CONSOLE (via Referer)
-  if (isAdmin && referer.includes("/admin")) {
-    const url = new URL(request.url);
-    const forMember = url.searchParams.get("memberId");
-    if (forMember) {
-      const creds = await getMemberCredentials(forMember);
-      return NextResponse.json(creds);
-    }
-    const all = await getAllCredentials();
-    return NextResponse.json(all);
+  // 1. If Admin is requesting a SPECIFIC member's credentials (Safe, used in Admin Console)
+  if (isAdmin && forMember) {
+    const creds = await getMemberCredentials(forMember);
+    return NextResponse.json(creds);
   }
 
-  // 2. If we have a MEMBER SESSION (Standard Dashboard or testing)
+  // 2. If we have a MEMBER SESSION (Standard Dashboard view)
   if (memberSession && memberId) {
     const member = await getMember(memberId);
     if (!member?.portals.includes("social")) {
@@ -50,7 +46,13 @@ export async function GET(request: Request) {
     return NextResponse.json(creds);
   }
 
-  // 3. Fallback for Admin
+  // 3. Admin viewing ALL credentials (Only allowed if explicitly in Admin Console)
+  if (isAdmin && referer.includes("/admin")) {
+    const all = await getAllCredentials();
+    return NextResponse.json(all);
+  }
+
+  // 4. Fallback for Admin (e.g. debugging or direct API access)
   if (isAdmin) {
     const all = await getAllCredentials();
     return NextResponse.json(all);
