@@ -6,7 +6,14 @@ import { Loader2, Activity, Calendar as CalendarIcon } from "lucide-react";
 import type { DailyUpdateEntry, AllUpdatesData } from "@/lib/updates";
 import type { Member } from "@/lib/members";
 
-export default function AdminUpdatesManager() {
+export default function AdminUpdatesManager({ theme = "amber" }: { theme?: "red" | "amber" }) {
+  const accentColor = theme === "red" ? "red-500" : "amber-500";
+  const iconColor = theme === "red" ? "text-red-500" : "text-amber-500";
+  const badgeColor = theme === "red" ? "text-red-500 bg-red-500/10" : "text-amber-500 bg-amber-500/10";
+  const ringColor = theme === "red" ? "hover:ring-red-500/30" : "hover:ring-amber-500/30";
+  const textAccent = theme === "red" ? "text-red-400 bg-red-500/20" : "text-amber-400 bg-amber-500/20";
+  const borderAccent = theme === "red" ? "border-red-500/10 bg-red-500/5 text-red-500" : "border-amber-500/10 bg-amber-500/5 text-amber-500";
+  
   const [updates, setUpdates] = useState<AllUpdatesData>({});
   const [members, setMembers] = useState<Member[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -50,9 +57,9 @@ export default function AdminUpdatesManager() {
     <div className="space-y-8">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-bold text-white flex items-center gap-3">
-          <Activity className="w-5 h-5 text-amber-500" /> Member Daily Updates
+          <Activity className={`w-5 h-5 ${iconColor}`} /> Member Daily Updates
         </h3>
-        <button onClick={loadData} className="text-xs font-bold text-amber-500 uppercase tracking-widest hover:text-white transition-colors">
+        <button onClick={loadData} className={`text-xs font-bold ${iconColor} uppercase tracking-widest hover:text-white transition-colors`}>
           Refresh Data
         </button>
       </div>
@@ -70,11 +77,11 @@ export default function AdminUpdatesManager() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {allLogs.map(log => (
-            <Card key={log.entry.id} className="border-white/5 bg-[#0a0a0a] rounded-[24px] overflow-hidden group hover:ring-1 hover:ring-amber-500/30 transition-all">
+            <Card key={log.entry.id} className={`border-white/5 bg-[#0a0a0a] rounded-[24px] overflow-hidden group ${ringColor} transition-all`}>
               <CardHeader className="p-6 pb-2">
                 <div className="flex justify-between items-start mb-2">
                   <div className="text-sm font-black text-white uppercase tracking-wider">{getMemberName(log.memberId)}</div>
-                  <div className="flex items-center gap-1 text-[10px] font-bold text-amber-500 bg-amber-500/10 px-2 py-0.5 rounded-full">
+                  <div className={`flex items-center gap-1 text-[10px] font-bold ${badgeColor} px-2 py-0.5 rounded-full`}>
                     <CalendarIcon className="w-3 h-3" /> {log.entry.date}
                   </div>
                 </div>
@@ -92,12 +99,12 @@ export default function AdminUpdatesManager() {
                 </div>
                 
                 {log.entry.events.length > 0 && (
-                  <div className="bg-amber-500/5 p-4 rounded-2xl border border-amber-500/10 space-y-3">
-                    <div className="text-[10px] text-amber-500 uppercase font-black tracking-widest">Event Performance</div>
+                  <div className={`${borderAccent.split(' ').slice(0, 2).join(' ')} p-4 rounded-2xl border space-y-3`}>
+                    <div className={`text-[10px] ${iconColor} uppercase font-black tracking-widest`}>Event Performance</div>
                     {log.entry.events.map((ev, i) => (
                       <div key={i} className="flex justify-between items-center bg-black/40 p-2.5 rounded-xl">
                         <span className="text-xs text-zinc-300 font-bold truncate pr-3">{ev.eventName}</span>
-                        <span className="text-xs font-black text-amber-400 bg-amber-500/20 px-2 py-1 rounded-lg">{ev.count}</span>
+                        <span className={`text-xs font-black ${textAccent} px-2 py-1 rounded-lg`}>{ev.count}</span>
                       </div>
                     ))}
                   </div>

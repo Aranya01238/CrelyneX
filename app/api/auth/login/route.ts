@@ -72,6 +72,7 @@ export async function POST(request: Request) {
 
     if (member) {
       await updateMember(member.id, { lastLoginAt: new Date().toISOString() });
+      await logActivity(member.id, "member", "Portal Login");
       
       const response = NextResponse.json({
         ok: true,

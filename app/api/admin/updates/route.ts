@@ -1,15 +1,22 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { ADMIN_SESSION_COOKIE, ADMIN_SESSION_VALUE } from "@/lib/auth";
+import { 
+  ADMIN_SESSION_COOKIE, 
+  ADMIN_SESSION_VALUE,
+  HR_SESSION_COOKIE,
+  HR_SESSION_VALUE
+} from "@/lib/auth";
 import { getAllUpdates } from "@/lib/updates";
 
-function isAdmin(cookieStore: ReturnType<typeof cookies> extends Promise<infer U> ? U : ReturnType<typeof cookies>) {
-  return cookieStore.get(ADMIN_SESSION_COOKIE)?.value === ADMIN_SESSION_VALUE;
+function isManagement(cookieStore: Awaited<ReturnType<typeof cookies>>) {
+  const isAdmin = cookieStore.get(ADMIN_SESSION_COOKIE)?.value === ADMIN_SESSION_VALUE;
+  const isHR = cookieStore.get(HR_SESSION_COOKIE)?.value === HR_SESSION_VALUE;
+  return isAdmin || isHR;
 }
 
 export async function GET() {
   const cookieStore = await cookies();
-  if (!isAdmin(cookieStore)) {
+  if (!isManagement(cookieStore)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

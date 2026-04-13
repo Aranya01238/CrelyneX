@@ -1,12 +1,19 @@
 import { NextResponse } from "next/server";
 import { cookies, headers } from "next/headers";
 import { z } from "zod";
-import { ADMIN_SESSION_COOKIE, ADMIN_SESSION_VALUE } from "@/lib/auth";
+import { 
+  ADMIN_SESSION_COOKIE, 
+  ADMIN_SESSION_VALUE,
+  HR_SESSION_COOKIE,
+  HR_SESSION_VALUE
+} from "@/lib/auth";
 import { getTasks, createTask, updateTask, deleteTask, getTasksForMember, updateMember, getMember } from "@/lib/members";
 import { MEMBER_SESSION_COOKIE, MEMBER_SESSION_VALUE, MEMBER_ID_COOKIE } from "@/lib/auth";
 
-function isAdmin(cookieStore: Awaited<ReturnType<typeof cookies>>) {
-  return cookieStore.get(ADMIN_SESSION_COOKIE)?.value === ADMIN_SESSION_VALUE;
+function isManagement(cookieStore: Awaited<ReturnType<typeof cookies>>) {
+  const isAdmin = cookieStore.get(ADMIN_SESSION_COOKIE)?.value === ADMIN_SESSION_VALUE;
+  const isHR = cookieStore.get(HR_SESSION_COOKIE)?.value === HR_SESSION_VALUE;
+  return isAdmin || isHR;
 }
 
 function getMemberId(cookieStore: Awaited<ReturnType<typeof cookies>>) {
@@ -23,10 +30,10 @@ export async function GET(request: Request) {
   const memberId = getMemberId(cookieStore);
   const url = new URL(request.url);
   const forMember = url.searchParams.get("memberId");
-  const isAdminUser = isAdmin(cookieStore);
+  const isMgmt = isManagement(cookieStore);
 
-  // 1. If Admin is requesting a SPECIFIC member's tasks (Safe, used in Admin Console)
-  if (isAdminUser && forMember) {
+  // 1. If Management is requesting a SPECIFIC member's tasks
+  if (isMgmt && forMember) {
     const tasks = await getTasksForMember(forMember);
     return NextResponse.json(tasks);
   }
@@ -38,13 +45,13 @@ export async function GET(request: Request) {
   }
 
   // 3. Admin Viewing ALL tasks (Only allowed if explicitly in Admin Console)
-  if (isAdminUser && referer.includes("/admin")) {
+  if (isMgmt && referer.includes("/admin")) {
     const tasks = await getTasks();
     return NextResponse.json(tasks);
   }
 
   // 4. Final Fallback for Admin (e.g. direct API access)
-  if (isAdminUser) {
+  if (isMgmt) {
     return NextResponse.json(await getTasks());
   }
 
@@ -61,7 +68,7 @@ const createSchema = z.object({
 
 export async function POST(request: Request) {
   const cookieStore = await cookies();
-  if (!isAdmin(cookieStore)) {
+  if (!isManagement(cookieStore)) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
@@ -80,7 +87,7 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   const cookieStore = await cookies();
-  if (!isAdmin(cookieStore)) {
+  if (!isManagement(cookieStore)) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
@@ -131,7 +138,7 @@ export async function PATCH(request: Request) {
 
 export async function DELETE(request: Request) {
   const cookieStore = await cookies();
-  if (!isAdmin(cookieStore)) {
+  if (!isManagement(cookieStore)) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 

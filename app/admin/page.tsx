@@ -135,8 +135,16 @@ function AdminAuditLogs() {
                   <tr key={log.id} className="hover:bg-white/[0.02] transition-colors">
                     <td className="px-6 py-4">
                        <div className="flex items-center gap-2">
-                         <div className={`h-1.5 w-1.5 rounded-full ${log.role === 'admin' ? 'bg-red-500' : 'bg-amber-500'}`} />
-                         <span className="text-sm font-bold text-white">{log.userId}</span>
+                         <div className={`h-1.5 w-1.5 rounded-full ${
+                           log.role === 'admin' ? 'bg-red-500' : 
+                           log.role === 'hr' ? 'bg-amber-500' : 
+                           'bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.5)]'
+                         }`} />
+                         <span className={`text-sm font-bold ${
+                           log.role === 'admin' ? 'text-white' : 
+                           log.role === 'hr' ? 'text-zinc-200' : 
+                           'text-zinc-300'
+                         }`}>{log.userId}</span>
                        </div>
                     </td>
                     <td className="px-6 py-4 text-xs font-medium text-zinc-400">{log.action}</td>

@@ -11,10 +11,14 @@ import {
   Target, 
   BarChart3,
   TrendingUp,
-  Clock
+  Clock,
+  Briefcase
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import AdminMembersManager from "@/components/admin-members-manager";
+import AdminTasksManager from "@/components/admin-tasks-manager";
+import AdminUpdatesManager from "@/components/admin-updates-manager";
 
 export default function HRPage() {
   const [mounted, setMounted] = useState(false);
@@ -78,35 +82,21 @@ export default function HRPage() {
                 <TabsTrigger value="audit" className="h-12 px-8 rounded-2xl flex-1 data-[state=active]:bg-amber-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
                   <BarChart3 className="w-3.5 h-3.5" /> Performance Audit
                 </TabsTrigger>
+                <TabsTrigger value="tasks" className="h-12 px-8 rounded-2xl flex-1 data-[state=active]:bg-amber-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest">
+                  <Briefcase className="w-3.5 h-3.5" /> Missions & Tasks
+                </TabsTrigger>
               </TabsList>
             </div>
 
             <div className="min-h-[400px]">
               <TabsContent value="roster" className="mt-0">
-                <Card className="glass border-white/5">
-                   <CardHeader>
-                     <CardTitle className="text-xl font-black uppercase tracking-widest text-zinc-300">Member Lifecycle Oversight</CardTitle>
-                   </CardHeader>
-                   <CardContent>
-                      <div className="text-center py-20 italic text-zinc-600">
-                        Synchronizing real-time member metrics and authorized credentials...
-                        <div className="mt-4 text-[10px] not-italic font-black text-amber-500 uppercase tracking-[0.3em]">Module Online</div>
-                      </div>
-                   </CardContent>
-                </Card>
+                <AdminMembersManager theme="amber" />
               </TabsContent>
               <TabsContent value="audit" className="mt-0">
-                <Card className="glass border-white/5">
-                   <CardHeader>
-                     <CardTitle className="text-xl font-black uppercase tracking-widest text-zinc-300">Operational Throughput Audit</CardTitle>
-                   </CardHeader>
-                   <CardContent>
-                      <div className="text-center py-20 italic text-zinc-600">
-                        Aggregate impact analysis and collective goal tracking initialized...
-                        <div className="mt-4 text-[10px] not-italic font-black text-amber-500 uppercase tracking-[0.3em]">Deep Processing Active</div>
-                      </div>
-                   </CardContent>
-                </Card>
+                <AdminUpdatesManager theme="amber" />
+              </TabsContent>
+              <TabsContent value="tasks" className="mt-0">
+                <AdminTasksManager theme="amber" />
               </TabsContent>
             </div>
           </Tabs>

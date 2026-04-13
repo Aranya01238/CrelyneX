@@ -1,16 +1,23 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { z } from "zod";
-import { ADMIN_SESSION_COOKIE, ADMIN_SESSION_VALUE } from "@/lib/auth";
+import { 
+  ADMIN_SESSION_COOKIE, 
+  ADMIN_SESSION_VALUE,
+  HR_SESSION_COOKIE,
+  HR_SESSION_VALUE
+} from "@/lib/auth";
 import { getMembers, createMember, updateMember, deleteMember } from "@/lib/members";
 
-function isAdmin(cookieStore: Awaited<ReturnType<typeof cookies>>) {
-  return cookieStore.get(ADMIN_SESSION_COOKIE)?.value === ADMIN_SESSION_VALUE;
+function isManagement(cookieStore: Awaited<ReturnType<typeof cookies>>) {
+  const isAdmin = cookieStore.get(ADMIN_SESSION_COOKIE)?.value === ADMIN_SESSION_VALUE;
+  const isHR = cookieStore.get(HR_SESSION_COOKIE)?.value === HR_SESSION_VALUE;
+  return isAdmin || isHR;
 }
 
 export async function GET() {
   const cookieStore = await cookies();
-  if (!isAdmin(cookieStore)) {
+  if (!isManagement(cookieStore)) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
   const members = await getMembers();
@@ -28,7 +35,7 @@ const createSchema = z.object({
 
 export async function POST(request: Request) {
   const cookieStore = await cookies();
-  if (!isAdmin(cookieStore)) {
+  if (!isManagement(cookieStore)) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
@@ -64,7 +71,7 @@ const updateSchema = z.object({
 
 export async function PATCH(request: Request) {
   const cookieStore = await cookies();
-  if (!isAdmin(cookieStore)) {
+  if (!isManagement(cookieStore)) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 
@@ -89,7 +96,7 @@ export async function PATCH(request: Request) {
 
 export async function DELETE(request: Request) {
   const cookieStore = await cookies();
-  if (!isAdmin(cookieStore)) {
+  if (!isManagement(cookieStore)) {
     return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
   }
 

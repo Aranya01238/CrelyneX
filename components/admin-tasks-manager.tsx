@@ -16,7 +16,15 @@ const initialTaskForm = {
   points: 1,
 };
 
-export default function AdminTasksManager() {
+export default function AdminTasksManager({ theme = "red" }: { theme?: "red" | "amber" }) {
+  const accentColor = theme === "red" ? "purple-500" : "amber-500";
+  const focusColor = theme === "red" ? "focus:border-purple-500" : "focus:border-amber-500";
+  const buttonColor = theme === "red" ? "bg-purple-600 hover:bg-purple-500" : "bg-amber-600 hover:bg-amber-500";
+  const iconColor = theme === "red" ? "text-purple-500" : "text-amber-500";
+  const badgeColor = theme === "red" ? "bg-purple-500/10 text-purple-400" : "bg-amber-500/10 text-amber-500";
+  const hoverColor = theme === "red" ? "hover:text-purple-500" : "hover:text-amber-500";
+  const selectFocus = theme === "red" ? "focus:bg-purple-500/10" : "focus:bg-amber-500/10";
+  
   const [tasks, setTasks] = useState<Task[]>([]);
   const [members, setMembers] = useState<Member[]>([]);
   const [form, setForm] = useState(initialTaskForm);
@@ -112,7 +120,7 @@ export default function AdminTasksManager() {
         <Card className="lg:col-span-5 border-white/5 bg-background shadow-2xl rounded-[32px] overflow-hidden">
           <CardHeader className="p-8 pb-4">
             <CardTitle className="text-2xl font-black text-white flex items-center gap-3">
-              <Send className="w-6 h-6 text-purple-500" /> Assign Mission
+              <Send className={`w-6 h-6 ${iconColor}`} /> Assign Mission
             </CardTitle>
           </CardHeader>
           <CardContent className="p-8 pt-4">
@@ -124,12 +132,12 @@ export default function AdminTasksManager() {
                     value={form.toMemberId} 
                     onValueChange={val => setForm(f => ({ ...f, toMemberId: val }))}
                   >
-                    <SelectTrigger className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl">
+                    <SelectTrigger className={`h-12 bg-white/5 border-white/5 ${focusColor} rounded-xl`}>
                       <SelectValue placeholder="Select Recipient" />
                     </SelectTrigger>
                     <SelectContent className="bg-[#0a0a0a] border-white/10">
                       {members.map(m => (
-                        <SelectItem key={m.id} value={m.id} className="focus:bg-purple-500/10 focus:text-white">{m.name}</SelectItem>
+                        <SelectItem key={m.id} value={m.id} className={`${selectFocus} focus:text-white`}>{m.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -140,7 +148,7 @@ export default function AdminTasksManager() {
                     value={form.title}
                     onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
                     placeholder="Short task summary"
-                    className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl"
+                    className={`h-12 bg-white/5 border-white/5 ${focusColor} rounded-xl`}
                     required
                   />
                 </div>
@@ -150,7 +158,7 @@ export default function AdminTasksManager() {
                     value={String(form.points)} 
                     onValueChange={val => setForm(f => ({ ...f, points: Number(val) }))}
                   >
-                    <SelectTrigger className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl">
+                    <SelectTrigger className={`h-12 bg-white/5 border-white/5 ${focusColor} rounded-xl`}>
                       <SelectValue placeholder="Select Point Value" />
                     </SelectTrigger>
                     <SelectContent className="bg-[#0a0a0a] border-white/10">
@@ -166,15 +174,15 @@ export default function AdminTasksManager() {
                     value={form.description}
                     onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
                     placeholder="Detailed requirements and deliverables"
-                    className="min-h-[140px] bg-white/5 border-white/5 focus:border-purple-500 rounded-2xl resize-none"
+                    className={`min-h-[140px] bg-white/5 border-white/5 ${focusColor} rounded-2xl resize-none`}
                     required
                   />
                 </div>
               </div>
 
-              {error && <p className="text-xs text-purple-500 font-bold bg-purple-500/10 p-3 rounded-xl">{error}</p>}
+              {error && <p className={`text-xs ${iconColor} font-bold bg-white/5 p-3 rounded-xl`}>{error}</p>}
               
-              <Button type="submit" disabled={isSubmitting} className="w-full h-14 bg-purple-600 hover:bg-purple-500 text-white font-black text-lg rounded-2xl">
+              <Button type="submit" disabled={isSubmitting} className={`w-full h-14 ${buttonColor} text-white font-black text-lg rounded-2xl`}>
                 {isSubmitting ? <Loader2 className="animate-spin" /> : "Deploy Task Command"}
               </Button>
             </form>
@@ -198,10 +206,10 @@ export default function AdminTasksManager() {
                     <div className="flex items-center gap-2">
                       <h4 className="text-lg font-bold text-white">{task.title}</h4>
                       {task.status === "done" && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
-                      <span className="px-1.5 py-0.5 rounded-md bg-purple-500/10 text-purple-400 text-[10px] font-black">{task.points} PTS</span>
+                      <span className={`px-1.5 py-0.5 rounded-md ${badgeColor} text-[10px] font-black`}>{task.points} PTS</span>
                     </div>
                     <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase">
-                      To <span className="text-purple-500/80">{task.toMemberName}</span>
+                      To <span className={`text-${accentColor}/80`}>{task.toMemberName}</span>
                       <div className="h-3 w-px bg-white/10" />
                       {new Date(task.assignedAt).toLocaleDateString()}
                     </div>
@@ -214,11 +222,11 @@ export default function AdminTasksManager() {
                       </div>
                     )}
                     <div className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${
-                      task.status === "done" ? "bg-emerald-500/10 text-emerald-500" : (task.memberMarkedDone ? "bg-purple-500/20 text-purple-300" : "bg-zinc-500/10 text-zinc-500")
+                      task.status === "done" ? "bg-emerald-500/10 text-emerald-500" : (task.memberMarkedDone ? `bg-${accentColor}/20 text-${accentColor}/80` : "bg-zinc-500/10 text-zinc-500")
                     }`}>
                       {task.status === "done" ? "Approved" : (task.memberMarkedDone ? "Awaiting Approval" : "InProgress")}
                     </div>
-                    <Button onClick={() => handleDelete(task.id)} variant="outline" size="icon" className="h-8 w-8 rounded-lg border-white/5 glass text-zinc-500 hover:text-purple-500">
+                    <Button onClick={() => handleDelete(task.id)} variant="outline" size="icon" className={`h-8 w-8 rounded-lg border-white/5 glass text-zinc-500 ${hoverColor}`}>
                       <Trash2 className="w-3.5 h-3.5" />
                     </Button>
                   </div>

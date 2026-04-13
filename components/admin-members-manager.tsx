@@ -15,7 +15,15 @@ const initialMemberForm = {
   portals: [] as MemberPortal[],
 };
 
-export default function AdminMembersManager() {
+export default function AdminMembersManager({ theme = "red" }: { theme?: "red" | "amber" }) {
+  const accentColor = theme === "red" ? "red-500" : "amber-500";
+  const focusColor = theme === "red" ? "focus:border-purple-500" : "focus:border-amber-500";
+  const buttonColor = theme === "red" ? "bg-purple-600 hover:bg-purple-500" : "bg-amber-600 hover:bg-amber-500";
+  const iconColor = theme === "red" ? "text-purple-500" : "text-amber-500";
+  const ringColor = theme === "red" ? "ring-purple-500/50" : "ring-amber-500/50";
+  const avatarColor = theme === "red" ? "border-purple-500/20 bg-purple-500/10 text-purple-500" : "border-amber-500/20 bg-amber-500/10 text-amber-500";
+  const badgeColor = theme === "red" ? "text-purple-500 bg-purple-500/10" : "text-amber-500 bg-amber-500/10";
+  
   const [members, setMembers] = useState<Member[]>([]);
   const [form, setForm] = useState(initialMemberForm);
   const [editingMemberId, setEditingMemberId] = useState<string | null>(null);
@@ -117,13 +125,13 @@ export default function AdminMembersManager() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         
         {/* Create/Edit Form */}
-        <Card className={`lg:col-span-5 border-white/5 bg-background shadow-2xl rounded-[32px] overflow-hidden transition-all duration-300 ${editingMemberId ? 'ring-2 ring-emerald-500/50' : ''}`}>
+        <Card className={`lg:col-span-5 border-white/5 bg-background shadow-2xl rounded-[32px] overflow-hidden transition-all duration-300 ${editingMemberId ? ringColor : ''}`}>
           <CardHeader className="p-8 pb-4 flex flex-row items-center justify-between">
             <CardTitle className="text-2xl font-black text-white flex items-center gap-3">
               {editingMemberId ? (
-                <><Pencil className="w-6 h-6 text-emerald-500" /> Edit Member Profile</>
+                <><Pencil className={`w-6 h-6 text-emerald-500`} /> Edit Member Profile</>
               ) : (
-                <><UserPlus className="w-6 h-6 text-purple-500" /> Register Member</>
+                <><UserPlus className={`w-6 h-6 ${iconColor}`} /> Register Member</>
               )}
             </CardTitle>
             {editingMemberId && (
@@ -187,9 +195,9 @@ export default function AdminMembersManager() {
                 </div>
               </div>
 
-              {error && <p className="text-xs text-purple-500 font-bold bg-purple-500/10 p-3 rounded-xl">{error}</p>}
+              {error && <p className={`text-xs ${iconColor} font-bold bg-white/5 p-3 rounded-xl`}>{error}</p>}
               
-              <Button type="submit" disabled={isSubmitting} className={`w-full h-14 text-white font-black text-lg rounded-2xl transition-colors ${editingMemberId ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-purple-600 hover:bg-purple-500'}`}>
+              <Button type="submit" disabled={isSubmitting} className={`w-full h-14 text-white font-black text-lg rounded-2xl transition-colors ${editingMemberId ? 'bg-emerald-600 hover:bg-emerald-500' : buttonColor}`}>
                 {isSubmitting ? <Loader2 className="animate-spin" /> : (editingMemberId ? "Save Member Settings" : "Authorize New Member")}
               </Button>
             </form>
@@ -218,7 +226,7 @@ export default function AdminMembersManager() {
                       <span className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">{member.id}</span>
                       <div className="h-4 w-px bg-white/10" />
                       {member.portals.map(p => (
-                        <span key={p} className="text-[8px] font-black uppercase tracking-widest text-purple-500 bg-purple-500/10 px-2 py-0.5 rounded-full">{p}</span>
+                        <span key={p} className={`text-[8px] font-black uppercase tracking-widest ${badgeColor} px-2 py-0.5 rounded-full`}>{p}</span>
                       ))}
                       
                       {member.lastLoginAt ? (
