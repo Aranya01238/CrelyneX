@@ -11,6 +11,7 @@ export type Member = {
   portals: MemberPortal[];
   createdAt: string;
   lastLoginAt?: string;
+  creditPoints?: number; // Migration: older members might not have this
 };
 
 export type Task = {
@@ -21,6 +22,8 @@ export type Task = {
   description: string;
   assignedAt: string;
   status: "pending" | "done";
+  points: number;
+  memberMarkedDone: boolean;
 };
 
 const MEMBERS_FILE = path.join(process.cwd(), "data", "members.json");
@@ -68,7 +71,9 @@ export async function getMembers(): Promise<Member[]> {
   await ensureFile(MEMBERS_FILE, []);
   try {
     const raw = await fs.readFile(MEMBERS_FILE, "utf8");
-    return JSON.parse(raw) as Member[];
+    const members = JSON.parse(raw) as Member[];
+    // Initial Migration: set creditPoints to 0 if missing
+    return members.map(m => ({ ...m, creditPoints: m.creditPoints ?? 0 }));
   } catch {
     return [];
   }
@@ -76,7 +81,22 @@ export async function getMembers(): Promise<Member[]> {
 
 export async function getMember(id: string): Promise<Member | null> {
   const members = await getMembers();
-  return members.find((m) => m.id === id) ?? null;
+  const member = members.find((m) => m.id === id);
+  if (!member) return null;
+
+  // Retroactive Migration: if creditPoints is specifically undefined and they have done tasks
+  if (member.creditPoints === undefined || member.creditPoints === 0) {
+    const tasks = await getTasks();
+    const memberTasks = tasks.filter(t => t.toMemberId === id && t.status === "done");
+    const totalPoints = memberTasks.reduce((sum, t) => sum + (t.points || 1), 0);
+    
+    if (totalPoints > 0) {
+      member.creditPoints = totalPoints;
+      await saveMembers(members);
+    }
+  }
+
+  return member;
 }
 
 export async function saveMembers(members: Member[]) {
@@ -145,7 +165,13 @@ export async function getTasks(): Promise<Task[]> {
   await ensureFile(TASKS_FILE, []);
   try {
     const raw = await fs.readFile(TASKS_FILE, "utf8");
-    return JSON.parse(raw) as Task[];
+    const tasks = JSON.parse(raw) as Task[];
+    // Initial Migration: set points and memberMarkedDone if missing
+    return tasks.map(t => ({
+      ...t,
+      points: t.points ?? 1,
+      memberMarkedDone: t.memberMarkedDone ?? (t.status === "done")
+    }));
   } catch {
     return [];
   }
@@ -183,22 +209,24 @@ export async function createTask(
     id: `task_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
     assignedAt: new Date().toISOString(),
     status: "pending",
+    points: (data as any).points || 1,
+    memberMarkedDone: false,
   };
   tasks.push(newTask);
   await saveTasks(tasks);
   return newTask;
 }
 
-export async function updateTaskStatus(
+export async function updateTask(
   id: string,
-  status: "pending" | "done"
-): Promise<boolean> {
+  updates: Partial<Omit<Task, "id">>
+): Promise<Task | null> {
   const tasks = await getTasks();
   const idx = tasks.findIndex((t) => t.id === id);
-  if (idx === -1) return false;
-  tasks[idx].status = status;
+  if (idx === -1) return null;
+  tasks[idx] = { ...tasks[idx], ...updates };
   await saveTasks(tasks);
-  return true;
+  return tasks[idx];
 }
 
 export async function deleteTask(id: string): Promise<boolean> {

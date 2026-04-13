@@ -21,9 +21,8 @@ import { cn } from "@/lib/utils";
 import type { Task } from "@/lib/members";
 
 export default function MemberPage() {
-  const [name, setName] = useState("");
-  const [portals, setPortals] = useState<string[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [creditPoints, setCreditPoints] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -37,22 +36,45 @@ export default function MemberPage() {
     const portalStr = getCookie("crelynex-member-portals");
     setPortals(portalStr ? portalStr.split(",") : []);
 
-    const loadTasks = async () => {
+    const loadData = async () => {
       try {
-        const res = await fetch("/api/admin/tasks");
-        if (res.ok) {
-          const data = await res.json();
+        const [tasksRes, profileRes] = await Promise.all([
+          fetch("/api/admin/tasks"),
+          fetch("/api/member/profile")
+        ]);
+        if (tasksRes.ok) {
+          const data = await tasksRes.json();
           setTasks(data);
         }
+        if (profileRes.ok) {
+          const data = await profileRes.json();
+          setCreditPoints(data.creditPoints || 0);
+        }
       } catch (err) {
-        console.error("Task load error");
+        console.error("Data load error");
       } finally {
         setIsLoading(false);
       }
     };
 
-    loadTasks();
+    loadData();
   }, []);
+
+  const handleMarkFinished = async (id: string) => {
+    try {
+      const res = await fetch("/api/member/tasks", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (res.ok) {
+        // Optimistic update
+        setTasks(prev => prev.map(t => t.id === id ? { ...t, memberMarkedDone: true } : t));
+      }
+    } catch (err) {
+      console.error("Update error");
+    }
+  };
 
   const portalCards = [
     {
@@ -100,13 +122,20 @@ export default function MemberPage() {
             Your centralized node for accessing CrelyneX resources, tracking mission objectives, and managing digital growth.
           </p>
         </div>
-        <div className="hidden lg:flex items-center gap-4 glass p-4 rounded-[28px] border-white/5">
-          <div className="h-12 w-12 rounded-2xl glass-red flex items-center justify-center text-red-500 font-black">
-            {name.charAt(0)}
+        <div className="hidden lg:flex items-center gap-6 glass p-4 rounded-[32px] border-white/5">
+          <div className="text-right">
+            <div className="text-[10px] font-black text-purple-400 uppercase tracking-[0.3em] mb-1">Mission Credits</div>
+            <div className="text-3xl font-black text-white">{creditPoints}</div>
           </div>
-          <div className="pr-4">
-            <div className="text-xs font-black text-white uppercase tracking-widest">{name}</div>
-            <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Authorized Member</div>
+          <div className="h-12 w-px bg-white/10" />
+          <div className="flex items-center gap-4">
+            <div className="h-12 w-12 rounded-2xl glass-purple flex items-center justify-center text-purple-400 font-black border border-purple-500/20">
+              {name.charAt(0)}
+            </div>
+            <div className="pr-4">
+              <div className="text-xs font-black text-white uppercase tracking-widest">{name}</div>
+              <div className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Authorized Member</div>
+            </div>
           </div>
         </div>
       </div>
@@ -174,23 +203,35 @@ export default function MemberPage() {
                 </div>
               ) : (
                 tasks.map(task => (
-                  <div key={task.id} className="glass p-6 rounded-[28px] border-white/5 space-y-4 transition-all hover:bg-white/5">
-                    <div className="flex items-start justify-between">
+                  <div key={task.id} className="glass p-6 rounded-[32px] border-white/5 space-y-4 transition-all hover:bg-white/5 relative overflow-hidden group/task">
+                    <div className="flex items-start justify-between relative z-10">
                       <div className="space-y-1">
-                        <h4 className="text-sm font-black text-white uppercase tracking-wide">{task.title}</h4>
+                        <div className="flex items-center gap-3">
+                          <h4 className="text-sm font-black text-white uppercase tracking-wide">{task.title}</h4>
+                          <span className="text-[9px] font-black bg-purple-500/10 text-purple-400 px-1.5 py-0.5 rounded border border-purple-500/10">{task.points} CP</span>
+                        </div>
                         <span className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest">
                           Assigned {new Date(task.assignedAt).toLocaleDateString()}
                         </span>
                       </div>
                       <div className={`px-2 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${
-                        task.status === "done" ? "bg-emerald-500/10 text-emerald-500" : "bg-red-500/10 text-red-500"
+                        task.status === "done" ? "bg-emerald-500/10 text-emerald-500" : (task.memberMarkedDone ? "bg-purple-500/20 text-purple-300" : "bg-red-500/10 text-red-500")
                       }`}>
-                        {task.status}
+                        {task.status === "done" ? "Approved" : (task.memberMarkedDone ? "Awaiting Approval" : "Pending")}
                       </div>
                     </div>
-                    <p className="text-xs text-zinc-500 italic leading-relaxed line-clamp-2">
+                    <p className="text-xs text-zinc-500 italic leading-relaxed line-clamp-2 relative z-10">
                       "{task.description}"
                     </p>
+                    
+                    {task.status === "pending" && !task.memberMarkedDone && (
+                      <Button 
+                        onClick={() => handleMarkFinished(task.id)}
+                        className="w-full h-10 bg-purple-600/10 hover:bg-purple-600 border border-purple-500/20 hover:border-purple-600 text-purple-400 hover:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all duration-300 relative z-10"
+                      >
+                        Declare Mission Finished
+                      </Button>
+                    )}
                   </div>
                 ))
               )}

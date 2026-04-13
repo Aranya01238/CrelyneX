@@ -13,6 +13,7 @@ const initialTaskForm = {
   toMemberId: "",
   title: "",
   description: "",
+  points: 1,
 };
 
 export default function AdminTasksManager() {
@@ -55,7 +56,7 @@ export default function AdminTasksManager() {
       const response = await fetch("/api/admin/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...payload, points: Number(payload.points) }),
       });
       if (!response.ok) throw new Error("Create failed.");
       setForm(initialTaskForm);
@@ -65,6 +66,28 @@ export default function AdminTasksManager() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleApprove = async (id: string) => {
+    try {
+      const resp = await fetch("/api/admin/tasks", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, action: "approve" }),
+      });
+      if (resp.ok) await loadData();
+    } catch (err) { setError("Approve failed."); }
+  };
+
+  const handleReject = async (id: string) => {
+    try {
+      const resp = await fetch("/api/admin/tasks", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, action: "reject" }),
+      });
+      if (resp.ok) await loadData();
+    } catch (err) { setError("Reject failed."); }
   };
 
   const handleDelete = async (id: string) => {
@@ -122,14 +145,24 @@ export default function AdminTasksManager() {
                   />
                 </div>
                 <div className="space-y-2">
+                  <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Mission Complexity / Points</label>
+                  <Select 
+                    value={String(form.points)} 
+                    onValueChange={val => setForm(f => ({ ...f, points: Number(val) }))}
+                  >
+                    <SelectTrigger className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl">
+                      <SelectValue placeholder="Select Point Value" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[#0a0a0a] border-white/10">
+                      <SelectItem value="1" className="focus:bg-purple-500/10">1 Credit - Base Level</SelectItem>
+                      <SelectItem value="2" className="focus:bg-purple-500/10">2 Credits - Advanced</SelectItem>
+                      <SelectItem value="3" className="focus:bg-purple-500/10">3 Credits - Elite/Difficult</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
                   <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Mission Parameters</label>
-                  <Textarea 
-                    value={form.description}
-                    onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                    placeholder="Detailed requirements and deliverables"
-                    className="min-h-[140px] bg-white/5 border-white/5 focus:border-purple-500 rounded-2xl resize-none"
-                    required
-                  />
+                  <Textarea ... />
                 </div>
               </div>
 
@@ -159,6 +192,7 @@ export default function AdminTasksManager() {
                     <div className="flex items-center gap-2">
                       <h4 className="text-lg font-bold text-white">{task.title}</h4>
                       {task.status === "done" && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
+                      <span className="px-1.5 py-0.5 rounded-md bg-purple-500/10 text-purple-400 text-[10px] font-black">{task.points} PTS</span>
                     </div>
                     <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase">
                       To <span className="text-purple-500/80">{task.toMemberName}</span>
@@ -167,10 +201,16 @@ export default function AdminTasksManager() {
                     </div>
                   </div>
                   <div className="flex gap-2">
+                    {task.status === "pending" && task.memberMarkedDone && (
+                      <div className="flex gap-1">
+                        <Button onClick={() => handleApprove(task.id)} size="sm" className="h-8 bg-purple-600 hover:bg-purple-500 text-white text-[10px] font-black rounded-lg">APPROVE</Button>
+                        <Button onClick={() => handleReject(task.id)} size="sm" variant="outline" className="h-8 border-white/10 text-zinc-400 text-[10px] font-black rounded-lg">REJECT</Button>
+                      </div>
+                    )}
                     <div className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${
-                      task.status === "done" ? "bg-emerald-500/10 text-emerald-500" : "bg-purple-500/10 text-purple-500"
+                      task.status === "done" ? "bg-emerald-500/10 text-emerald-500" : (task.memberMarkedDone ? "bg-purple-500/20 text-purple-300" : "bg-zinc-500/10 text-zinc-500")
                     }`}>
-                      {task.status}
+                      {task.status === "done" ? "Approved" : (task.memberMarkedDone ? "Awaiting Approval" : "InProgress")}
                     </div>
                     <Button onClick={() => handleDelete(task.id)} variant="outline" size="icon" className="h-8 w-8 rounded-lg border-white/5 glass text-zinc-500 hover:text-purple-500">
                       <Trash2 className="w-3.5 h-3.5" />

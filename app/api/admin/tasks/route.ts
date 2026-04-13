@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { z } from "zod";
 import { ADMIN_SESSION_COOKIE, ADMIN_SESSION_VALUE } from "@/lib/auth";
-import { getTasks, createTask, updateTaskStatus, deleteTask, getTasksForMember } from "@/lib/members";
+import { getTasks, createTask, updateTask, deleteTask, getTasksForMember, updateMember, getMember } from "@/lib/members";
 import { MEMBER_SESSION_COOKIE, MEMBER_SESSION_VALUE, MEMBER_ID_COOKIE } from "@/lib/auth";
 
 function isAdmin(cookieStore: Awaited<ReturnType<typeof cookies>>) {
@@ -43,6 +43,7 @@ const createSchema = z.object({
   toMemberName: z.string().min(1),
   title: z.string().min(1),
   description: z.string().min(1),
+  points: z.number().min(1).max(3),
 });
 
 export async function POST(request: Request) {
@@ -71,15 +72,47 @@ export async function PATCH(request: Request) {
   }
 
   try {
-    const body = (await request.json()) as { id?: string; status?: "pending" | "done" };
-    if (!body.id || !body.status) {
-      return NextResponse.json({ error: "Missing id or status." }, { status: 400 });
+    const body = (await request.json()) as { 
+      id?: string; 
+      action?: "approve" | "reject" | "update_status";
+      status?: "pending" | "done";
+    };
+
+    if (!body.id) return NextResponse.json({ error: "Missing id." }, { status: 400 });
+
+    const tasks = await getTasks();
+    const task = tasks.find(t => t.id === body.id);
+    if (!task) return NextResponse.json({ error: "Task not found." }, { status: 404 });
+
+    if (body.action === "approve") {
+      // Approve: Award points to member and set status to done
+      const updated = await updateTask(body.id, { status: "done", memberMarkedDone: true });
+      if (updated) {
+        const member = await getMember(task.toMemberId);
+        if (member) {
+          await updateMember(task.toMemberId, { 
+            creditPoints: (member.creditPoints || 0) + task.points 
+          });
+        }
+      }
+      return NextResponse.json({ ok: true });
     }
-    const ok = await updateTaskStatus(body.id, body.status);
-    if (!ok) return NextResponse.json({ error: "Task not found." }, { status: 404 });
-    return NextResponse.json({ ok: true });
+
+    if (body.action === "reject") {
+      // Reject: Reset memberMarkedDone, keep status pending
+      await updateTask(body.id, { memberMarkedDone: false, status: "pending" });
+      return NextResponse.json({ ok: true });
+    }
+
+    // Default status update (legacy or direct admin set)
+    if (body.status) {
+      await updateTask(body.id, { status: body.status });
+      return NextResponse.json({ ok: true });
+    }
+
+    return NextResponse.json({ error: "Invalid action." }, { status: 400 });
   } catch {
-    return NextResponse.json({ error: "Failed to update task." }, { status: 500 });
+    return NextResponse.json({ error: "Failed to process task update." }, { status: 500 });
   }
 }
 
