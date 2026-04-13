@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/components/header";
 import Footer from "@/components/footer";
 import Image from "next/image";
 import {
@@ -109,7 +108,7 @@ export default function AboutPage() {
       <div className="pointer-events-none fixed top-0 right-0 h-125 w-125 rounded-full bg-red-900/10 blur-[120px]" />
       <div className="pointer-events-none fixed bottom-0 left-0 h-125 w-125 rounded-full bg-red-950/10 blur-[120px]" />
 
-      <Header />
+
 
       <main className="flex-1 relative z-10">
         {/* Hero Section */}

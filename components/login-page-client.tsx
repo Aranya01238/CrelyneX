@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -47,21 +46,21 @@ export default function LoginPageClient() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white flex flex-col noise overflow-hidden">
-      <Header />
+
 
       <main className="flex-1 flex items-center justify-center p-6 relative">
         {/* Background Glowing Effects */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-950/10 blur-[160px] rounded-full pointer-events-none" />
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-red-600/5 blur-[120px] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-950/10 blur-[160px] rounded-full pointer-events-none" />
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-purple-600/5 blur-[120px] rounded-full" />
         <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-600/5 blur-[120px] rounded-full" />
 
         <section className="w-full max-w-xl reveal-scale">
           <Card className="border-white/10 bg-black/40 backdrop-blur-2xl rounded-[40px] shadow-[0_32px_80px_rgba(0,0,0,0.8)] overflow-hidden">
-            <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-red-600 via-red-400 to-red-800" />
+            <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-purple-600 via-purple-400 to-purple-800" />
             
             <CardHeader className="pt-12 pb-8 text-center space-y-4">
-              <div className="mx-auto w-16 h-16 rounded-2xl glass-red flex items-center justify-center mb-4">
-                <ShieldCheck className="w-8 h-8 text-red-500" />
+              <div className="mx-auto w-16 h-16 rounded-2xl border border-purple-500/20 bg-purple-500/10 flex items-center justify-center mb-4">
+                <ShieldCheck className="w-8 h-8 text-purple-500" />
               </div>
               <div className="space-y-1">
                 <p className="text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-bold">Secure Gateway</p>
@@ -84,7 +83,7 @@ export default function LoginPageClient() {
                       Identity ID
                     </label>
                     <div className="relative group">
-                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-red-500 transition-colors">
+                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-purple-500 transition-colors">
                         <User className="w-4 h-4" />
                       </div>
                       <Input
@@ -94,7 +93,7 @@ export default function LoginPageClient() {
                         placeholder="e.g. jdoe_77"
                         autoComplete="username"
                         required
-                        className="h-14 pl-12 rounded-2xl border-white/5 bg-white/3 focus:bg-white/5 focus:border-red-500/50 transition-all text-white placeholder:text-zinc-600"
+                        className="h-14 pl-12 rounded-2xl border-white/5 bg-white/3 focus:bg-white/5 focus:border-purple-500/50 transition-all text-white placeholder:text-zinc-600"
                       />
                     </div>
                   </div>
@@ -107,7 +106,7 @@ export default function LoginPageClient() {
                       </label>
                     </div>
                     <div className="relative group">
-                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-red-500 transition-colors">
+                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-purple-500 transition-colors">
                         <Lock className="w-4 h-4" />
                       </div>
                       <Input
@@ -118,7 +117,7 @@ export default function LoginPageClient() {
                         placeholder="••••••••"
                         autoComplete="current-password"
                         required
-                        className="h-14 pl-12 rounded-2xl border-white/5 bg-white/3 focus:bg-white/5 focus:border-red-500/50 transition-all text-white placeholder:text-zinc-600"
+                        className="h-14 pl-12 rounded-2xl border-white/5 bg-white/3 focus:bg-white/5 focus:border-purple-500/50 transition-all text-white placeholder:text-zinc-600"
                       />
                     </div>
                   </div>
@@ -126,8 +125,8 @@ export default function LoginPageClient() {
                 </div>
 
                 {message ? (
-                  <div className="rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-xs font-bold text-red-500 flex items-center gap-3 animate-fade-in-down">
-                    <div className="w-1 h-1 rounded-full bg-red-500" />
+                  <div className="rounded-2xl border border-purple-500/20 bg-purple-500/10 px-4 py-3 text-xs font-bold text-purple-500 flex items-center gap-3 animate-fade-in-down">
+                    <div className="w-1 h-1 rounded-full bg-purple-500" />
                     {message}
                   </div>
                 ) : null}

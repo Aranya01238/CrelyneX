@@ -91,11 +91,11 @@ export default function GraphicsPortalClient() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 reveal">
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 glass-red rounded-full px-4 py-1.5 text-[10px] font-bold tracking-[0.3em] text-red-500 uppercase">
+          <div className="inline-flex items-center gap-2 border border-purple-500/20 bg-purple-500/10 rounded-full px-4 py-1.5 text-[10px] font-bold tracking-[0.3em] text-purple-400 uppercase">
             <UploadCloud className="w-3 h-3" /> Shared Creative Hub
           </div>
           <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tighter">
-            Graphics <span className="text-gradient-red">Vault</span>
+            Graphics <span className="text-gradient-purple">Vault</span>
           </h1>
           <p className="text-zinc-500 text-sm sm:text-base font-medium max-w-2xl">
             A secure distributed storage for CrelyneX promotional content. Upload, preview, and synchronize posters and video assets.
@@ -109,7 +109,7 @@ export default function GraphicsPortalClient() {
         <Card className="lg:col-span-4 border-white/5 bg-background shadow-2xl rounded-[32px] overflow-hidden reveal-left delay-100">
           <CardHeader className="p-8 pb-4 border-b border-white/5">
             <CardTitle className="text-xl font-black text-white flex items-center gap-3">
-              <Plus className="w-5 h-5 text-red-500" /> New Submission
+              <Plus className="w-5 h-5 text-purple-500" /> New Submission
             </CardTitle>
           </CardHeader>
           <CardContent className="p-8 space-y-6 pt-6">
@@ -121,7 +121,7 @@ export default function GraphicsPortalClient() {
                     value={form.type} 
                     onValueChange={val => setForm(f => ({ ...f, type: val as "poster" | "video" }))}
                   >
-                    <SelectTrigger className="h-12 bg-white/5 border-white/5 focus:border-red-500 rounded-xl">
+                    <SelectTrigger className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-[#0a0a0a] border-white/10">
@@ -136,7 +136,7 @@ export default function GraphicsPortalClient() {
                     value={form.title}
                     onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
                     placeholder="Brief identifying name"
-                    className="h-12 bg-white/5 border-white/5 focus:border-red-500 rounded-xl"
+                    className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl"
                     required
                   />
                 </div>
@@ -146,15 +146,15 @@ export default function GraphicsPortalClient() {
                     value={form.url}
                     onChange={e => setForm(f => ({ ...f, url: e.target.value }))}
                     placeholder="Direct link to source file"
-                    className="h-12 bg-white/5 border-white/5 focus:border-red-500 rounded-xl"
+                    className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl"
                     required
                   />
                 </div>
               </div>
 
-              {error && <p className="text-[10px] text-red-500 font-bold bg-red-500/10 p-3 rounded-xl italic">{error}</p>}
+              {error && <p className="text-[10px] text-purple-500 font-bold bg-purple-500/10 p-3 rounded-xl italic">{error}</p>}
               
-              <Button type="submit" disabled={isSubmitting} className="w-full h-14 bg-red-600 hover:bg-red-500 text-white font-black text-sm rounded-2xl flex gap-2">
+              <Button type="submit" disabled={isSubmitting} className="w-full h-14 bg-purple-600 hover:bg-purple-500 text-white font-black text-sm rounded-2xl flex gap-2">
                 {isSubmitting ? <Loader2 className="animate-spin w-4 h-4" /> : <UploadCloud className="w-4 h-4" />}
                 Synchronize Asset
               </Button>
@@ -178,7 +178,7 @@ export default function GraphicsPortalClient() {
                             {upload.type === "poster" ? (
                                 <img src={upload.url} alt={upload.title} className="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-110" onError={e => e.currentTarget.src = "https://placehold.co/600x400/0a0a0a/444?text=PREVIEW_NA"} />
                             ) : (
-                                <div className="flex flex-col items-center justify-center gap-3 text-zinc-600 group-hover:text-red-500 transition-colors">
+                                <div className="flex flex-col items-center justify-center gap-3 text-zinc-600 group-hover:text-purple-500 transition-colors">
                                     <PlayCircle className="w-12 h-12" />
                                     <span className="text-[8px] font-black uppercase tracking-widest">Video Stream</span>
                                 </div>
@@ -204,7 +204,7 @@ export default function GraphicsPortalClient() {
                                     </div>
                                 </div>
                                 {upload.uploadedBy === memberId && (
-                                    <Button onClick={() => handleDelete(upload.id)} variant="outline" size="icon" className="h-8 w-8 rounded-lg border-white/5 glass text-zinc-500 hover:text-red-500">
+                                    <Button onClick={() => handleDelete(upload.id)} variant="outline" size="icon" className="h-8 w-8 rounded-lg border-white/5 glass text-zinc-500 hover:text-purple-500">
                                         <Trash2 className="w-3.5 h-3.5" />
                                     </Button>
                                 )}

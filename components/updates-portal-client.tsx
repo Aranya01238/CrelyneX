@@ -116,7 +116,7 @@ export default function UpdatesPortalClient() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <Loader2 className="w-8 h-8 text-amber-500 animate-spin" />
+        <Loader2 className="w-8 h-8 text-purple-500 animate-spin" />
       </div>
     );
   }
@@ -134,7 +134,7 @@ export default function UpdatesPortalClient() {
           </Link>
           <div>
             <h1 className="text-2xl font-black text-white flex items-center gap-2">
-              <Activity className="w-6 h-6 text-amber-500" /> Updates Feed
+              <Activity className="w-6 h-6 text-purple-500" /> Updates Feed
             </h1>
             <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest mt-1">Submit Daily Performance & Impact Metrics</p>
           </div>
@@ -148,7 +148,7 @@ export default function UpdatesPortalClient() {
               <form onSubmit={handleSubmit} className="space-y-8">
                 
                 <div className="space-y-4">
-                  <h3 className="text-sm font-black text-amber-500 uppercase tracking-widest border-b border-amber-500/20 pb-2">Social Impact</h3>
+                  <h3 className="text-sm font-black text-purple-500 uppercase tracking-widest border-b border-purple-500/20 pb-2">Social Impact</h3>
                   
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Instagram Update</label>
@@ -158,7 +158,7 @@ export default function UpdatesPortalClient() {
                       value={instagramCount || ""}
                       onChange={e => setInstagramCount(parseInt(e.target.value) || 0)}
                       placeholder="Add Daily Number"
-                      className="h-12 bg-white/5 border-white/5 focus:border-amber-500 rounded-xl"
+                      className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl"
                       required
                     />
                   </div>
@@ -171,16 +171,16 @@ export default function UpdatesPortalClient() {
                       value={facebookCount || ""}
                       onChange={e => setFacebookCount(parseInt(e.target.value) || 0)}
                       placeholder="Add Daily Number"
-                      className="h-12 bg-white/5 border-white/5 focus:border-amber-500 rounded-xl"
+                      className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl"
                       required
                     />
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between border-b border-amber-500/20 pb-2">
-                    <h3 className="text-sm font-black text-amber-500 uppercase tracking-widest">Events Impact</h3>
-                    <Button type="button" onClick={addEventEntry} variant="ghost" size="sm" className="h-6 px-2 text-amber-500 hover:bg-amber-500/10 hover:text-amber-400 rounded-md">
+                  <div className="flex items-center justify-between border-b border-purple-500/20 pb-2">
+                    <h3 className="text-sm font-black text-purple-500 uppercase tracking-widest">Events Impact</h3>
+                    <Button type="button" onClick={addEventEntry} variant="ghost" size="sm" className="h-6 px-2 text-purple-500 hover:bg-purple-500/10 hover:text-purple-400 rounded-md">
                       <Plus className="w-4 h-4 mr-1" /> Add
                     </Button>
                   </div>
@@ -216,7 +216,7 @@ export default function UpdatesPortalClient() {
                           min={0}
                           value={entry.count || ""}
                           onChange={e => updateEventEntry(idx, "count", parseInt(e.target.value) || 0)}
-                          className="h-10 bg-black/40 border-white/5 focus:border-amber-500 rounded-lg text-xs"
+                          className="h-10 bg-black/40 border-white/5 focus:border-purple-500 rounded-lg text-xs"
                           required
                         />
                       </div>
@@ -229,7 +229,7 @@ export default function UpdatesPortalClient() {
 
                 {error && <p className="text-xs text-red-500 font-bold bg-red-500/10 p-3 rounded-xl">{error}</p>}
                 
-                <Button type="submit" disabled={isSubmitting} className="w-full h-14 bg-amber-600 hover:bg-amber-500 text-white font-black text-lg rounded-2xl">
+                <Button type="submit" disabled={isSubmitting} className="w-full h-14 bg-purple-600 hover:bg-purple-500 text-white font-black text-lg rounded-2xl">
                   {isSubmitting ? <Loader2 className="animate-spin" /> : "File Daily Report"}
                 </Button>
               </form>
@@ -246,7 +246,7 @@ export default function UpdatesPortalClient() {
               {logs.map(log => (
                 <div key={log.id} className="glass p-6 rounded-[28px] border-white/5 space-y-4 transition-all hover:bg-white/5 group">
                   <div className="flex justify-between items-start">
-                    <span className="text-xs font-black text-amber-500 uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full">
+                    <span className="text-xs font-black text-purple-500 uppercase tracking-widest bg-purple-500/10 px-3 py-1 rounded-full">
                       {log.date}
                     </span>
                   </div>
@@ -264,7 +264,7 @@ export default function UpdatesPortalClient() {
 
                   {log.events.length > 0 && (
                     <div className="space-y-2">
-                      <div className="text-[10px] text-amber-500 uppercase font-black tracking-widest">Events Updated</div>
+                      <div className="text-[10px] text-purple-500 uppercase font-black tracking-widest">Events Updated</div>
                       <div className="grid gap-2">
                         {log.events.map((ev, i) => (
                           <div key={i} className="flex justify-between items-center bg-black/30 p-3 rounded-xl">

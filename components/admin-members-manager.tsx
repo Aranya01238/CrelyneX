@@ -123,7 +123,7 @@ export default function AdminMembersManager() {
               {editingMemberId ? (
                 <><Pencil className="w-6 h-6 text-emerald-500" /> Edit Member Profile</>
               ) : (
-                <><UserPlus className="w-6 h-6 text-red-500" /> Register Member</>
+                <><UserPlus className="w-6 h-6 text-purple-500" /> Register Member</>
               )}
             </CardTitle>
             {editingMemberId && (
@@ -141,7 +141,7 @@ export default function AdminMembersManager() {
                     value={form.name}
                     onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                     placeholder="Full Business Name"
-                    className="h-12 bg-white/5 border-white/5 focus:border-red-500 rounded-xl"
+                    className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl"
                     required
                   />
                 </div>
@@ -151,7 +151,7 @@ export default function AdminMembersManager() {
                     value={form.id}
                     onChange={e => setForm(f => ({ ...f, id: e.target.value }))}
                     placeholder="Unique alphanumeric ID"
-                    className="h-12 bg-white/5 border-white/5 focus:border-red-500 rounded-xl disabled:opacity-50"
+                    className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl disabled:opacity-50"
                     required
                     disabled={!!editingMemberId} // Cannot change ID after creation
                   />
@@ -166,7 +166,7 @@ export default function AdminMembersManager() {
                     value={form.password}
                     onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
                     placeholder={editingMemberId ? "Leave blank to keep unchanged" : "Login Password"}
-                    className="h-12 bg-white/5 border-white/5 focus:border-red-500 rounded-xl"
+                    className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl"
                     required={!editingMemberId}
                   />
                 </div>
@@ -187,9 +187,9 @@ export default function AdminMembersManager() {
                 </div>
               </div>
 
-              {error && <p className="text-xs text-red-500 font-bold bg-red-500/10 p-3 rounded-xl">{error}</p>}
+              {error && <p className="text-xs text-purple-500 font-bold bg-purple-500/10 p-3 rounded-xl">{error}</p>}
               
-              <Button type="submit" disabled={isSubmitting} className={`w-full h-14 text-white font-black text-lg rounded-2xl transition-colors ${editingMemberId ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-red-600 hover:bg-red-500'}`}>
+              <Button type="submit" disabled={isSubmitting} className={`w-full h-14 text-white font-black text-lg rounded-2xl transition-colors ${editingMemberId ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-purple-600 hover:bg-purple-500'}`}>
                 {isSubmitting ? <Loader2 className="animate-spin" /> : (editingMemberId ? "Save Member Settings" : "Authorize New Member")}
               </Button>
             </form>
@@ -209,7 +209,7 @@ export default function AdminMembersManager() {
             {members.map(member => (
               <div key={member.id} className={`glass group p-6 rounded-[32px] border-white/5 flex flex-col xl:flex-row items-center justify-between gap-6 transition-all hover:bg-white/5 ${editingMemberId === member.id ? 'ring-1 ring-emerald-500/30 bg-emerald-500/5' : ''}`}>
                 <div className="flex items-center gap-5 w-full">
-                  <div className="h-16 w-16 rounded-2xl glass-red flex shrink-0 items-center justify-center text-red-500 text-xl font-black">
+                  <div className="h-16 w-16 rounded-2xl border border-purple-500/20 bg-purple-500/10 flex shrink-0 items-center justify-center text-purple-500 text-xl font-black">
                     {member.name.charAt(0)}
                   </div>
                   <div className="space-y-1">
@@ -218,7 +218,7 @@ export default function AdminMembersManager() {
                       <span className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">{member.id}</span>
                       <div className="h-4 w-px bg-white/10" />
                       {member.portals.map(p => (
-                        <span key={p} className="text-[8px] font-black uppercase tracking-widest text-red-500 bg-red-500/10 px-2 py-0.5 rounded-full">{p}</span>
+                        <span key={p} className="text-[8px] font-black uppercase tracking-widest text-purple-500 bg-purple-500/10 px-2 py-0.5 rounded-full">{p}</span>
                       ))}
                       
                       {member.lastLoginAt ? (

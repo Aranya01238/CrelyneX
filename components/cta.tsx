@@ -13,7 +13,7 @@ const features = [
 ];
 
 const stats = [
-  { value: "500+", label: "Active Members", color: "text-red-500" },
+  { value: "500+", label: "Active Members", color: "text-purple-500" },
   { value: "4", label: "Service Tracks", color: "text-purple-500" },
   { value: "∞", label: "Growth Potential", color: "text-emerald-500" },
 ];
@@ -26,13 +26,13 @@ export default function CTA() {
     >
       {/* Background Decor */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-red-950/5 blur-[160px] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-950/5 blur-[160px] rounded-full" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-purple-900/5 blur-[120px] rounded-full" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-900/5 blur-[120px] rounded-full" />
         
         {/* Particle/Dot background */}
         <div className="absolute inset-0 opacity-[0.15]" 
-             style={{ backgroundImage: 'radial-gradient(circle, #dc2626 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
+             style={{ backgroundImage: 'radial-gradient(circle, #a855f7 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
       </div>
 
       <div className="container mx-auto max-w-6xl">
@@ -41,12 +41,12 @@ export default function CTA() {
           {/* Content Side */}
           <div className="space-y-10 reveal-left">
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 glass-red rounded-full px-4 py-1.5 text-[10px] font-bold tracking-[0.2em] text-red-400 uppercase">
-                <span className="w-1 h-1 rounded-full bg-red-500 animate-pulse" /> Community
+              <div className="inline-flex items-center gap-2 border border-purple-500/20 bg-purple-500/10 rounded-full px-4 py-1.5 text-[10px] font-bold tracking-[0.2em] text-purple-400 uppercase">
+                <span className="w-1 h-1 rounded-full bg-purple-500 animate-pulse shadow-[0_0_8px_rgba(168,85,247,0.8)]" /> Community
               </div>
               <h2 className="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.05]">
                 <span className="text-white">Join the </span>
-                <span className="text-gradient-red">CrelyneX </span>
+                <span className="text-purple-500 drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]">CrelyneX </span>
                 <span className="text-white">Ecosystem</span>
               </h2>
               <p className="text-lg sm:text-xl text-zinc-400 leading-relaxed font-light">
@@ -58,8 +58,8 @@ export default function CTA() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {features.map((feature, i) => (
                 <div key={i} className="flex items-center gap-3 group">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full glass-red border-red-500/20 group-hover:border-red-500/50 transition-colors">
-                    <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-purple-500/20 bg-purple-500/5 group-hover:border-purple-500/50 transition-colors">
+                    <div className="h-1.5 w-1.5 rounded-full bg-purple-500" />
                   </div>
                   <span className="text-zinc-300 text-sm font-medium tracking-wide">{feature}</span>
                 </div>
@@ -71,7 +71,7 @@ export default function CTA() {
               <Button
                 asChild
                 size="lg"
-                className="h-14 px-10 rounded-full bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 text-white font-bold shadow-[0_0_30px_rgba(220,38,38,0.3)] hover:shadow-[0_0_45px_rgba(220,38,38,0.5)] transition-all hover:scale-105 duration-300"
+                className="h-14 px-10 rounded-full bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-500 hover:to-purple-700 text-white font-bold shadow-[0_0_30px_rgba(168,85,247,0.3)] hover:shadow-[0_0_45px_rgba(168,85,247,0.5)] transition-all hover:scale-105 duration-300"
               >
                 <a href="https://chat.whatsapp.com/KVzZksJWnJT0aJvm1fzK7W" target="_blank" rel="noopener noreferrer">
                   Join Community Now
@@ -103,13 +103,13 @@ export default function CTA() {
           {/* Card Showcase Side */}
           <div className="relative reveal-right delay-200">
             {/* Decorative Orbs */}
-            <div className="absolute -top-12 -right-12 w-32 h-32 bg-red-600/20 blur-3xl animate-pulse" />
+            <div className="absolute -top-12 -right-12 w-32 h-32 bg-purple-600/20 blur-3xl animate-pulse" />
             <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-purple-600/20 blur-3xl animate-pulse" />
 
             <Card className="relative overflow-hidden rounded-[40px] border-white/10 bg-[#0a0a0a] p-8 sm:p-12 shadow-[0_32px_80px_rgba(0,0,0,0.6)] group">
               {/* Internal Gradients */}
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-purple-500/5 opacity-50" />
-              <div className="absolute -inset-px bg-gradient-to-br from-red-500/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5 opacity-50" />
+              <div className="absolute -inset-px bg-gradient-to-br from-purple-500/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
               <div className="relative z-10 space-y-10">
                 <div className="flex items-center justify-between">
@@ -117,13 +117,13 @@ export default function CTA() {
                     <h3 className="text-3xl font-black text-white tracking-tight">CrelyneX</h3>
                     <p className="text-zinc-500 text-xs font-bold tracking-[0.2em] uppercase">Community Access</p>
                   </div>
-                  <div className="h-14 w-14 rounded-2xl glass-red flex items-center justify-center text-3xl">𝞓</div>
+                  <div className="h-14 w-14 rounded-2xl border border-purple-500/20 bg-purple-500/10 flex items-center justify-center text-3xl text-purple-500">𝞓</div>
                 </div>
 
                 {/* Highlight Boxes */}
                 <div className="space-y-4">
                   {[
-                    { icon: "👥", title: "Active Daily", sub: "Real-time discussions", color: "bg-red-500/10 text-red-500" },
+                    { icon: "👥", title: "Active Daily", sub: "Real-time discussions", color: "bg-purple-500/10 text-purple-500" },
                     { icon: "🚀", title: "Opportunities", sub: "Project collaborations", color: "bg-purple-500/10 text-purple-500" },
                     { icon: "📚", title: "Resources", sub: "Premium materials", color: "bg-emerald-500/10 text-emerald-500" },
                   ].map((item, i) => (
@@ -145,14 +145,14 @@ export default function CTA() {
                   </Button>
                   <div className="text-center">
                     <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-[0.2em]">
-                      In Association with <span className="text-red-500/80">HSS</span> & <span className="text-emerald-500/80">ZenEra</span>
+                      In Association with <span className="text-purple-500/80">HSS</span> & <span className="text-emerald-500/80">ZenEra</span>
                     </p>
                   </div>
                 </div>
               </div>
 
               {/* Decorative Corner */}
-              <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-red-600/10 to-transparent rounded-bl-[120px] transition-all group-hover:scale-110" />
+              <div className="absolute top-0 right-0 w-48 h-48 bg-gradient-to-br from-purple-600/10 to-transparent rounded-bl-[120px] transition-all group-hover:scale-110" />
             </Card>
           </div>
         </div>

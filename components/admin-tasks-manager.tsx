@@ -89,7 +89,7 @@ export default function AdminTasksManager() {
         <Card className="lg:col-span-5 border-white/5 bg-background shadow-2xl rounded-[32px] overflow-hidden">
           <CardHeader className="p-8 pb-4">
             <CardTitle className="text-2xl font-black text-white flex items-center gap-3">
-              <Send className="w-6 h-6 text-red-500" /> Assign Mission
+              <Send className="w-6 h-6 text-purple-500" /> Assign Mission
             </CardTitle>
           </CardHeader>
           <CardContent className="p-8 pt-4">
@@ -101,12 +101,12 @@ export default function AdminTasksManager() {
                     value={form.toMemberId} 
                     onValueChange={val => setForm(f => ({ ...f, toMemberId: val }))}
                   >
-                    <SelectTrigger className="h-12 bg-white/5 border-white/5 focus:border-red-500 rounded-xl">
+                    <SelectTrigger className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl">
                       <SelectValue placeholder="Select Recipient" />
                     </SelectTrigger>
                     <SelectContent className="bg-[#0a0a0a] border-white/10">
                       {members.map(m => (
-                        <SelectItem key={m.id} value={m.id} className="focus:bg-red-500/10 focus:text-white">{m.name}</SelectItem>
+                        <SelectItem key={m.id} value={m.id} className="focus:bg-purple-500/10 focus:text-white">{m.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -117,7 +117,7 @@ export default function AdminTasksManager() {
                     value={form.title}
                     onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
                     placeholder="Short task summary"
-                    className="h-12 bg-white/5 border-white/5 focus:border-red-500 rounded-xl"
+                    className="h-12 bg-white/5 border-white/5 focus:border-purple-500 rounded-xl"
                     required
                   />
                 </div>
@@ -127,15 +127,15 @@ export default function AdminTasksManager() {
                     value={form.description}
                     onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
                     placeholder="Detailed requirements and deliverables"
-                    className="min-h-[140px] bg-white/5 border-white/5 focus:border-red-500 rounded-2xl resize-none"
+                    className="min-h-[140px] bg-white/5 border-white/5 focus:border-purple-500 rounded-2xl resize-none"
                     required
                   />
                 </div>
               </div>
 
-              {error && <p className="text-xs text-red-500 font-bold bg-red-500/10 p-3 rounded-xl">{error}</p>}
+              {error && <p className="text-xs text-purple-500 font-bold bg-purple-500/10 p-3 rounded-xl">{error}</p>}
               
-              <Button type="submit" disabled={isSubmitting} className="w-full h-14 bg-red-600 hover:bg-red-500 text-white font-black text-lg rounded-2xl">
+              <Button type="submit" disabled={isSubmitting} className="w-full h-14 bg-purple-600 hover:bg-purple-500 text-white font-black text-lg rounded-2xl">
                 {isSubmitting ? <Loader2 className="animate-spin" /> : "Deploy Task Command"}
               </Button>
             </form>
@@ -161,18 +161,18 @@ export default function AdminTasksManager() {
                       {task.status === "done" && <CheckCircle2 className="w-4 h-4 text-emerald-500" />}
                     </div>
                     <div className="flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase">
-                      To <span className="text-red-500/80">{task.toMemberName}</span>
+                      To <span className="text-purple-500/80">{task.toMemberName}</span>
                       <div className="h-3 w-px bg-white/10" />
                       {new Date(task.assignedAt).toLocaleDateString()}
                     </div>
                   </div>
                   <div className="flex gap-2">
                     <div className={`px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest ${
-                      task.status === "done" ? "bg-emerald-500/10 text-emerald-500" : "bg-red-500/10 text-red-500"
+                      task.status === "done" ? "bg-emerald-500/10 text-emerald-500" : "bg-purple-500/10 text-purple-500"
                     }`}>
                       {task.status}
                     </div>
-                    <Button onClick={() => handleDelete(task.id)} variant="outline" size="icon" className="h-8 w-8 rounded-lg border-white/5 glass text-zinc-500 hover:text-red-500">
+                    <Button onClick={() => handleDelete(task.id)} variant="outline" size="icon" className="h-8 w-8 rounded-lg border-white/5 glass text-zinc-500 hover:text-purple-500">
                       <Trash2 className="w-3.5 h-3.5" />
                     </Button>
                   </div>

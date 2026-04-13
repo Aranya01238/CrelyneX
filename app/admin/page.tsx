@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Header from "@/components/header";
 import Footer from "@/components/footer";
 import AdminEventsCoursesManager from "@/components/admin-events-courses-manager";
 import AdminMembersManager from "@/components/admin-members-manager";
@@ -24,7 +23,7 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-[#050505] text-white flex flex-col noise">
-      <Header />
+
 
       <main className="flex-1 container mx-auto max-w-7xl px-4 py-16 sm:py-24 space-y-12">
         {/* Header Section */}

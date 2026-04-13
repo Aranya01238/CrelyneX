@@ -9,9 +9,9 @@ const services = [
     title: "IoT Project Consultancy",
     description: "Expert guidance on Internet of Things architecture, embedded systems design, and real-world implementation strategies for smart devices.",
     tag: "IoT",
-    gradient: "from-red-600/20 to-red-900/5",
-    glow: "rgba(220,38,38,0.25)",
-    border: "rgba(220,38,38,0.2)",
+    gradient: "from-purple-600/20 to-purple-900/5",
+    glow: "rgba(168,85,247,0.25)",
+    border: "rgba(168,85,247,0.2)",
   },
   {
     id: 2,
@@ -52,7 +52,7 @@ export default function Services() {
     <section id="services" className="relative px-4 py-24 sm:py-32 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute right-0 top-0 w-[500px] h-[500px] bg-red-950/10 blur-[150px] rounded-full" />
+        <div className="absolute right-0 top-0 w-[500px] h-[500px] bg-purple-950/10 blur-[150px] rounded-full" />
         <div className="absolute left-0 bottom-0 w-80 h-80 bg-purple-950/10 blur-[100px] rounded-full" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:40px_40px]" />
       </div>
@@ -60,12 +60,12 @@ export default function Services() {
       <div className="container mx-auto max-w-6xl">
         {/* Section header */}
         <div className="mb-16 sm:mb-20 text-center reveal">
-          <div className="inline-flex items-center gap-2 glass-red rounded-full px-4 py-1.5 text-xs font-bold tracking-[0.2em] text-red-400 uppercase mb-6">
-            <span className="w-1 h-1 rounded-full bg-red-500" /> What we offer
+          <div className="inline-flex items-center gap-2 border border-purple-500/20 bg-purple-500/10 rounded-full px-4 py-1.5 text-xs font-bold tracking-[0.2em] text-purple-400 uppercase mb-6">
+            <span className="w-1 h-1 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]" /> What we offer
           </div>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight">
             <span className="text-white">Our </span>
-            <span className="text-gradient-crimson">Services</span>
+            <span className="text-purple-500 drop-shadow-[0_0_15px_rgba(168,85,247,0.4)]">Services</span>
           </h2>
           <p className="mt-4 text-zinc-400 text-lg max-w-2xl mx-auto">
             Comprehensive solutions tailored to accelerate your tech journey
@@ -119,7 +119,7 @@ export default function Services() {
                   {/* Animated underline */}
                   <div className="flex items-center gap-3 pt-2">
                     <div
-                      className="h-px bg-gradient-to-r from-red-500 to-transparent transition-all duration-500"
+                      className="h-px bg-gradient-to-r from-purple-500 to-transparent transition-all duration-500"
                       style={{ width: hoveredId === service.id ? "60px" : "20px" }}
                     />
                     <span className="text-xs font-bold tracking-widest text-zinc-500 uppercase group-hover:text-zinc-300 transition-colors">

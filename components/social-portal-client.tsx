@@ -111,7 +111,7 @@ export default function SocialPortalClient() {
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Secret Key</label>
                     <div className="relative group">
-                      <div className="h-12 px-5 rounded-xl glass border-white/5 flex items-center text-sm font-mono font-bold text-red-500 tracking-wider overflow-hidden">
+                      <div className="h-12 px-5 rounded-xl border border-purple-500/10 bg-purple-500/5 flex items-center text-sm font-mono font-bold text-purple-500 tracking-wider overflow-hidden">
                         {showPass[platform] ? cred.password : "••••••••••••••••"}
                       </div>
                       <Button 
@@ -150,12 +150,12 @@ export default function SocialPortalClient() {
                     value={inputs[platform]}
                     onChange={e => setInputs(prev => ({ ...prev, [platform]: e.target.value }))}
                     placeholder="Enter current count"
-                    className="h-14 bg-white/5 border-white/5 focus:border-red-500 rounded-2xl text-lg font-black"
+                    className="h-14 bg-white/5 border-white/5 focus:border-purple-500 rounded-2xl text-lg font-black"
                   />
                   <Button 
                     onClick={() => handleLog(platform)} 
                     disabled={isSubmitting}
-                    className="h-14 px-8 bg-red-600 hover:bg-red-500 text-white rounded-2xl shadow-lg flex gap-2"
+                    className="h-14 px-8 bg-purple-600 hover:bg-purple-500 text-white rounded-2xl shadow-lg flex gap-2"
                   >
                     {isSubmitting ? <Loader2 className="animate-spin w-4 h-4" /> : <Save className="w-4 h-4" />}
                     Log
@@ -177,15 +177,15 @@ export default function SocialPortalClient() {
                     <YAxis stroke="rgba(255,255,255,0.2)" fontSize={8} width={25} />
                     <Tooltip 
                         contentStyle={{ background: "#0a0a0a", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "12px", fontSize: "10px" }}
-                        itemStyle={{ fontWeight: "bold", fontSize: "12px", color: "#ef4444" }}
+                        itemStyle={{ fontWeight: "bold", fontSize: "12px", color: "#a855f7" }}
                     />
                     <Line 
                         type="monotone" 
                         dataKey="count" 
-                        stroke="#ef4444" 
+                        stroke="#a855f7" 
                         strokeWidth={3} 
-                        dot={{ r: 4, fill: "#ef4444", stroke: "#050505", strokeWidth: 2 }}
-                        activeDot={{ r: 6, fill: "#ef4444" }}
+                        dot={{ r: 4, fill: "#a855f7", stroke: "#050505", strokeWidth: 2 }}
+                        activeDot={{ r: 6, fill: "#a855f7" }}
                     />
                   </LineChart>
                 </ResponsiveContainer>
@@ -203,7 +203,7 @@ export default function SocialPortalClient() {
                 {data.slice().reverse().map((entry, idx) => (
                     <div key={idx} className="glass p-4 rounded-2xl border-white/5 text-center space-y-1 transition-all hover:bg-white/5">
                         <div className="text-[8px] font-bold text-zinc-600 uppercase tracking-widest">{entry.date}</div>
-                        <div className="text-sm font-black text-red-500 tracking-tighter">{entry.count.toLocaleString()}</div>
+                        <div className="text-sm font-black text-purple-500 tracking-tighter">{entry.count.toLocaleString()}</div>
                     </div>
                 ))}
                 {data.length === 0 && (
@@ -221,11 +221,11 @@ export default function SocialPortalClient() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 reveal">
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 glass-red rounded-full px-4 py-1.5 text-[10px] font-bold tracking-[0.3em] text-red-500 uppercase">
+          <div className="inline-flex items-center gap-2 border border-purple-500/20 bg-purple-500/10 rounded-full px-4 py-1.5 text-[10px] font-bold tracking-[0.3em] text-purple-400 uppercase">
             <Share2 className="w-3 h-3" /> Growth Management System
           </div>
           <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tighter">
-            Social <span className="text-gradient-red">Metrics</span>
+            Social <span className="text-gradient-purple">Metrics</span>
           </h1>
           <p className="text-zinc-500 text-sm sm:text-base font-medium max-w-2xl leading-relaxed">
             Authorized node for tracking digital expansion across CrelyneX social channels. Securely retrieve access identifiers and log expansion metrics.

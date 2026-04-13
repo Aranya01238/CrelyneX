@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Header from "@/components/header";
 import Hero from "@/components/hero";
 import Services from "@/components/services";
 import CTA from "@/components/cta";
@@ -14,7 +13,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="min-h-screen bg-transparent text-foreground">
-      <Header />
       <Hero />
       <Services />
       <CTA />

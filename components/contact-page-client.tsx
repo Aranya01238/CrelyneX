@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Header from "@/components/header";
 import Footer from "@/components/footer";
 import {
   Card,
@@ -94,7 +93,7 @@ export default function ContactPageClient() {
 
   return (
     <div className="min-h-screen bg-transparent flex flex-col">
-      <Header />
+
 
       <main className="flex-1">
         <section className="relative overflow-hidden border-b border-border/40 py-16 sm:py-20">

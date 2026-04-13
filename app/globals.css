@@ -26,10 +26,10 @@
   --ring: oklch(0.58 0.22 185);
   --radius: 0.75rem;
 
-  /* Red brand palette */
-  --red-glow: rgba(220, 38, 38, 0.4);
-  --red-subtle: rgba(220, 38, 38, 0.08);
-  --red-border: rgba(220, 38, 38, 0.2);
+  /* Purple brand palette */
+  --purple-glow: rgba(168, 85, 247, 0.4);
+  --purple-subtle: rgba(168, 85, 247, 0.08);
+  --purple-border: rgba(168, 85, 247, 0.2);
 }
 
 .dark {
@@ -110,8 +110,8 @@
   100% { background-position: 200% center; }
 }
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px var(--red-glow), 0 0 40px rgba(220,38,38,0.1); }
-  50%       { box-shadow: 0 0 35px var(--red-glow), 0 0 70px rgba(220,38,38,0.25); }
+  0%, 100% { box-shadow: 0 0 20px var(--purple-glow), 0 0 40px rgba(168,85,247,0.1); }
+  50%       { box-shadow: 0 0 35px var(--purple-glow), 0 0 70px rgba(168,85,247,0.25); }
 }
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
@@ -218,28 +218,28 @@
   -webkit-backdrop-filter: blur(32px);
   border: 1px solid rgba(255,255,255,0.10);
 }
-.glass-red {
-  background: rgba(220,38,38,0.05);
+.glass-purple {
+  background: rgba(168,85,247,0.05);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(220,38,38,0.15);
+  border: 1px solid rgba(168,85,247,0.15);
 }
 
 /* Gradient text */
-.text-gradient-red {
-  background: linear-gradient(135deg, #ff6b6b 0%, #dc2626 50%, #991b1b 100%);
+.text-gradient-purple {
+  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #5b21b6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-.text-gradient-crimson {
-  background: linear-gradient(90deg, #ffffff 0%, #fca5a5 40%, #dc2626 100%);
+.text-gradient-plum {
+  background: linear-gradient(90deg, #ffffff 0%, #d8b4fe 40%, #a855f7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .text-gradient-shimmer {
-  background: linear-gradient(90deg, #dc2626, #ff6b6b, #dc2626);
+  background: linear-gradient(90deg, #a855f7, #d8b4fe, #a855f7);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -248,9 +248,9 @@
 }
 
 /* Premium glow effects */
-.glow-red     { box-shadow: 0 0 20px rgba(220,38,38,0.35), 0 4px 24px rgba(0,0,0,0.4); }
-.glow-red-lg  { box-shadow: 0 0 40px rgba(220,38,38,0.4), 0 8px 48px rgba(0,0,0,0.5); }
-.text-glow-red { text-shadow: 0 0 20px rgba(220,38,38,0.6), 0 0 40px rgba(220,38,38,0.3); }
+.glow-purple     { box-shadow: 0 0 20px rgba(168,85,247,0.35), 0 4px 24px rgba(0,0,0,0.4); }
+.glow-purple-lg  { box-shadow: 0 0 40px rgba(168,85,247,0.4), 0 8px 48px rgba(0,0,0,0.5); }
+.text-glow-purple { text-shadow: 0 0 20px rgba(168,85,247,0.6), 0 0 40px rgba(168,85,247,0.3); }
 
 /* Noise texture overlay */
 .noise::after {

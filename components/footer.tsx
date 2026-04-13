@@ -30,8 +30,8 @@ export default function Footer() {
   return (
     <footer id="contact" className="relative overflow-hidden border-t border-white/5 bg-[#050505] pt-24 pb-12 transition-all">
       {/* Background Decor */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red-500/30 to-transparent" />
-      <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-red-950/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
+      <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-purple-950/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="grid grid-cols-1 gap-16 md:grid-cols-12 mb-20">
@@ -39,10 +39,10 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-4 space-y-8">
             <div className="flex items-center gap-3 group cursor-pointer">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-red-600 to-red-900 shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all group-hover:scale-110">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-purple-900 shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all group-hover:scale-110">
                 <span className="text-xl font-black text-white">𝞓</span>
               </div>
-              <span className="text-2xl font-black tracking-tighter text-white group-hover:text-red-500 transition-colors">
+              <span className="text-2xl font-black tracking-tighter text-white group-hover:text-purple-500 transition-colors">
                 CrelyneX
               </span>
             </div>
@@ -58,7 +58,7 @@ export default function Footer() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-12 w-12 rounded-xl glass border-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:border-red-500/50 hover:bg-red-500/10 transition-all group"
+                  className="h-12 w-12 rounded-xl glass border-white/5 flex items-center justify-center text-zinc-400 hover:text-white hover:border-purple-500/50 hover:bg-purple-500/10 transition-all group"
                   title={item.label}
                 >
                   <span className="text-xl font-mono group-hover:scale-120 transition-transform">
@@ -78,7 +78,7 @@ export default function Footer() {
               <ul className="space-y-4">
                 {serviceLinks.map((item) => (
                   <li key={item.label}>
-                    <Link href={item.href} className="text-zinc-500 hover:text-red-500 text-sm font-semibold transition-colors">
+                    <Link href={item.href} className="text-zinc-500 hover:text-purple-500 text-sm font-semibold transition-colors">
                       {item.label}
                     </Link>
                   </li>
@@ -92,7 +92,7 @@ export default function Footer() {
               <ul className="space-y-4">
                 {communityLinks.map((item) => (
                   <li key={item.label}>
-                    <Link href={item.href} className="text-zinc-500 hover:text-red-500 text-sm font-semibold transition-colors">
+                    <Link href={item.href} className="text-zinc-500 hover:text-purple-500 text-sm font-semibold transition-colors">
                       {item.label}
                     </Link>
                   </li>
@@ -106,7 +106,7 @@ export default function Footer() {
               <div className="space-y-4">
                 <div className="group">
                   <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-widest mb-1">Direct Email</p>
-                  <a href="mailto:crelynex@gmail.com" className="text-white hover:text-red-500 text-sm font-bold transition-all underline decoration-red-500/30 underline-offset-4 decoration-2">
+                  <a href="mailto:crelynex@gmail.com" className="text-white hover:text-purple-500 text-sm font-bold transition-all underline decoration-purple-500/30 underline-offset-4 decoration-2">
                     crelynex@gmail.com
                   </a>
                 </div>
@@ -146,7 +146,7 @@ export default function Footer() {
             <div className="text-center">
               <p className="text-[8px] text-zinc-500 font-bold uppercase tracking-[0.2em] mb-1">Association</p>
               <div className="flex items-center gap-3">
-                <span className="text-[10px] font-black text-red-500 tracking-tighter">HSS SERVICE</span>
+                <span className="text-[10px] font-black text-purple-500 tracking-tighter">HSS SERVICE</span>
                 <div className="h-4 w-px bg-white/10" />
                 <span className="text-[10px] font-black text-emerald-500 tracking-tighter">AI ZENERA</span>
               </div>
