@@ -5,7 +5,9 @@ import {
   ADMIN_SESSION_COOKIE, 
   ADMIN_SESSION_VALUE,
   HR_SESSION_COOKIE,
-  HR_SESSION_VALUE
+  HR_SESSION_VALUE,
+  ADMIN2_SESSION_COOKIE,
+  ADMIN2_SESSION_VALUE
 } from "@/lib/auth";
 import { getTasks, createTask, updateTask, deleteTask, getTasksForMember, updateMember, getMember } from "@/lib/members";
 import { MEMBER_SESSION_COOKIE, MEMBER_SESSION_VALUE, MEMBER_ID_COOKIE } from "@/lib/auth";
@@ -13,7 +15,8 @@ import { MEMBER_SESSION_COOKIE, MEMBER_SESSION_VALUE, MEMBER_ID_COOKIE } from "@
 function isManagement(cookieStore: Awaited<ReturnType<typeof cookies>>) {
   const isAdmin = cookieStore.get(ADMIN_SESSION_COOKIE)?.value === ADMIN_SESSION_VALUE;
   const isHR = cookieStore.get(HR_SESSION_COOKIE)?.value === HR_SESSION_VALUE;
-  return isAdmin || isHR;
+  const isAdmin2 = cookieStore.get(ADMIN2_SESSION_COOKIE)?.value === ADMIN2_SESSION_VALUE;
+  return isAdmin || isHR || isAdmin2;
 }
 
 function getMemberId(cookieStore: Awaited<ReturnType<typeof cookies>>) {

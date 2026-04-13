@@ -6,13 +6,13 @@ import { Loader2, Activity, Calendar as CalendarIcon } from "lucide-react";
 import type { DailyUpdateEntry, AllUpdatesData } from "@/lib/updates";
 import type { Member } from "@/lib/members";
 
-export default function AdminUpdatesManager({ theme = "amber" }: { theme?: "red" | "amber" }) {
-  const accentColor = theme === "red" ? "red-500" : "amber-500";
-  const iconColor = theme === "red" ? "text-red-500" : "text-amber-500";
-  const badgeColor = theme === "red" ? "text-red-500 bg-red-500/10" : "text-amber-500 bg-amber-500/10";
-  const ringColor = theme === "red" ? "hover:ring-red-500/30" : "hover:ring-amber-500/30";
-  const textAccent = theme === "red" ? "text-red-400 bg-red-500/20" : "text-amber-400 bg-amber-500/20";
-  const borderAccent = theme === "red" ? "border-red-500/10 bg-red-500/5 text-red-500" : "border-amber-500/10 bg-amber-500/5 text-amber-500";
+export default function AdminUpdatesManager({ theme = "amber" }: { theme?: "red" | "amber" | "blue" }) {
+  const accentColor = theme === "red" ? "red-500" : theme === "amber" ? "amber-500" : "indigo-500";
+  const iconColor = theme === "red" ? "text-red-500" : theme === "amber" ? "text-amber-500" : "text-indigo-500";
+  const badgeColor = theme === "red" ? "text-red-500 bg-red-500/10" : theme === "amber" ? "text-amber-500 bg-amber-500/10" : "text-indigo-500 bg-indigo-500/10";
+  const ringColor = theme === "red" ? "hover:ring-red-500/30" : theme === "amber" ? "hover:ring-amber-500/30" : "hover:ring-indigo-500/30";
+  const textAccent = theme === "red" ? "text-red-400 bg-red-500/20" : theme === "amber" ? "text-amber-400 bg-amber-500/20" : "text-indigo-400 bg-indigo-500/20";
+  const borderAccent = theme === "red" ? "border-red-500/10 bg-red-500/5 text-red-500" : theme === "amber" ? "border-amber-500/10 bg-amber-500/5 text-amber-500" : "border-indigo-500/10 bg-indigo-500/5 text-indigo-500";
   
   const [updates, setUpdates] = useState<AllUpdatesData>({});
   const [members, setMembers] = useState<Member[]>([]);

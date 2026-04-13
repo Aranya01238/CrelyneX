@@ -14,6 +14,10 @@ import {
   MEMBER_ID_COOKIE,
   MEMBER_NAME_COOKIE,
   MEMBER_PORTALS_COOKIE,
+  ADMIN2_ID,
+  ADMIN2_PASSWORD,
+  ADMIN2_SESSION_COOKIE,
+  ADMIN2_SESSION_VALUE,
 } from "@/lib/auth";
 import { getMembers, updateMember } from "@/lib/members";
 import { logActivity } from "@/lib/activity";
@@ -50,13 +54,28 @@ export async function POST(request: Request) {
       return response;
     }
 
-    // Check HR credentials
     if (id === HR_ID && password === HR_PASSWORD) {
       await logActivity(id, "hr", "Operations Login");
       const response = NextResponse.json({ ok: true, role: "hr", redirect: "/hr" });
       response.cookies.set({
         name: HR_SESSION_COOKIE,
         value: HR_SESSION_VALUE,
+        httpOnly: true,
+        sameSite: "lax",
+        secure: process.env.NODE_ENV === "production",
+        path: "/",
+        maxAge: 60 * 60 * 8,
+      });
+      return response;
+    }
+
+    // Check Admin2 credentials
+    if (id === ADMIN2_ID && password === ADMIN2_PASSWORD) {
+      await logActivity(id, "admin", "Governance Login");
+      const response = NextResponse.json({ ok: true, role: "admin", redirect: "/admin2" });
+      response.cookies.set({
+        name: ADMIN2_SESSION_COOKIE,
+        value: ADMIN2_SESSION_VALUE,
         httpOnly: true,
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",

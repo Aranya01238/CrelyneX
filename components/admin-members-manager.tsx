@@ -15,14 +15,14 @@ const initialMemberForm = {
   portals: [] as MemberPortal[],
 };
 
-export default function AdminMembersManager({ theme = "red" }: { theme?: "red" | "amber" }) {
-  const accentColor = theme === "red" ? "red-500" : "amber-500";
-  const focusColor = theme === "red" ? "focus:border-purple-500" : "focus:border-amber-500";
-  const buttonColor = theme === "red" ? "bg-purple-600 hover:bg-purple-500" : "bg-amber-600 hover:bg-amber-500";
-  const iconColor = theme === "red" ? "text-purple-500" : "text-amber-500";
-  const ringColor = theme === "red" ? "ring-purple-500/50" : "ring-amber-500/50";
-  const avatarColor = theme === "red" ? "border-purple-500/20 bg-purple-500/10 text-purple-500" : "border-amber-500/20 bg-amber-500/10 text-amber-500";
-  const badgeColor = theme === "red" ? "text-purple-500 bg-purple-500/10" : "text-amber-500 bg-amber-500/10";
+export default function AdminMembersManager({ theme = "red" }: { theme?: "red" | "amber" | "blue" }) {
+  const accentColor = theme === "red" ? "red-500" : theme === "amber" ? "amber-500" : "indigo-500";
+  const focusColor = theme === "red" ? "focus:border-purple-500" : theme === "amber" ? "focus:border-amber-500" : "focus:border-indigo-500";
+  const buttonColor = theme === "red" ? "bg-purple-600 hover:bg-purple-500" : theme === "amber" ? "bg-amber-600 hover:bg-amber-500" : "bg-indigo-600 hover:bg-indigo-500";
+  const iconColor = theme === "red" ? "text-purple-500" : theme === "amber" ? "text-amber-500" : "text-indigo-500";
+  const ringColor = theme === "red" ? "ring-purple-500/50" : theme === "amber" ? "ring-amber-500/50" : "ring-indigo-500/50";
+  const avatarColor = theme === "red" ? "border-purple-500/20 bg-purple-500/10 text-purple-500" : theme === "amber" ? "border-amber-500/20 bg-amber-500/10 text-amber-500" : "border-indigo-500/20 bg-indigo-500/10 text-indigo-500";
+  const badgeColor = theme === "red" ? "text-purple-500 bg-purple-500/10" : theme === "amber" ? "text-amber-500 bg-amber-500/10" : "text-indigo-500 bg-indigo-500/10";
   
   const [members, setMembers] = useState<Member[]>([]);
   const [form, setForm] = useState(initialMemberForm);

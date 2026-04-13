@@ -16,14 +16,14 @@ const initialTaskForm = {
   points: 1,
 };
 
-export default function AdminTasksManager({ theme = "red" }: { theme?: "red" | "amber" }) {
-  const accentColor = theme === "red" ? "purple-500" : "amber-500";
-  const focusColor = theme === "red" ? "focus:border-purple-500" : "focus:border-amber-500";
-  const buttonColor = theme === "red" ? "bg-purple-600 hover:bg-purple-500" : "bg-amber-600 hover:bg-amber-500";
-  const iconColor = theme === "red" ? "text-purple-500" : "text-amber-500";
-  const badgeColor = theme === "red" ? "bg-purple-500/10 text-purple-400" : "bg-amber-500/10 text-amber-500";
-  const hoverColor = theme === "red" ? "hover:text-purple-500" : "hover:text-amber-500";
-  const selectFocus = theme === "red" ? "focus:bg-purple-500/10" : "focus:bg-amber-500/10";
+export default function AdminTasksManager({ theme = "red" }: { theme?: "red" | "amber" | "blue" }) {
+  const accentColor = theme === "red" ? "purple-500" : theme === "amber" ? "amber-500" : "indigo-500";
+  const focusColor = theme === "red" ? "focus:border-purple-500" : theme === "amber" ? "focus:border-amber-500" : "focus:border-indigo-500";
+  const buttonColor = theme === "red" ? "bg-purple-600 hover:bg-purple-500" : theme === "amber" ? "bg-amber-600 hover:bg-amber-500" : "bg-indigo-600 hover:bg-indigo-500";
+  const iconColor = theme === "red" ? "text-purple-500" : theme === "amber" ? "text-amber-500" : "text-indigo-500";
+  const badgeColor = theme === "red" ? "bg-purple-500/10 text-purple-400" : theme === "amber" ? "bg-amber-500/10 text-amber-500" : "bg-indigo-500/10 text-indigo-400";
+  const hoverColor = theme === "red" ? "hover:text-purple-500" : theme === "amber" ? "hover:text-amber-500" : "hover:text-indigo-500";
+  const selectFocus = theme === "red" ? "focus:bg-purple-500/10" : theme === "amber" ? "focus:bg-amber-500/10" : "focus:bg-indigo-500/10";
   
   const [tasks, setTasks] = useState<Task[]>([]);
   const [members, setMembers] = useState<Member[]>([]);
