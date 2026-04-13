@@ -17,6 +17,7 @@ import {
   CheckCircle2,
   Workflow,
   Target,
+  History,
 } from "lucide-react";
 import Image from "next/image";
 import { readEventsCoursesData } from "@/lib/events-courses";
@@ -56,20 +57,17 @@ const questFlow = [
   },
 ];
 
-const completedCourseArchive = {
-  title: "Machine Learning Online Bootcamp",
-  status: "Completed",
-  dateRange: "March 21 - April 5, 2026",
-  highlights: [
-    "4 live sessions completed",
-    "500+ learners attended",
-    "E-certificates issued to participants",
-  ],
-};
+// Removed hardcoded completedCourseArchive correctly replaced by dynamic data below
 
 export default async function EventsCoursesPage() {
-  const { events: upcomingEvents, courses } = await readEventsCoursesData();
-  const featuredCourse = courses[0];
+  const { events, courses } = await readEventsCoursesData();
+  
+  const upcomingEvents = events.filter(e => !e.completed);
+  const pastEvents = events.filter(e => e.completed);
+  const activeCourses = courses.filter(c => !c.completed);
+  const archivedCourses = courses.filter(c => c.completed);
+  
+  const featuredCourse = activeCourses[0];
 
   return (
     <div className="min-h-screen bg-transparent flex flex-col">
@@ -204,6 +202,36 @@ export default async function EventsCoursesPage() {
                 </Card>
               ))}
             </div>
+
+            {/* Past Events Section */}
+            {pastEvents.length > 0 && (
+              <div className="mt-20">
+                <div className="mb-10">
+                  <h3 className="text-xl font-bold text-muted-foreground flex items-center gap-2">
+                    <History className="h-5 w-5" /> Recent Past Events
+                  </h3>
+                </div>
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {pastEvents.map((event) => (
+                    <Card key={event.id} className="border-border/40 bg-card/30 opacity-80 grayscale-[0.5] hover:grayscale-0 transition-all">
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-lg">{event.title}</CardTitle>
+                        <Badge variant="outline" className="w-fit">{event.category}</Badge>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="text-xs text-muted-foreground mb-3 flex items-center gap-2">
+                          <Calendar className="h-3 w-3" /> {event.date}
+                        </div>
+                        <p className="text-sm text-muted-foreground line-clamp-2">{event.description}</p>
+                        <div className="mt-4 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-green-500">
+                          <CheckCircle2 className="h-4 w-4" /> Successfully Concluded
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
 
@@ -348,54 +376,63 @@ export default async function EventsCoursesPage() {
                   </div>
                 </div>
               </div>
-            ) : (
-              <Card className="border-secondary/30 bg-linear-to-br from-card to-card/60 backdrop-blur">
-                <CardHeader>
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <CardTitle className="text-2xl">
-                        {completedCourseArchive.title}
-                      </CardTitle>
-                      <CardDescription className="mt-2 text-base">
-                        This cohort has successfully concluded.
-                      </CardDescription>
-                    </div>
-                    <Badge className="w-fit bg-secondary/20 text-secondary hover:bg-secondary/30">
-                      {completedCourseArchive.status}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center gap-2 rounded-lg border border-border/40 bg-card/40 p-3 text-sm text-muted-foreground">
-                    <Calendar className="h-4 w-4 text-accent" />
-                    {completedCourseArchive.dateRange}
-                  </div>
-                  <div className="space-y-2">
-                    {completedCourseArchive.highlights.map((item) => (
-                      <div
-                        key={item}
-                        className="flex items-center gap-2 text-sm"
-                      >
-                        <CheckCircle2 className="h-4 w-4 text-accent" />
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="pt-2">
-                    <a
-                      href="https://forms.gle/VEBroAEH3stdeuMv7"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
-                        Join Upcoming Workshops
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </a>
-                  </div>
-                </CardContent>
-              </Card>
             )}
+
+            {/* Archived Courses Section */}
+            {archivedCourses.length > 0 && (
+              <div className="mt-16 space-y-6">
+                 <h3 className="text-2xl font-bold text-zinc-400">Archived Cohorts</h3>
+                 <div className="grid gap-6 md:grid-cols-2">
+                   {archivedCourses.map(course => (
+                     <Card key={course.id} className="border-secondary/30 bg-linear-to-br from-card to-card/60 backdrop-blur">
+                       <CardHeader>
+                         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                           <div>
+                             <CardTitle className="text-xl">
+                               {course.title}
+                             </CardTitle>
+                             <CardDescription className="mt-2 text-sm italic">
+                               This cohort has successfully concluded.
+                             </CardDescription>
+                           </div>
+                           <Badge className="w-fit bg-secondary/10 text-secondary border-secondary/20">
+                             Completed
+                           </Badge>
+                         </div>
+                       </CardHeader>
+                       <CardContent className="space-y-4">
+                         <div className="flex items-center gap-2 rounded-lg border border-border/40 bg-card/40 p-3 text-xs text-muted-foreground font-medium">
+                           <Calendar className="h-4 w-4 text-accent" />
+                           Concluded: {course.duration}
+                         </div>
+                         <div className="grid grid-cols-2 gap-2">
+                            {course.modules.slice(0, 4).map((m, i) => (
+                              <div key={i} className="flex items-center gap-2 text-[10px] text-muted-foreground">
+                                <CheckCircle2 className="h-3 w-3 text-accent" />
+                                {m}
+                              </div>
+                            ))}
+                         </div>
+                         <div className="pt-2">
+                           <a
+                             href="https://forms.gle/VEBroAEH3stdeuMv7"
+                             target="_blank"
+                             rel="noopener noreferrer"
+                           >
+                             <Button variant="outline" size="sm" className="w-full border-accent/30 text-accent hover:bg-accent/10">
+                               Notify for Next Cohort
+                               <ArrowRight className="ml-2 h-4 w-4" />
+                             </Button>
+                           </a>
+                         </div>
+                       </CardContent>
+                     </Card>
+                   ))}
+                 </div>
+              </div>
+            )}
+          </div>
+        </section>
           </div>
         </section>
 

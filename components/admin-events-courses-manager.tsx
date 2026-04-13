@@ -50,6 +50,7 @@ const initialEventForm = {
   category: "",
   price: "",
   registrationLink: "",
+  completed: false,
 };
 
 const initialCourseForm = {
@@ -63,6 +64,7 @@ const initialCourseForm = {
   datesText: "",
   time: "",
   registrationLink: "",
+  completed: false,
 };
 
 export default function AdminEventsCoursesManager() {
@@ -136,6 +138,7 @@ export default function AdminEventsCoursesManager() {
           category: eventForm.category,
           price: eventForm.price,
           registrationLink: eventForm.registrationLink,
+          completed: eventForm.completed,
         }),
       });
 
@@ -193,6 +196,7 @@ export default function AdminEventsCoursesManager() {
           time: courseForm.time,
           certificate: true,
           registrationLink: courseForm.registrationLink,
+          completed: courseForm.completed,
         }),
       });
 
@@ -226,6 +230,7 @@ export default function AdminEventsCoursesManager() {
       category: item.category,
       price: item.price,
       registrationLink: item.registrationLink,
+      completed: item.completed,
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -243,8 +248,37 @@ export default function AdminEventsCoursesManager() {
       datesText: item.dates.join("\n"),
       time: item.time,
       registrationLink: item.registrationLink,
+      completed: item.completed,
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const toggleEventCompletion = async (event: EventItem) => {
+    try {
+      const response = await fetch("/api/admin/events-courses/events", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: event.id, completed: !event.completed }),
+      });
+      if (!response.ok) throw new Error("Toggle failed");
+      await loadData();
+    } catch (error) {
+       setMessage("Failed to toggle status");
+    }
+  };
+
+  const toggleCourseCompletion = async (course: CourseItem) => {
+    try {
+      const response = await fetch("/api/admin/events-courses/courses", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: course.id, completed: !course.completed }),
+      });
+      if (!response.ok) throw new Error("Toggle failed");
+      await loadData();
+    } catch (error) {
+       setMessage("Failed to toggle status");
+    }
   };
 
   const removeEvent = async (id: string) => {
@@ -399,6 +433,16 @@ export default function AdminEventsCoursesManager() {
                 }
                 required
               />
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={eventForm.completed}
+                  onChange={(e) =>
+                    setEventForm((prev) => ({ ...prev, completed: e.target.checked }))
+                  }
+                />
+                Mark as Completed
+              </label>
               <div className="flex gap-2">
                 <Button
                   type="submit"
@@ -533,6 +577,16 @@ export default function AdminEventsCoursesManager() {
                 }
                 required
               />
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={courseForm.completed}
+                  onChange={(e) =>
+                    setCourseForm((prev) => ({ ...prev, completed: e.target.checked }))
+                  }
+                />
+                Mark as Completed
+              </label>
               <div className="flex gap-2">
                 <Button
                   type="submit"
@@ -578,7 +632,14 @@ export default function AdminEventsCoursesManager() {
                 key={event.id}
                 className="rounded-md border border-border/60 bg-card/50 p-3"
               >
-                <p className="font-semibold">{event.title}</p>
+                <p className="font-semibold flex items-center gap-2">
+                  {event.title}
+                  {event.completed && (
+                    <span className="text-[10px] bg-green-500/10 text-green-500 border border-green-500/20 px-2 py-0.5 rounded-full uppercase font-black">
+                      Completed
+                    </span>
+                  )}
+                </p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   {event.date} | {event.time}
                 </p>
@@ -590,6 +651,14 @@ export default function AdminEventsCoursesManager() {
                     onClick={() => startEditingEvent(event)}
                   >
                     Edit
+                  </Button>
+                  <Button
+                    variant={event.completed ? "secondary" : "outline"}
+                    size="sm"
+                    type="button"
+                    onClick={() => void toggleEventCompletion(event)}
+                  >
+                    {event.completed ? "Mark Active" : "Mark Completed"}
                   </Button>
                   <Button
                     variant="destructive"
@@ -621,7 +690,14 @@ export default function AdminEventsCoursesManager() {
                 key={course.id}
                 className="rounded-md border border-border/60 bg-card/50 p-3"
               >
-                <p className="font-semibold">{course.title}</p>
+                <p className="font-semibold flex items-center gap-2">
+                  {course.title}
+                  {course.completed && (
+                    <span className="text-[10px] bg-green-500/10 text-green-500 border border-green-500/20 px-2 py-0.5 rounded-full uppercase font-black">
+                      Completed
+                    </span>
+                  )}
+                </p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   {course.duration} | {course.price}
                 </p>
@@ -633,6 +709,14 @@ export default function AdminEventsCoursesManager() {
                     onClick={() => startEditingCourse(course)}
                   >
                     Edit
+                  </Button>
+                  <Button
+                    variant={course.completed ? "secondary" : "outline"}
+                    size="sm"
+                    type="button"
+                    onClick={() => void toggleCourseCompletion(course)}
+                  >
+                    {course.completed ? "Mark Active" : "Mark Completed"}
                   </Button>
                   <Button
                     variant="destructive"

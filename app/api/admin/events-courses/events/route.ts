@@ -15,6 +15,7 @@ const eventSchema = z.object({
   category: z.string().min(2).max(80),
   price: z.string().min(1).max(40),
   registrationLink: z.string().url().max(400),
+  completed: z.boolean().optional(),
 });
 
 async function isAdminAuthorized() {
@@ -40,6 +41,7 @@ export async function POST(request: Request) {
     const nextEvent = {
       id: `event-${randomUUID()}`,
       ...parsed.data,
+      completed: !!parsed.data.completed,
     };
 
     data.events = [nextEvent, ...data.events];
@@ -111,7 +113,11 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: "Event not found." }, { status: 404 });
     }
 
-    data.events[index] = { ...data.events[index], ...parsed.data };
+    data.events[index] = { 
+      ...data.events[index], 
+      ...parsed.data,
+      completed: parsed.data.completed ?? data.events[index].completed 
+    };
     await writeEventsCoursesData(data);
 
     return NextResponse.json({ ok: true, event: data.events[index] });

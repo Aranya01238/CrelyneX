@@ -13,6 +13,7 @@ export type EventItem = {
   category: string;
   price: string;
   registrationLink: string;
+  completed: boolean;
 };
 
 export type CourseItem = {
@@ -29,6 +30,7 @@ export type CourseItem = {
   time: string;
   certificate: boolean;
   registrationLink: string;
+  completed: boolean;
 };
 
 export type EventsCoursesData = {
@@ -70,6 +72,7 @@ const DEFAULT_DATA: EventsCoursesData = {
       category: "Workshop",
       price: "₹99",
       registrationLink: "https://forms.gle/VEBroAEH3stdeuMv7",
+      completed: false,
     },
   ],
   courses: [],
@@ -93,10 +96,14 @@ function normalizeData(data: Partial<EventsCoursesData> | null | undefined): Eve
   }
 
   const events = Array.isArray(data.events)
-    ? data.events.filter((item) => item.id !== "ml-bootcamp-event-2026")
+    ? data.events
+        .filter((item) => item.id !== "ml-bootcamp-event-2026")
+        .map((item) => ({ ...item, completed: !!item.completed }))
     : [];
   const courses = Array.isArray(data.courses)
-    ? data.courses.filter((item) => item.id !== "ml-bootcamp-course-2026")
+    ? data.courses
+        .filter((item) => item.id !== "ml-bootcamp-course-2026")
+        .map((item) => ({ ...item, completed: !!item.completed }))
     : [];
 
   return {
