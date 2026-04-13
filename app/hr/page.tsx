@@ -85,9 +85,29 @@ function HRAuditLogs() {
 
 export default function HRPage() {
   const [mounted, setMounted] = useState(false);
+  const [stats, setStats] = useState({
+    activeNodes: "...",
+    missionCompletion: "...",
+    operationalVelocity: "...",
+    systemUptime: "..."
+  });
+
+  const loadStats = async () => {
+    try {
+      const res = await fetch("/api/admin/stats");
+      if (res.ok) {
+        const data = await res.json();
+        setStats(data);
+      }
+    } catch {}
+  };
 
   useEffect(() => {
     setMounted(true);
+    loadStats();
+    // Refresh stats every 30 seconds
+    const interval = setInterval(loadStats, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   if (!mounted) return null;
@@ -115,19 +135,19 @@ export default function HRPage() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 reveal delay-100">
           {[
-            { label: "Active Nodes", val: "12", icon: Users, color: "text-amber-500" },
-            { label: "Mission Completion", val: "84%", icon: Target, color: "text-purple-400" },
-            { label: "Operational Velocity", val: "High", icon: TrendingUp, color: "text-emerald-400" },
-            { label: "System Uptime", val: "99.9%", icon: Activity, color: "text-blue-400" },
+            { label: "Active Nodes", val: stats.activeNodes, icon: Users, color: "text-amber-500" },
+            { label: "Mission Completion", val: stats.missionCompletion, icon: Target, color: "text-purple-400" },
+            { label: "Operational Velocity", val: stats.operationalVelocity, icon: TrendingUp, color: "text-emerald-400" },
+            { label: "System Uptime", val: stats.systemUptime, icon: Activity, color: "text-blue-400" },
           ].map((stat, i) => (
-            <Card key={i} className="glass border-white/5 bg-white/2 hover:bg-white/5 transition-colors">
+            <Card key={i} className="glass border-white/5 bg-white/2 hover:bg-white/5 transition-all duration-500 hover:scale-[1.02]">
               <CardContent className="p-6 flex items-center gap-4">
-                <div className={stat.color}>
+                <div className={`${stat.color} transition-transform duration-500 ${stats.activeNodes === "..." ? "animate-pulse" : ""}`}>
                   <stat.icon className="w-6 h-6" />
                 </div>
                 <div>
                   <div className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">{stat.label}</div>
-                  <div className="text-2xl font-black text-white">{stat.val}</div>
+                  <div className="text-2xl font-black text-white lining-nums">{stat.val}</div>
                 </div>
               </CardContent>
             </Card>
