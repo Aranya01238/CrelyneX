@@ -87,15 +87,20 @@ async function ensureDataFile() {
 }
 
 function normalizeData(data: Partial<EventsCoursesData> | null | undefined): EventsCoursesData {
-  const events = Array.isArray(data?.events)
+  // If no data provided at all (e.g. completely missing storage), return the default initial state
+  if (!data || (!data.events && !data.courses)) {
+    return DEFAULT_DATA;
+  }
+
+  const events = Array.isArray(data.events)
     ? data.events.filter((item) => item.id !== "ml-bootcamp-event-2026")
     : [];
-  const courses = Array.isArray(data?.courses)
+  const courses = Array.isArray(data.courses)
     ? data.courses.filter((item) => item.id !== "ml-bootcamp-course-2026")
     : [];
 
   return {
-    events: events.length > 0 ? events : DEFAULT_DATA.events,
+    events,
     courses,
   };
 }

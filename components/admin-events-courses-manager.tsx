@@ -73,6 +73,8 @@ export default function AdminEventsCoursesManager() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmittingEvent, setIsSubmittingEvent] = useState(false);
   const [isSubmittingCourse, setIsSubmittingCourse] = useState(false);
+  const [editingEventId, setEditingEventId] = useState<string | null>(null);
+  const [editingCourseId, setEditingCourseId] = useState<string | null>(null);
   const [message, setMessage] = useState("");
 
   const loadData = async () => {
@@ -110,16 +112,21 @@ export default function AdminEventsCoursesManager() {
     void loadData();
   }, []);
 
-  const addEvent = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleEventSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmittingEvent(true);
     setMessage("");
 
     try {
-      const response = await fetch("/api/admin/events-courses/events", {
-        method: "POST",
+      const isEditing = Boolean(editingEventId);
+      const url = "/api/admin/events-courses/events";
+      const method = isEditing ? "PATCH" : "POST";
+
+      const response = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          id: editingEventId,
           title: eventForm.title,
           date: eventForm.date,
           time: eventForm.time,
@@ -134,27 +141,32 @@ export default function AdminEventsCoursesManager() {
 
       const data = (await response.json()) as { error?: string };
       if (!response.ok) {
-        throw new Error(data.error || "Failed to add event.");
+        throw new Error(data.error || `Failed to ${isEditing ? "update" : "add"} event.`);
       }
 
       setEventForm(initialEventForm);
-      setMessage("Event added successfully.");
+      setEditingEventId(null);
+      setMessage(`Event ${isEditing ? "updated" : "added"} successfully.`);
       await loadData();
     } catch (error) {
       setMessage(
-        error instanceof Error ? error.message : "Failed to add event.",
+        error instanceof Error ? error.message : "Submission failed.",
       );
     } finally {
       setIsSubmittingEvent(false);
     }
   };
 
-  const addCourse = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleCourseSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmittingCourse(true);
     setMessage("");
 
     try {
+      const isEditing = Boolean(editingCourseId);
+      const url = "/api/admin/events-courses/courses";
+      const method = isEditing ? "PATCH" : "POST";
+
       const modules = courseForm.modulesText
         .split("\n")
         .map((value) => value.trim())
@@ -164,10 +176,11 @@ export default function AdminEventsCoursesManager() {
         .map((value) => value.trim())
         .filter(Boolean);
 
-      const response = await fetch("/api/admin/events-courses/courses", {
-        method: "POST",
+      const response = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          id: editingCourseId,
           title: courseForm.title,
           price: courseForm.price,
           duration: courseForm.duration,
@@ -185,19 +198,53 @@ export default function AdminEventsCoursesManager() {
 
       const data = (await response.json()) as { error?: string };
       if (!response.ok) {
-        throw new Error(data.error || "Failed to add course.");
+        throw new Error(data.error || `Failed to ${isEditing ? "update" : "add"} course.`);
       }
 
       setCourseForm(initialCourseForm);
-      setMessage("Course added successfully.");
+      setEditingCourseId(null);
+      setMessage(`Course ${isEditing ? "updated" : "added"} successfully.`);
       await loadData();
     } catch (error) {
       setMessage(
-        error instanceof Error ? error.message : "Failed to add course.",
+        error instanceof Error ? error.message : "Submission failed.",
       );
     } finally {
       setIsSubmittingCourse(false);
     }
+  };
+
+  const startEditingEvent = (item: EventItem) => {
+    setEditingEventId(item.id);
+    setEventForm({
+      title: item.title,
+      date: item.date,
+      time: item.time,
+      attendees: String(item.attendees),
+      location: item.location,
+      description: item.description,
+      category: item.category,
+      price: item.price,
+      registrationLink: item.registrationLink,
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const startEditingCourse = (item: CourseItem) => {
+    setEditingCourseId(item.id);
+    setCourseForm({
+      title: item.title,
+      price: item.price,
+      duration: item.duration,
+      level: item.level,
+      students: String(item.students),
+      description: item.description,
+      modulesText: item.modules.join("\n"),
+      datesText: item.dates.join("\n"),
+      time: item.time,
+      registrationLink: item.registrationLink,
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const removeEvent = async (id: string) => {
@@ -261,7 +308,7 @@ export default function AdminEventsCoursesManager() {
             <CardTitle>Add Event</CardTitle>
           </CardHeader>
           <CardContent>
-            <form className="space-y-3" onSubmit={addEvent}>
+            <form className="space-y-3" onSubmit={handleEventSubmit}>
               <Input
                 placeholder="Title"
                 value={eventForm.title}
@@ -352,13 +399,29 @@ export default function AdminEventsCoursesManager() {
                 }
                 required
               />
-              <Button
-                type="submit"
-                disabled={isSubmittingEvent}
-                className="w-full"
-              >
-                {isSubmittingEvent ? "Adding Event..." : "Add Event"}
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  type="submit"
+                  disabled={isSubmittingEvent}
+                  className="flex-1"
+                >
+                  {isSubmittingEvent 
+                    ? (editingEventId ? "Updating..." : "Adding...") 
+                    : (editingEventId ? "Update Event" : "Add Event")}
+                </Button>
+                {editingEventId && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setEditingEventId(null);
+                      setEventForm(initialEventForm);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                )}
+              </div>
             </form>
           </CardContent>
         </Card>
@@ -368,7 +431,7 @@ export default function AdminEventsCoursesManager() {
             <CardTitle>Add Course</CardTitle>
           </CardHeader>
           <CardContent>
-            <form className="space-y-3" onSubmit={addCourse}>
+            <form className="space-y-3" onSubmit={handleCourseSubmit}>
               <Input
                 placeholder="Title"
                 value={courseForm.title}
@@ -470,13 +533,29 @@ export default function AdminEventsCoursesManager() {
                 }
                 required
               />
-              <Button
-                type="submit"
-                disabled={isSubmittingCourse}
-                className="w-full"
-              >
-                {isSubmittingCourse ? "Adding Course..." : "Add Course"}
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  type="submit"
+                  disabled={isSubmittingCourse}
+                  className="flex-1"
+                >
+                  {isSubmittingCourse 
+                    ? (editingCourseId ? "Updating..." : "Adding...") 
+                    : (editingCourseId ? "Update Course" : "Add Course")}
+                </Button>
+                {editingCourseId && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setEditingCourseId(null);
+                      setCourseForm(initialCourseForm);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                )}
+              </div>
             </form>
           </CardContent>
         </Card>
@@ -503,15 +582,24 @@ export default function AdminEventsCoursesManager() {
                 <p className="mt-1 text-xs text-muted-foreground">
                   {event.date} | {event.time}
                 </p>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  className="mt-3"
-                  type="button"
-                  onClick={() => void removeEvent(event.id)}
-                >
-                  Remove
-                </Button>
+                <div className="mt-3 flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    type="button"
+                    onClick={() => startEditingEvent(event)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    type="button"
+                    onClick={() => void removeEvent(event.id)}
+                  >
+                    Remove
+                  </Button>
+                </div>
               </div>
             ))}
           </CardContent>
@@ -537,15 +625,24 @@ export default function AdminEventsCoursesManager() {
                 <p className="mt-1 text-xs text-muted-foreground">
                   {course.duration} | {course.price}
                 </p>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  className="mt-3"
-                  type="button"
-                  onClick={() => void removeCourse(course.id)}
-                >
-                  Remove
-                </Button>
+                <div className="mt-3 flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    type="button"
+                    onClick={() => startEditingCourse(course)}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    type="button"
+                    onClick={() => void removeCourse(course.id)}
+                  >
+                    Remove
+                  </Button>
+                </div>
               </div>
             ))}
           </CardContent>

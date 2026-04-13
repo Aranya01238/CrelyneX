@@ -88,3 +88,43 @@ export async function DELETE(request: Request) {
     );
   }
 }
+
+export async function PATCH(request: Request) {
+  if (!(await isAdminAuthorized())) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const payload = await request.json();
+    const { id, ...updateData } = payload;
+
+    if (!id) {
+      return NextResponse.json({ error: "Course id is required." }, { status: 400 });
+    }
+
+    const parsed = courseSchema.safeParse(updateData);
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid course data." }, { status: 400 });
+    }
+
+    const data = await readEventsCoursesData();
+    const index = data.courses.findIndex((c) => c.id === id);
+    
+    if (index === -1) {
+      return NextResponse.json({ error: "Course not found." }, { status: 404 });
+    }
+
+    data.courses[index] = { ...data.courses[index], ...parsed.data };
+    await writeEventsCoursesData(data);
+
+    return NextResponse.json({ ok: true, course: data.courses[index] });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error ? error.message : "Failed to update course.",
+      },
+      { status: 500 },
+    );
+  }
+}

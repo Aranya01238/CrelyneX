@@ -85,3 +85,43 @@ export async function DELETE(request: Request) {
     );
   }
 }
+
+export async function PATCH(request: Request) {
+  if (!(await isAdminAuthorized())) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const payload = await request.json();
+    const { id, ...updateData } = payload;
+
+    if (!id) {
+      return NextResponse.json({ error: "Event id is required." }, { status: 400 });
+    }
+
+    const parsed = eventSchema.safeParse(updateData);
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Invalid event data." }, { status: 400 });
+    }
+
+    const data = await readEventsCoursesData();
+    const index = data.events.findIndex((e) => e.id === id);
+    
+    if (index === -1) {
+      return NextResponse.json({ error: "Event not found." }, { status: 404 });
+    }
+
+    data.events[index] = { ...data.events[index], ...parsed.data };
+    await writeEventsCoursesData(data);
+
+    return NextResponse.json({ ok: true, event: data.events[index] });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error ? error.message : "Failed to update event.",
+      },
+      { status: 500 },
+    );
+  }
+}
