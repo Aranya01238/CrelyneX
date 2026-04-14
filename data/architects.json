@@ -1,0 +1,65 @@
+[
+  {
+    "id": "1",
+    "name": "Aranya Rath",
+    "role": "Founder",
+    "bio": "Leading CrelyneX vision, strategy, and innovation initiatives.",
+    "icon": "👨‍💼"
+  },
+  {
+    "id": "2",
+    "name": "Swarnabha Ray",
+    "role": "Co-Founder",
+    "bio": "Driving product direction and community growth at CrelyneX.",
+    "icon": "👨‍💼"
+  },
+  {
+    "id": "3",
+    "name": "Snehasis Das",
+    "role": "Co-Founder",
+    "bio": "Building operations and partnerships for long-term impact.",
+    "icon": "👩‍💼"
+  },
+  {
+    "id": "4",
+    "name": "Amullyajit Nandi",
+    "role": "Core Team - Manager",
+    "bio": "Managing execution, coordination, and team workflows.",
+    "icon": "🧭"
+  },
+  {
+    "id": "5",
+    "name": "Pushan Seth",
+    "role": "Core Team - Technical Lead",
+    "bio": "Leading technical planning and implementation quality.",
+    "icon": "👨‍💻"
+  },
+  {
+    "id": "6",
+    "name": "Arunabha Dey",
+    "role": "Core Team - Technical Lead",
+    "bio": "Supporting architecture decisions and engineering delivery.",
+    "icon": "👨‍💻"
+  },
+  {
+    "id": "7",
+    "name": "Priyanshu Mitra",
+    "role": "Core Team - Graphics Lead",
+    "bio": "Crafting visual identity and design assets for CrelyneX.",
+    "icon": "🎨"
+  },
+  {
+    "id": "8",
+    "name": "Sahitya Pan",
+    "role": "Core Team - Social Media & Partnerships Lead",
+    "bio": "Handling brand communication and external collaborations.",
+    "icon": "📣"
+  },
+  {
+    "id": "9",
+    "name": "Debjit Paul",
+    "role": "Core Team - Social Media  & Partnership Co-Lead",
+    "bio": "Managing social channels and partnership initiatives.",
+    "icon": "🤝"
+  }
+]

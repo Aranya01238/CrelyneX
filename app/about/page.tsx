@@ -10,69 +10,13 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, Target, Lightbulb, Zap } from "lucide-react";
+import { getArchitects } from "@/lib/architects";
 
 export const metadata: Metadata = {
   title: "About | CrelyneX",
   description:
     "Meet the CrelyneX team and discover our mission, values, and innovation journey.",
 };
-
-const team = [
-  {
-    name: "Aranya Rath",
-    role: "Founder",
-    bio: "Leading CrelyneX vision, strategy, and innovation initiatives.",
-    icon: "👨‍💼",
-  },
-  {
-    name: "Swarnabha Ray",
-    role: "Co-Founder",
-    bio: "Driving product direction and community growth at CrelyneX.",
-    icon: "👨‍💼",
-  },
-  {
-    name: "Snehasis Das",
-    role: "Co-Founder",
-    bio: "Building operations and partnerships for long-term impact.",
-    icon: "👩‍💼",
-  },
-  {
-    name: "Amullyajit Nandi",
-    role: "Core Team - Manager",
-    bio: "Managing execution, coordination, and team workflows.",
-    icon: "🧭",
-  },
-  {
-    name: "Pushan Seth",
-    role: "Core Team - Technical Lead",
-    bio: "Leading technical planning and implementation quality.",
-    icon: "👨‍💻",
-  },
-  {
-    name: "Arunabha Dey",
-    role: "Core Team - Technical Lead",
-    bio: "Supporting architecture decisions and engineering delivery.",
-    icon: "👨‍💻",
-  },
-  {
-    name: "Priyanshu Mitra",
-    role: "Core Team - Graphics Lead",
-    bio: "Crafting visual identity and design assets for CrelyneX.",
-    icon: "🎨",
-  },
-  {
-    name: "Sahitya Pan",
-    role: "Core Team - Social Media & Partnerships Lead",
-    bio: "Handling brand communication and external collaborations.",
-    icon: "📣",
-  },
-  {
-    name: "Debjit Paul",
-    role: "Core Team - Social Media  & Partnership Co-Lead",
-    bio: "Managing social channels and partnership initiatives.",
-    icon: "🤝",
-  },
-];
 
 const values = [
   {
@@ -100,15 +44,15 @@ const values = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const team = await getArchitects();
+
   return (
     <div className="min-h-screen bg-[#050505] flex flex-col relative text-zinc-200">
       {/* Global Background Grid & Glows */}
       <div className="pointer-events-none fixed inset-0 z-0 bg-[linear-gradient(to_right,#dc262608_1px,transparent_1px),linear-gradient(to_bottom,#dc262608_1px,transparent_1px)] bg-size-[32px_32px]" />
       <div className="pointer-events-none fixed top-0 right-0 h-125 w-125 rounded-full bg-red-900/10 blur-[120px]" />
       <div className="pointer-events-none fixed bottom-0 left-0 h-125 w-125 rounded-full bg-red-950/10 blur-[120px]" />
-
-
 
       <main className="flex-1 relative z-10">
         {/* Hero Section */}
@@ -301,7 +245,7 @@ export default function AboutPage() {
                     <CardTitle className="text-lg text-white">
                       {member.name}
                     </CardTitle>
-                    <Badge className="mt-3 mx-auto max-w-[180px] bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 px-3 py-1 rounded-full text-[9px] uppercase tracking-widest font-bold whitespace-normal text-center">
+                    <Badge className="mt-3 mx-auto max-w-45 bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/20 px-3 py-1 rounded-full text-[9px] uppercase tracking-widest font-bold whitespace-normal text-center">
                       {member.role}
                     </Badge>
                   </CardHeader>
