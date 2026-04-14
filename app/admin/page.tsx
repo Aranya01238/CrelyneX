@@ -30,6 +30,7 @@ type GraphicsSyncItem = {
   id: string;
   title: string;
   type: "poster" | "video";
+  url: string;
   uploadedBy: string;
   uploadedByName: string;
   uploadedAt: string;
@@ -391,6 +392,9 @@ function AdminGraphicsSync() {
                     Uploader
                   </th>
                   <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">
+                    URL
+                  </th>
+                  <th className="px-6 py-4 text-[10px] font-black text-zinc-500 uppercase tracking-widest">
                     Synchronized At
                   </th>
                 </tr>
@@ -410,6 +414,20 @@ function AdminGraphicsSync() {
                     <td className="px-6 py-4 text-xs font-medium text-zinc-400">
                       {item.uploadedByName} ({item.uploadedBy})
                     </td>
+                    <td className="px-6 py-4 text-xs font-medium text-zinc-400 max-w-70">
+                      {item.url ? (
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-red-300 hover:text-red-200 underline underline-offset-4 break-all"
+                        >
+                          {item.url}
+                        </a>
+                      ) : (
+                        <span className="text-zinc-600">N/A</span>
+                      )}
+                    </td>
                     <td className="px-6 py-4 text-xs font-mono text-zinc-500">
                       {new Date(item.uploadedAt).toLocaleString()}
                     </td>
@@ -418,7 +436,7 @@ function AdminGraphicsSync() {
                 {items.length === 0 && (
                   <tr>
                     <td
-                      colSpan={4}
+                      colSpan={5}
                       className="px-6 py-12 text-center text-zinc-600 italic"
                     >
                       No synchronized graphics records found.
