@@ -71,53 +71,58 @@ export default function AdminPage() {
         {/* Console / Tabs Section */}
         <section className="reveal delay-100">
           <Tabs defaultValue="events" className="w-full">
-            <div className="glass rounded-4xl p-2 border-white/5 mb-8 overflow-x-auto">
-              <TabsList className="bg-transparent border-none w-full flex justify-start sm:justify-center h-auto p-0 gap-2">
+            <div className="glass rounded-4xl p-3 sm:p-4 border-white/5 mb-8 overflow-hidden space-y-3">
+              <div className="px-2">
+                <p className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.25em]">
+                  Portal Sections
+                </p>
+              </div>
+              <TabsList className="bg-transparent border-none w-full grid grid-cols-2 lg:grid-cols-4 h-auto p-0 gap-2">
                 <TabsTrigger
                   value="events"
-                  className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
+                  className="h-12 px-4 rounded-2xl w-full justify-start sm:justify-center data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
                 >
                   <Calendar className="w-3.5 h-3.5" /> Events/Courses
                 </TabsTrigger>
                 <TabsTrigger
                   value="members"
-                  className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
+                  className="h-12 px-4 rounded-2xl w-full justify-start sm:justify-center data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
                 >
                   <Users className="w-3.5 h-3.5" /> Members
                 </TabsTrigger>
                 <TabsTrigger
                   value="tasks"
-                  className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
+                  className="h-12 px-4 rounded-2xl w-full justify-start sm:justify-center data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
                 >
                   <Briefcase className="w-3.5 h-3.5" /> Tasks
                 </TabsTrigger>
                 <TabsTrigger
                   value="social"
-                  className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
+                  className="h-12 px-4 rounded-2xl w-full justify-start sm:justify-center data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
                 >
                   <Key className="w-3.5 h-3.5" /> Social Creds
                 </TabsTrigger>
                 <TabsTrigger
                   value="updates"
-                  className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
+                  className="h-12 px-4 rounded-2xl w-full justify-start sm:justify-center data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
                 >
                   <Activity className="w-3.5 h-3.5" /> Updates Feed
                 </TabsTrigger>
                 <TabsTrigger
                   value="architects"
-                  className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
+                  className="h-12 px-4 rounded-2xl w-full justify-start sm:justify-center data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
                 >
                   <Building2 className="w-3.5 h-3.5" /> Architects
                 </TabsTrigger>
                 <TabsTrigger
                   value="audit"
-                  className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
+                  className="h-12 px-4 rounded-2xl w-full justify-start sm:justify-center data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
                 >
                   <Clock className="w-3.5 h-3.5" /> Systems Audit
                 </TabsTrigger>
                 <TabsTrigger
                   value="crelynex-sync"
-                  className="h-12 px-6 rounded-2xl flex-1 sm:flex-none data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
+                  className="h-12 px-4 rounded-2xl w-full justify-start sm:justify-center data-[state=active]:bg-red-600 data-[state=active]:text-white data-[state=inactive]:text-zinc-500 data-[state=inactive]:hover:bg-white/5 transition-all gap-2 text-[10px] font-black uppercase tracking-widest"
                 >
                   <Activity className="w-3.5 h-3.5" /> CrelyneX Sync
                 </TabsTrigger>
